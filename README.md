@@ -1,11 +1,12 @@
-# easy_paste
-Generate easy-to-paste table for quotes from the analysis exported from memoQ
+# easy_paste (draft)
+Generate easy-to-paste tables for quotes from the analysis exported from memoQ
 
 [Japanese README](https://github.com/ShunSakurai/easy_paste/blob/master/README_jpn.md) will be also available.
 
 ![Concept](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_concept.png)
 
 ## Description
+You don't have to manually calculate the words for quotes anymore. This tool generates easy-to-paste tables for quotes from the analysis exported from memoQ.
 This tool is coded in Python with tkinter and is distributed in .exe format thanks to [py2exe](http://www.py2exe.org/).
 
 ## Installation
@@ -55,6 +56,7 @@ Two file types will be supported:
 - Prepare the installer
 - Prepare the icon
 - Make the "Open files" dialog more useful
+- Add some spaces above and below buttons
 
 ### Maybe later
 - Calculate the weighted words
@@ -67,7 +69,8 @@ Please let me know if you need any of the features as soon as possible.
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### v1.2.0, April 22, 2016
+### v1.2.1, April 22, 2016
+- * Include Context TM in Repetitions and 100% Matches
 - Add to GitHub
 - Support both semicolon and tab delimiters
 - Open the csv file and detect the delimiter
@@ -75,7 +78,7 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/eas
 ## Contribution
 This is just a personal project and I do not really know what kind of contribution I may get. Any feedback and contribution is welcome!
 
-Dear translators and PMs, please help me brush up my English on this page.
+Dear colleague translators and PMs, please help me brush up my English on this page.
 
 ## License
 You can use it for free.
