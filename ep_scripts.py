@@ -17,7 +17,7 @@ def detect_delimiter(fn):
 
 def calc_csv(analysis_read, var_unit, content):
     if var_unit.get() == 'word':
-        analysis_indice = [[8, 12], [16, 20, 24, 28], [32]]
+        analysis_indice = [[4, 8, 12], [16, 20, 24, 28], [32]]
     elif var_unit.get() == 'char':
         raise ValueError('Trados-compatible CSV file doesn\'t contain characters. Please use the HTML format.')
     for i in analysis_read:
@@ -29,9 +29,9 @@ def calc_csv(analysis_read, var_unit, content):
             unit_sum_fuzzy = addup_unit(i, analysis_indice[1])
             unit_sum_new = addup_unit(i, analysis_indice[2])
             content.append([fname])
-            content.append(['Translation - New Words', unit_sum_new])
-            content.append(['Translation - Fuzzy Matches', unit_sum_fuzzy])
-            content.append(['Translation - Repetitions and 100% Matches', unit_sum_rep100])
+            content.append(['New Words', unit_sum_new])
+            content.append(['Fuzzy Matches', unit_sum_fuzzy])
+            content.append(['Repetitions and 100% Matches', unit_sum_rep100])
             content.append(['\n'])
 
 
