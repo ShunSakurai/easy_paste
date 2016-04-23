@@ -6,7 +6,7 @@ Generate easy-to-paste tables for quotes from the analysis exported from memoQ
 ![Concept](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_concept.png)
 
 ## Description
-You don't have to manually calculate the words for quotes anymore. This tool generates easy-to-paste tables for quotes from the analysis exported from memoQ.
+You don't have to manually add up the words for quotes anymore. This tool generates easy-to-paste tables for quotes from the analysis exported from memoQ.
 This tool is coded in Python with tkinter and is distributed in .exe format thanks to [py2exe](http://www.py2exe.org/).
 
 ## Installation
@@ -26,7 +26,7 @@ If you have Python environment installed, you can run the source code with `pyth
 ## Usage
 
 ### Overview
-You can open the program by double-clicking easy_paste.exe or its alias.
+You can open the program by double-clicking Easy Paste.exe or its alias.
 
 - Choose a Trados-compatible CSV or html file exported from memoQ's statistics
 - Currently only a CSV file is supported
@@ -68,6 +68,9 @@ Please let me know if you need any of the features as soon as possible.
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
+
+### v1.2.2, April 24, 2016
+- Reduce the size of the dist folder
 
 ### v1.2.1, April 22, 2016
 - * Include Context TM in Repetitions and 100% Matches
