@@ -56,7 +56,6 @@ Two file types will be supported:
 - Prepare the installer
 - Prepare the icon
 - Make the "Open files" dialog more useful
-- Add some spaces above and below buttons
 
 ### Maybe later
 - Calculate the weighted words
@@ -69,7 +68,8 @@ Please let me know if you need any of the features as soon as possible.
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### v1.2.2, April 24, 2016
+### v1.2.3, April 24, 2016
+- Add some spaces above and below buttons
 - Reduce the size of the dist folder
 
 ### v1.2.1, April 22, 2016

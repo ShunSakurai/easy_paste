@@ -14,7 +14,7 @@ args_file = {'filetypes' : [('csv', '*.csv')]}
 
 btn_file = tkinter.Button(text='Import Analysis')
 var_file = tkinter.StringVar(tk_F)
-btn_file.grid(columnspan=2)
+btn_file.grid(columnspan=2, pady=5)
 
 
 def import_file(self):
@@ -44,7 +44,7 @@ def run(self):
         ep_scripts.calc_sum(var_file, var_unit)
 
 btn_run = tkinter.Button(text='Run', state='disabled')
-btn_run.grid(columnspan=2)
+btn_run.grid(columnspan=2, pady=5)
 btn_run.bind('<ButtonRelease-1>', run)
 
 

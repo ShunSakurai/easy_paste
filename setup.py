@@ -14,7 +14,7 @@ setup(
     console=[{'author': 'Shun Sakurai',
                      'dest_base': 'Easy Paste',
                      'script': 'easy_paste.py',
-                     'version': '1.2.2',
+                     'version': '1.2.3',
                      }],
       options={'py2exe': {
                      'bundle_files': 2,
