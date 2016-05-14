@@ -1,5 +1,9 @@
 import csv
 
+templates = {
+    'short': ['New Words', 'Fuzzy Matches', 'Repetitions and 100% Matches'],
+    'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches', 'Translation -  Repetitions and 100% Matches']}
+
 
 def addup_unit(row, index_list):
     unit_sum = 0
@@ -15,31 +19,33 @@ def detect_delimiter(fn):
     return delimiter
 
 
-def calc_csv(analysis_read, var_unit, content):
+def calc_csv(analysis_read, var_unit, var_template):
     if var_unit.get() == 'word':
-        analysis_indice = [[4, 8, 12], [16, 20, 24, 28], [32]]
+        analysis_indice = [[32], [16, 20, 24, 28], [4, 8, 12]]
     elif var_unit.get() == 'char':
         raise ValueError('Trados-compatible CSV file doesn\'t contain characters. Please use the HTML format.')
+    lines = []
     for i in analysis_read:
         if len(i[0].rsplit('.', 1)) == 1:
             pass
         else:
             fname = i[0].rsplit('\\', 1)[1]
-            unit_sum_rep100 = addup_unit(i, analysis_indice[0])
-            unit_sum_fuzzy = addup_unit(i, analysis_indice[1])
-            unit_sum_new = addup_unit(i, analysis_indice[2])
-            content.append([fname])
-            content.append(['New Words', unit_sum_new])
-            content.append(['Fuzzy Matches', unit_sum_fuzzy])
-            content.append(['Repetitions and 100% Matches', unit_sum_rep100])
-            content.append(['\n'])
+            sum_new = addup_unit(i, analysis_indice[0])
+            sum_fuzzy = addup_unit(i, analysis_indice[1])
+            sum_rep100 = addup_unit(i, analysis_indice[2])
+            list_sum = [sum_new, sum_fuzzy, sum_rep100]
+            lines.append([fname])
+            for i in range(len(list_sum)):
+                lines.append([templates[var_template.get()][i], list_sum[i]])
+            lines.append(['\n'])
+    return lines
 
 
-def calc_html(analysis_read, var_unit, content):
+def calc_html(analysis_read, var_unit, var_template):
     pass
 
 
-def calc_sum(var_file, var_unit):
+def calc_sum(var_file, var_unit, var_template):
     analysis_path = var_file.get()
     if analysis_path.rsplit('.', 1)[1] == 'csv':
         dl = detect_delimiter(analysis_path)
@@ -55,9 +61,8 @@ def calc_sum(var_file, var_unit):
 
     quote = open(quote_full_path, 'a', encoding='utf-8')
     quote_write = csv.writer(quote, delimiter=',', lineterminator='\n')
-    content = []
-    calc_file(analysis_read, var_unit, content)
-    quote_write.writerows(content)
+    lines = calc_file(analysis_read, var_unit, var_template)
+    quote_write.writerows(lines)
     quote.close()
 
     print('Successfully created:\n' + quote_part_path + '\n' +

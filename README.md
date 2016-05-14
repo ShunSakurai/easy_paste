@@ -1,17 +1,17 @@
-# easy_paste (draft)
-Generate easy-to-paste tables for quotes from the analysis exported from memoQ
+# easy_paste
+A tool for generating easy-to-paste tables for quotes from the analysis exported from memoQ
 
-[Japanese README](https://github.com/ShunSakurai/easy_paste/blob/master/README_jpn.md) will be also available.
+[Japanese README](https://github.com/ShunSakurai/easy_paste/blob/master/README_jpn.md) will also be available.
 
 ![Concept](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_concept.png)
 
 ## Description
-You don't have to manually add up the words for quotes anymore. This tool generates easy-to-paste tables for quotes from the analysis exported from memoQ.
-This tool is coded in Python with tkinter and is distributed in .exe format thanks to [py2exe](http://www.py2exe.org/).
+You don't have to manually add up the number of words for creating quotes anymore. This tool generates easy-to-paste tables for quotes from the analysis exported from memoQ.
+This program is coded in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
 
 ## Installation
 This tool is currently only available for Windows at [Releases](https://github.com/ShunSakurai/easy_paste/releases).
-Installer is now being developed. For the moment, please do the following:
+Installer is now under development. In the meantime, please follow the steps below:
 
 - Download dist.zip and decompress it
 - Rename the folder to "easy_paste" or any name you like
@@ -21,15 +21,15 @@ Installer is now being developed. For the moment, please do the following:
 When you use an updated version, you only have to move the files and folders with newer dates.
 This program needs to be **kept in the folder** to work. It does not work by itself.
 
-If you have Python environment installed, you can run the source code with `python(3) easy_paste.py` or `import easy_paste` even on Mac and on any OS.
+If you have the Python environment installed, you can run the source code with `python(3) easy_paste.py` or `import easy_paste` even on Mac and on any OS.
 
 ## Usage
 
 ### Overview
 You can open the program by double-clicking Easy Paste.exe or its alias.
 
-- Choose a Trados-compatible CSV or html file exported from memoQ's statistics
-- Currently only a CSV file is supported
+- Choose a Trados-compatible CSV file or a html file exported from memoQ's statistics
+- Currently only CSV files are supported
 - Click "Run!"
 
 - Open the exported CSV file
@@ -58,7 +58,6 @@ Two file types will be supported:
 - Make the "Open files" dialog more useful
 
 ### Maybe later
-- Calculate the weighted words
 - Add the option to display 101%(Repetition) and 100% separately
 - Save last used settings
 
@@ -67,6 +66,9 @@ Please let me know if you need any of the features as soon as possible.
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
+
+### Newest version
+- Add several label formats such as "Translation - New Words"
 
 ### v1.2.3, April 24, 2016
 - Add some spaces above and below buttons
