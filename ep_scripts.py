@@ -2,7 +2,7 @@ import csv
 
 templates = {
     'short': ['New Words', 'Fuzzy Matches', 'Repetitions and 100% Matches'],
-    'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches', 'Translation -  Repetitions and 100% Matches']}
+    'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches', 'Translation -  Repetitions and 100% Matchs']}
 
 
 def addup_unit(row, index_list):
@@ -19,20 +19,34 @@ def detect_delimiter(fn):
     return delimiter
 
 
+def get_fname(lan_path):
+    '''
+    >>> '[jpn] "Z:\\Users\\sakuraishun\\Dropbox\\Codes\\easy_paste\\README.md"''
+    [jpn]README.md
+    '''
+    if lan_path.startswith('['):
+        lan = lan_path[:lan_path.find(']') + 1]
+        fname = lan + lan_path.rsplit('\\', 1)[1]
+        return fname
+    else:
+        fname = lan_path.rsplit('\\', 1)[1].strip('"')
+        return fname
+
+
 def calc_csv(analysis_read, var_unit, var_template):
     if var_unit.get() == 'word':
         analysis_indice = [[32], [16, 20, 24, 28], [4, 8, 12]]
     elif var_unit.get() == 'char':
         raise ValueError('Trados-compatible CSV file doesn\'t contain characters. Please use the HTML format.')
     lines = []
-    for i in analysis_read:
-        if len(i[0].rsplit('.', 1)) == 1:
+    for row in analysis_read:
+        if len(row[0].rsplit('.', 1)) == 1:
             pass
         else:
-            fname = i[0].rsplit('\\', 1)[1]
-            sum_new = addup_unit(i, analysis_indice[0])
-            sum_fuzzy = addup_unit(i, analysis_indice[1])
-            sum_rep100 = addup_unit(i, analysis_indice[2])
+            fname = get_fname(row[0])
+            sum_new = addup_unit(row, analysis_indice[0])
+            sum_fuzzy = addup_unit(row, analysis_indice[1])
+            sum_rep100 = addup_unit(row, analysis_indice[2])
             list_sum = [sum_new, sum_fuzzy, sum_rep100]
             lines.append([fname])
             for i in range(len(list_sum)):
