@@ -25,15 +25,18 @@ If you have the Python environment installed, you can run the source code with `
 
 ## Usage
 
-### Overview
-You can open the program by double-clicking Easy Paste.exe or its alias.
+### Generating a table
 
+- You can open the program by double-clicking Easy Paste.exe or its alias.
 - Choose a Trados-compatible CSV file or a html file exported from memoQ's statistics
 - Currently only CSV files are supported
-- Click "Run!"
+- Click "Generate table!"
+
+### Copy and pasting
 
 - Open the exported CSV file
 - You can easily copy and paste the table to your quote
+- Paste with "Keep Text Only" option in order to avoid messing up the font and the format
 
 ![UI](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_ui.png)
 
@@ -52,24 +55,28 @@ Two file types will be supported:
 ## Features to come
 ### Working on
 - Support HTML format to count characters
+- Add the option to display 101%(Repetition) and 100% separately
 - Make the code more [readable](http://www.amazon.com/dp/0596802293)
 - Prepare the installer
 - Prepare the icon
 - Make the "Open files" dialog more useful
+- Calculate the weighted words
+- Preview the task sheet (calculated words and time table)
 
 ### Maybe later
-- Add the option to display 101%(Repetition) and 100% separately
 - Save last used settings
 
-Please let me know if you need any of the features as soon as possible.
+Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4HdnKpFhvDDKXHfGUw0ccrb27xIIYgXyXV0-29199191293549) if you need any of the features as soon as possible.
 
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
 ### Newest version
+- Add contact information
 - Support multilingual projects
 - Add several label formats such as "Translation - New Words"
+- Change the button name from Run to Generate table
 
 ### v1.2.3, April 24, 2016
 - Add some spaces above and below buttons
@@ -82,7 +89,7 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/eas
 - Open the csv file and detect the delimiter
 
 ## Contribution
-This is just a personal project and I do not really know what kind of contribution I may get. Any feedback and contribution is welcome!
+This is just a personal project and I do not really know what kind of contribution I may get. Any [feedback and contribution](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4HdnKpFhvDDKXHfGUw0ccrb27xIIYgXyXV0-29199191293549) is welcome!
 
 Dear colleague translators and PMs, please help me brush up my English on this page.
 
