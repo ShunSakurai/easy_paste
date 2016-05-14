@@ -68,6 +68,7 @@ Please let me know if you need any of the features as soon as possible.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
 ### Newest version
+- Support multilingual projects
 - Add several label formats such as "Translation - New Words"
 
 ### v1.2.3, April 24, 2016
