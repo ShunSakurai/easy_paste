@@ -32,13 +32,13 @@ If you have the Python environment installed, you can run the source code with `
 - Currently only CSV files are supported
 - Click "Generate table!"
 
-### Copy and pasting
+![UI](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_ui.png)
+
+### Copying and pasting the table
 
 - Open the exported CSV file
 - You can easily copy and paste the table to your quote
 - Paste with "Keep Text Only" option in order to avoid messing up the font and the format
-
-![UI](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_ui.png)
 
 ### Options
 You can choose the unit from "word" or "character". Currently only "word" is supported.
@@ -71,6 +71,9 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
+### Newest version
+- Move with the Tab key and select with the Enter key
+
 ### v1.3.0, May 15, 2016
 - Display 101% (Repetition) and 100% joined or separately
 - Add contact information
@@ -89,7 +92,7 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/eas
 - Open the csv file and detect the delimiter
 
 ## Contribution
-This is just a personal project and I do not really know what kind of contribution I may get. Any [feedback and contribution](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4HdnKpFhvDDKXHfGUw0ccrb27xIIYgXyXV0-29199191293549) is welcome!
+This is just a personal project and I do not really know what kind of contribution I may get. Any [feedback](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4HdnKpFhvDDKXHfGUw0ccrb27xIIYgXyXV0-29199191293549) and contribution is welcome!
 
 Dear colleague translators and PMs, please help me brush up my English on this page.
 

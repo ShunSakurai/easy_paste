@@ -44,7 +44,7 @@ def calc_csv(analysis_read, var_unit, var_rep100, var_heading):
     if var_unit.get() == 'word':
         pass
     elif var_unit.get() == 'char':
-        raise ValueError('Trados-compatible CSV file doesn\'t contain characters. Please use the HTML format.')
+        raise ValueError('A Trados-compatible CSV file doesn\'t contain characters. Please use the HTML format instead.')
     if var_rep100.get() == 'joined':
         csv_indice = csv_indice_joined
         headings = headings_joined

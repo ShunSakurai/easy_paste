@@ -8,7 +8,8 @@ import tkinter.filedialog
 
 print('Loading...')
 
-tk_F = tkinter.Frame()
+root = tkinter.Tk()
+tk_F = tkinter.Frame(root)
 
 args_file = {'filetypes' : [('csv', '*.csv')]}
 # args_file = {'filetypes' : [('csv or html', '*.csv:*.html')]}
@@ -74,6 +75,20 @@ def run(self):
 btn_generate.bind('<ButtonRelease-1>', run)
 
 
+def select_and_focus(self):
+    self.widget.select()
+    self.widget.focus()
+
+for rb in rbs_unit:
+    rb.bind('<ButtonRelease-1>', select_and_focus)
+
+for rb in rbs_rep100:
+    rb.bind('<ButtonRelease-1>', select_and_focus)
+
+for rb in rbs_heading:
+    rb.bind('<ButtonRelease-1>', select_and_focus)
+
+
 def true_false(var, unknown, w):
     if var_file.get():
         btn_generate['state'] = 'normal'
@@ -83,6 +98,12 @@ def true_false(var, unknown, w):
         btn_generate['text'] = 'Generate table'
 
 var_file.trace('w', true_false)
+
+
+def return_to_click(self):
+    tk_F.focus_get().event_generate('<ButtonRelease-1>')
+
+root.bind('<Return>', return_to_click)
 
 top = tk_F.winfo_toplevel()
 top.resizable(False, False)
