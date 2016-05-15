@@ -55,7 +55,6 @@ Two file types will be supported:
 ## Features to come
 ### Working on
 - Support HTML format to count characters
-- Add the option to display 101%(Repetition) and 100% separately
 - Make the code more [readable](http://www.amazon.com/dp/0596802293)
 - Prepare the installer
 - Prepare the icon
@@ -73,9 +72,10 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
 ### Newest version
+- Add the option to display 101% (Repetition) and 100% joined or separately
 - Add contact information
 - Support multilingual projects
-- Add several label formats such as "Translation - New Words"
+- Add several heading formats such as "Translation - New Words"
 - Change the button name from Run to Generate table
 
 ### v1.2.3, April 24, 2016
