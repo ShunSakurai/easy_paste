@@ -21,9 +21,9 @@ ent_file = tkinter.Entry(width=35, textvariable=var_file)
 ent_file.grid(columnspan=2)
 
 lable_unit = tkinter.Label(text='Units')
-lable_unit.grid()
+lable_unit.grid(sticky='w', padx=10)
 
-units = [('Word', 'word'), ('Character*\n*HTML only and\nnot supported', 'char')]
+units = [('Word', 'word'), ('Character\n*Not supported', 'char')]
 var_unit = tkinter.StringVar()
 var_unit.set('word')
 rbs_unit = []
@@ -32,17 +32,29 @@ for label, unit in units:
     rb_unit.grid(row=3, column=units.index((label, unit)))
     rbs_unit.append(rb_unit)
 
-lable_template = tkinter.Label(text='Templates')
-lable_template.grid()
+lable_rep100 = tkinter.Label(text='Rep and 100%')
+lable_rep100.grid(sticky='w', padx=10)
 
-templates = [('New', 'short'), ('Translation -  New', 'long')]
-var_template = tkinter.StringVar()
-var_template.set('short')
-rbs_template = []
-for label, template in templates:
-    rb_template = tkinter.Radiobutton(text=label, variable=var_template, value=template)
-    rb_template.grid(row=5, column=templates.index((label, template)))
-    rbs_template.append(rb_template)
+rep100s = [('Joined', 'joined'), ('Separate', 'separate')]
+var_rep100 = tkinter.StringVar()
+var_rep100.set('joined')
+rbs_rep100 = []
+for label, rep100 in rep100s:
+    rb_rep100 = tkinter.Radiobutton(text=label, variable=var_rep100, value=rep100)
+    rb_rep100.grid(row=5, column=rep100s.index((label, rep100)))
+    rbs_rep100.append(rb_rep100)
+
+lable_heading = tkinter.Label(text='Headings')
+lable_heading.grid(sticky='w', padx=10)
+
+headings = [('New', 'short'), ('Translation -  New', 'long')]
+var_heading = tkinter.StringVar()
+var_heading.set('short')
+rbs_heading = []
+for label, heading in headings:
+    rb_heading = tkinter.Radiobutton(text=label, variable=var_heading, value=heading)
+    rb_heading.grid(row=7, column=headings.index((label, heading)))
+    rbs_heading.append(rb_heading)
 
 btn_generate = tkinter.Button(text='Generate table', state='disabled')
 btn_generate.grid(columnspan=2, pady=5)
@@ -57,7 +69,7 @@ btn_file.bind('<ButtonRelease-1>', import_file)
 
 def run(self):
     if btn_generate['state'] == 'normal' or 'active':
-        ep_scripts.calc_sum(var_file, var_unit, var_template)
+        ep_scripts.calc_sum(var_file, var_unit, var_rep100, var_heading)
 
 btn_generate.bind('<ButtonRelease-1>', run)
 

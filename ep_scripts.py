@@ -1,8 +1,15 @@
 import csv
 
-templates = {
+headings_joined = {
     'short': ['New Words', 'Fuzzy Matches', 'Repetitions and 100% Matches'],
     'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches', 'Translation -  Repetitions and 100% Matchs']}
+
+headings_separate = {
+    'short': ['New Words', 'Fuzzy Matches', '100% Matches', 'Repetitions'],
+    'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches', 'Translation - 100% Matchs'', Translation -  Repetitions']}
+
+csv_indice_joined = [[32], [16, 20, 24, 28], [4, 8, 12]]
+csv_indice_separate = [[32], [16, 20, 24, 28], [12], [4, 8]]
 
 
 def addup_unit(row, index_list):
@@ -10,7 +17,6 @@ def addup_unit(row, index_list):
     for i in index_list:
         unit_sum += int(row[i])
     return unit_sum
-    print(unit_sum)
 
 
 def detect_delimiter(fn):
@@ -33,33 +39,38 @@ def get_fname(lan_path):
         return fname
 
 
-def calc_csv(analysis_read, var_unit, var_template):
+def calc_csv(analysis_read, var_unit, var_rep100, var_heading):
+    print(var_rep100.get())
     if var_unit.get() == 'word':
-        analysis_indice = [[32], [16, 20, 24, 28], [4, 8, 12]]
+        pass
     elif var_unit.get() == 'char':
         raise ValueError('Trados-compatible CSV file doesn\'t contain characters. Please use the HTML format.')
+    if var_rep100.get() == 'joined':
+        csv_indice = csv_indice_joined
+        headings = headings_joined
+    if var_rep100.get() == 'separate':
+        csv_indice = csv_indice_separate
+        headings = headings_separate
     lines = []
     for row in analysis_read:
         if len(row[0].rsplit('.', 1)) == 1:
             pass
         else:
             fname = get_fname(row[0])
-            sum_new = addup_unit(row, analysis_indice[0])
-            sum_fuzzy = addup_unit(row, analysis_indice[1])
-            sum_rep100 = addup_unit(row, analysis_indice[2])
-            list_sum = [sum_new, sum_fuzzy, sum_rep100]
             lines.append([fname])
-            for i in range(len(list_sum)):
-                lines.append([templates[var_template.get()][i], list_sum[i]])
+            for i in range(len(csv_indice)):
+                label_sum = headings[var_heading.get()][i]
+                unit_sum = addup_unit(row, csv_indice[i])
+                lines.append([label_sum, unit_sum])
             lines.append(['\n'])
     return lines
 
 
-def calc_html(analysis_read, var_unit, var_template):
+def calc_html(analysis_read, var_unit, var_rep100, var_heading):
     pass
 
 
-def calc_sum(var_file, var_unit, var_template):
+def calc_sum(var_file, var_unit, var_rep100, var_heading):
     analysis_path = var_file.get()
     if analysis_path.rsplit('.', 1)[1] == 'csv':
         dl = detect_delimiter(analysis_path)
@@ -75,7 +86,7 @@ def calc_sum(var_file, var_unit, var_template):
 
     quote = open(quote_full_path, 'a', encoding='utf-8')
     quote_write = csv.writer(quote, delimiter=',', lineterminator='\n')
-    lines = calc_file(analysis_read, var_unit, var_template)
+    lines = calc_file(analysis_read, var_unit, var_rep100, var_heading)
     quote_write.writerows(lines)
     quote.close()
 
