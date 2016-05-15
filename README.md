@@ -71,8 +71,8 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### Newest version
-- Add the option to display 101% (Repetition) and 100% joined or separately
+### v1.3.0, May 15, 2016
+- Display 101% (Repetition) and 100% joined or separately
 - Add contact information
 - Support multilingual projects
 - Add several heading formats such as "Translation - New Words"
