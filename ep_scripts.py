@@ -26,10 +26,10 @@ def get_fname(lan_path):
     '''
     if lan_path.startswith('['):
         lan = lan_path[:lan_path.find(']') + 1]
-        fname = lan + lan_path.rsplit('\\', 1)[1]
+        fname = lan + lan_path.rsplit('\\', 1)[1].strip('"')
         return fname
     else:
-        fname = lan_path.rsplit('\\', 1)[1].strip('"')
+        fname = lan_path.rsplit('\\', 1)[1]
         return fname
 
 
