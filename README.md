@@ -41,7 +41,12 @@ If you have the Python environment installed, you can run the source code with `
 - Paste with "Keep Text Only" option in order to avoid messing up the font and the format
 
 ### Options
-You can choose the unit from "word" or "character". Currently only "word" is supported.
+
+- You can choose the unit from "word" or "character." Currently only "word" is supported.
+- You can choose the format from "New, Fuzzy, and 100% and Repetitions" or ""New, Fuzzy, 100%, and Repetitions""
+- You can choose the heading from "New Words" or "Translation -  New Words." I will add an option to create your own heading formats
+
+![Four heading formats](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_heading.png)
 
 ### memoQ analysis file types
 Two file types will be supported:
@@ -61,6 +66,7 @@ Two file types will be supported:
 - Make the "Open files" dialog more useful
 - Calculate the weighted words
 - Preview the task sheet (calculated words and time table)
+- Create your own heading formats
 
 ### Maybe later
 - Save last used settings
@@ -71,7 +77,7 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### Newest version
+### v1.3.1, May 16, 2016
 - Move with the Tab key and select with the Enter key
 
 ### v1.3.0, May 15, 2016
