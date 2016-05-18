@@ -12,26 +12,13 @@ root = tkinter.Tk()
 tk_F = tkinter.Frame(root)
 
 args_file = {'filetypes' : [('csv', '*.csv')]}
-# args_file = {'filetypes' : [('csv or html', '*.csv:*.html')]}
 
 btn_file = tkinter.Button(text='Import Analysis')
 var_file = tkinter.StringVar(tk_F)
 btn_file.grid(columnspan=2, pady=5)
 
 ent_file = tkinter.Entry(width=35, textvariable=var_file)
-ent_file.grid(columnspan=2)
-
-lable_unit = tkinter.Label(text='Units')
-lable_unit.grid(sticky='w', padx=10)
-
-units = [('Word', 'word'), ('Character\n*Not supported', 'char')]
-var_unit = tkinter.StringVar()
-var_unit.set('word')
-rbs_unit = []
-for label, unit in units:
-    rb_unit = tkinter.Radiobutton(text=label, variable=var_unit, value=unit)
-    rb_unit.grid(row=3, column=units.index((label, unit)))
-    rbs_unit.append(rb_unit)
+ent_file.grid(columnspan=2, pady=5)
 
 lable_rep100 = tkinter.Label(text='Rep and 100%')
 lable_rep100.grid(sticky='w', padx=10)
@@ -42,7 +29,7 @@ var_rep100.set('joined')
 rbs_rep100 = []
 for label, rep100 in rep100s:
     rb_rep100 = tkinter.Radiobutton(text=label, variable=var_rep100, value=rep100)
-    rb_rep100.grid(row=5, column=rep100s.index((label, rep100)))
+    rb_rep100.grid(row=3, column=rep100s.index((label, rep100)))
     rbs_rep100.append(rb_rep100)
 
 lable_heading = tkinter.Label(text='Headings')
@@ -54,7 +41,7 @@ var_heading.set('short')
 rbs_heading = []
 for label, heading in headings:
     rb_heading = tkinter.Radiobutton(text=label, variable=var_heading, value=heading)
-    rb_heading.grid(row=7, column=headings.index((label, heading)))
+    rb_heading.grid(row=5, column=headings.index((label, heading)))
     rbs_heading.append(rb_heading)
 
 btn_generate = tkinter.Button(text='Generate table', state='disabled')
@@ -70,7 +57,7 @@ btn_file.bind('<ButtonRelease-1>', import_file)
 
 def run(self):
     if btn_generate['state'] == 'normal' or 'active':
-        ep_scripts.calc_sum(var_file, var_unit, var_rep100, var_heading)
+        ep_scripts.calc_sum(var_file, var_rep100, var_heading)
 
 btn_generate.bind('<ButtonRelease-1>', run)
 
@@ -78,9 +65,6 @@ btn_generate.bind('<ButtonRelease-1>', run)
 def select_and_focus(self):
     self.widget.select()
     self.widget.focus()
-
-for rb in rbs_unit:
-    rb.bind('<ButtonRelease-1>', select_and_focus)
 
 for rb in rbs_rep100:
     rb.bind('<ButtonRelease-1>', select_and_focus)

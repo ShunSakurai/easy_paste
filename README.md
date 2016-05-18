@@ -28,9 +28,9 @@ If you have the Python environment installed, you can run the source code with `
 ### Generating a table
 
 - You can open the program by double-clicking Easy Paste.exe or its alias.
-- Choose a Trados-compatible CSV file or a html file exported from memoQ's statistics
-- Currently only CSV files are supported
+- Choose a Trados-compatible CSV file exported from memoQ's statistics
 - Click "Generate table!"
+- A CSV file starting with "to_paste" is generated in the same folder as the original CSV file
 
 ![UI](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_ui.png)
 
@@ -42,24 +42,29 @@ If you have the Python environment installed, you can run the source code with `
 
 ### Options
 
-- You can choose the unit from "word" or "character." Currently only "word" is supported.
 - You can choose the format from "New, Fuzzy, and 100% and Repetitions" or ""New, Fuzzy, 100%, and Repetitions""
 - You can choose the heading from "New Words" or "Translation -  New Words." I will add an option to create your own heading formats
 
 ![Four heading formats](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_heading.png)
 
 ### memoQ analysis file types
-Two file types will be supported:
+Please select the following option when exporting the statistics from memoQ
 
 - CSV (Per-file, Trados-compatible)
-- HTML (Reflecting displayed results)
-- Currently only a CSV file is supported
 
 ![Format](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_format.png)
 
+## Known issues and workarounds
+
+### Garbled UTF-8 CSV files opened with Shift-JIS Excel
+If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an environment whose default encoding is Shift-JIS or any other non-Unicode encoding, the characters are likely to be garbled. There are many remedies to this, but the simplest solutions are as follows:
+
+- Change the extension from .csv to .txt. A dialog window pops up and allows you to select the encoding
+- Open the CSV files with Notepad. Rows are displayed merely as lines and the items are not separated, but at least they are displayed correctly
+- Download CSV openers like [OpenOffice](https://www.openoffice.org/product/calc.html) Calc
+
 ## Features to come
 ### Working on
-- Support HTML format to count characters
 - Make the code more [readable](http://www.amazon.com/dp/0596802293)
 - Prepare the installer
 - Prepare the icon
@@ -71,11 +76,17 @@ Two file types will be supported:
 ### Maybe later
 - Save last used settings
 
+### Features not coming
+- Support HTML format to count characters. It turned out we can use word counts for Asian characters
+
 Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4HdnKpFhvDDKXHfGUw0ccrb27xIIYgXyXV0-29199191293549) if you need any of the features as soon as possible.
 
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
+
+### v1.3.2, May 18, 2016
+- Simplify the tool by deleting the option for characters or HTML files
 
 ### v1.3.1, May 16, 2016
 - Move with the Tab key and select with the Enter key

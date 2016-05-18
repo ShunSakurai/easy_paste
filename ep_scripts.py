@@ -39,12 +39,7 @@ def get_fname(lan_path):
         return fname
 
 
-def calc_csv(analysis_read, var_unit, var_rep100, var_heading):
-    print(var_rep100.get())
-    if var_unit.get() == 'word':
-        pass
-    elif var_unit.get() == 'char':
-        raise ValueError('A Trados-compatible CSV file doesn\'t contain characters. Please use the HTML format instead.')
+def calc_csv(analysis_read, var_rep100, var_heading):
     if var_rep100.get() == 'joined':
         csv_indice = csv_indice_joined
         headings = headings_joined
@@ -66,19 +61,10 @@ def calc_csv(analysis_read, var_unit, var_rep100, var_heading):
     return lines
 
 
-def calc_html(analysis_read, var_unit, var_rep100, var_heading):
-    pass
-
-
-def calc_sum(var_file, var_unit, var_rep100, var_heading):
+def calc_sum(var_file, var_rep100, var_heading):
     analysis_path = var_file.get()
-    if analysis_path.rsplit('.', 1)[1] == 'csv':
-        dl = detect_delimiter(analysis_path)
-        analysis_read = csv.reader(open(analysis_path, encoding='utf-16'), delimiter=dl)
-        calc_file = calc_csv
-    else:
-        analysis_read = open(analysis_path, encoding='utf-8')
-        calc_file = calc_html
+    dl = detect_delimiter(analysis_path)
+    analysis_read = csv.reader(open(analysis_path, encoding='utf-16'), delimiter=dl)
 
     analysis_divided = analysis_path.rsplit('/', 2)
     quote_full_path = analysis_divided[0] + '/' + analysis_divided[1] + '/to_paste(utf-8, comma)' + analysis_divided[2]
@@ -86,9 +72,9 @@ def calc_sum(var_file, var_unit, var_rep100, var_heading):
 
     quote = open(quote_full_path, 'a', encoding='utf-8')
     quote_write = csv.writer(quote, delimiter=',', lineterminator='\n')
-    lines = calc_file(analysis_read, var_unit, var_rep100, var_heading)
+    lines = calc_csv(analysis_read, var_rep100, var_heading)
     quote_write.writerows(lines)
     quote.close()
 
-    print('Successfully created:\n' + quote_part_path + '\n' +
-          'Click [x] on the tk window and close the program.\n')
+    print('\nSuccessfully created:\n' + quote_part_path + '\n' +
+          'Click [x] on the tk window and close the program.')
