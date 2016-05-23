@@ -1,7 +1,7 @@
 # easy_paste
 A tool for generating easy-to-paste tables for quotes from the analysis exported from memoQ
 
-[Japanese README](https://github.com/ShunSakurai/easy_paste/blob/master/README_jpn.md) will also be available.
+Japanese README will also be available upon request.
 
 ![Concept](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_concept.png)
 
@@ -15,8 +15,8 @@ Installer is now under development. In the meantime, please follow the steps bel
 
 - Download dist.zip and decompress it
 - Rename the folder to "easy_paste" or any name you like
-- Move it to C:\Program Files
-- Create a shortcut of the .exe file and add it to your Desktop, to your tools folder, or to C:\ProgramData\Microsoft\Windows\Start Menu\Programs
+- (Optional) Move the folder to C:\Program Files
+- (Optional) Create a shortcut of the .exe file and add it to your Desktop, to your tools folder, or to C:\ProgramData\Microsoft\Windows\Start Menu\Programs (this way you can run the program from Windows Start Menu)
 
 When you use an updated version, you only have to move the files and folders with newer dates.
 This program needs to be **kept in the folder** to work. It does not work by itself.
