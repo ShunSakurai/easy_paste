@@ -1,3 +1,7 @@
+'''
+cd dropbox/codes/easy_paste
+py ep_scripts.py
+'''
 import csv
 
 headings_joined = {
@@ -8,8 +12,8 @@ headings_separate = {
     'short': ['New Words', 'Fuzzy Matches', '100% Matches', 'Repetitions'],
     'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches', 'Translation - 100% Matchs', 'Translation -  Repetitions']}
 
-csv_indice_joined = [[32], [16, 20, 24, 28], [4, 8, 12]]
-csv_indice_separate = [[32], [16, 20, 24, 28], [12], [4, 8]]
+csv_indices_joined = [[32], [16, 20, 24, 28], [4, 8, 12]]
+csv_indices_separate = [[32], [16, 20, 24, 28], [12], [4, 8]]
 
 
 def addup_unit(row, index_list):
@@ -26,9 +30,9 @@ def detect_delimiter(fn):
 
 
 def get_fname(lan_path):
-    '''
-    >>> '[jpn] "Z:\\Users\\sakuraishun\\Dropbox\\Codes\\easy_paste\\README.md"''
-    [jpn]README.md
+    r'''
+    >>> get_fname(r'[jpn] "Z:\Users\sakuraishun\Dropbox\Codes\easy_paste\README.md"')
+    '[jpn]README.md'
     '''
     if lan_path.startswith('['):
         lan = lan_path[:lan_path.find(']') + 1]
@@ -41,10 +45,10 @@ def get_fname(lan_path):
 
 def calc_csv(analysis_read, var_rep100, var_heading):
     if var_rep100.get() == 'joined':
-        csv_indice = csv_indice_joined
+        csv_indices = csv_indices_joined
         headings = headings_joined
     if var_rep100.get() == 'separate':
-        csv_indice = csv_indice_separate
+        csv_indices = csv_indices_separate
         headings = headings_separate
     lines = []
     for row in analysis_read:
@@ -53,9 +57,9 @@ def calc_csv(analysis_read, var_rep100, var_heading):
         else:
             fname = get_fname(row[0])
             lines.append([fname])
-            for i in range(len(csv_indice)):
+            for i in range(len(csv_indices)):
                 label_sum = headings[var_heading.get()][i]
-                unit_sum = addup_unit(row, csv_indice[i])
+                unit_sum = addup_unit(row, csv_indices[i])
                 lines.append([label_sum, unit_sum])
             lines.append(['\n'])
     return lines
@@ -78,3 +82,7 @@ def calc_sum(var_file, var_rep100, var_heading):
 
     print('\nSuccessfully created:\n' + quote_part_path + '\n' +
           'Click [x] on the tk window and close the program.')
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

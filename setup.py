@@ -6,6 +6,7 @@ Libraries used:
 import tkinter
 import tkinter.filedialog
 import csv
+import doctest
 '''
 from distutils.core import setup
 import py2exe
@@ -15,11 +16,11 @@ setup(
         'author': 'Shun Sakurai',
         'dest_base': 'Easy Paste',
         'script': 'easy_paste.py',
-        'version': '1.3.2',
+        'version': '1.3.3',
     }],
     options={'py2exe': {
         'bundle_files': 2,
         'compressed': True,
-        'excludes': ['_bz2', '_frozen_importlib', '_hashlib', '_lzma', '_ssl', 'argparse', 'calendar', 'datetime', 'difflib', 'doctest', 'inspect', 'locale', 'optparse', 'pdb', 'pickle', 'pydoc', 'pyexpat', 'pyreadline', 'zipfile'],
+        'excludes': ['_bz2', '_frozen_importlib', '_hashlib', '_lzma', '_ssl', 'argparse', 'calendar', 'datetime', 'difflib', 'inspect', 'locale', 'optparse', 'pdb', 'pickle', 'pydoc', 'pyexpat', 'pyreadline', 'zipfile'],
     }}
 )
