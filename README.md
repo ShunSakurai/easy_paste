@@ -1,5 +1,5 @@
 # easy_paste
-A tool for generating easy-to-paste tables for quotes from the analysis exported from memoQ
+A tool for generating easy-to-paste tables for quotes and weighted words from the analysis exported from memoQ
 
 Japanese README will also be available upon request.
 
@@ -7,6 +7,7 @@ Japanese README will also be available upon request.
 
 ## Description
 You don't have to manually add up the number of words for creating quotes anymore. This tool generates easy-to-paste tables for quotes from the analysis exported from memoQ.
+You can also calculate the weighted words for the files.
 This program is coded in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
 
 ## Installation
@@ -18,7 +19,7 @@ Installer is now under development. In the meantime, please follow the steps bel
 - (Optional) Move the folder to C:\Program Files
 - (Optional) Create a shortcut of the .exe file and add it to your Desktop, to your tools folder, or to C:\ProgramData\Microsoft\Windows\Start Menu\Programs (this way you can run the program from Windows Start Menu)
 
-When you use an updated version, you only have to move the files and folders with newer dates.
+When you use an updated version, you only have to copy and overwrite the files and folders with newer dates.
 This program needs to be **kept in the folder** to work. It does not work by itself.
 
 If you have the Python environment installed, you can run the source code with `python(3) easy_paste.py` or `import easy_paste` even on Mac and on any OS.
@@ -47,6 +48,13 @@ If you have the Python environment installed, you can run the source code with `
 
 ![Four heading formats](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_heading.png)
 
+### Calculating weighted words
+
+- The basic procedure is the same as in 'Generating a table'
+- Click "Generate table!"
+- A CSV file starting with "weighted_" is generated in the same folder as the original CSV file
+- Open the file with Microsoft Excel
+
 ### memoQ analysis file types
 Please select the following option when exporting the statistics from memoQ
 
@@ -69,12 +77,11 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 - Prepare the installer
 - Prepare the icon
 - Make the "Open files" dialog more useful
-- Calculate the weighted words
-- Preview the task sheet (calculated words and time table)
 - Create your own heading formats
 
 ### Maybe later
 - Save last used settings
+- Make the weighted words compatible with non-Excel programs
 
 ### Features not coming
 - Support HTML format to count characters. It turned out we can use word counts for Asian characters
@@ -84,6 +91,9 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
+
+### v1.4,0, June 14, 2016
+- Calculate the weighted words and translation and proofreading time
 
 ### v1.3.2, May 18, 2016
 - Simplify the tool by deleting the option for characters or HTML files

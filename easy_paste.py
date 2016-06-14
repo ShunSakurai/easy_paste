@@ -44,8 +44,11 @@ for label, heading in headings:
     rb_heading.grid(row=5, column=headings.index((label, heading)))
     rbs_heading.append(rb_heading)
 
-btn_generate = tkinter.Button(text='Generate table', state='disabled')
-btn_generate.grid(columnspan=2, pady=5)
+btn_quote = tkinter.Button(text='Generate table for quote', state='disabled')
+btn_quote.grid(columnspan=2, pady=5)
+
+btn_weighted = tkinter.Button(text='Calculate weighted words', state='disabled')
+btn_weighted.grid(columnspan=2, pady=5)
 
 
 def import_file(self):
@@ -55,11 +58,18 @@ def import_file(self):
 btn_file.bind('<ButtonRelease-1>', import_file)
 
 
-def run(self):
-    if btn_generate['state'] == 'normal' or 'active':
+def run_quote(self):
+    if btn_quote['state'] == 'normal' or 'active':
         ep_scripts.calc_sum(var_file, var_rep100, var_heading)
 
-btn_generate.bind('<ButtonRelease-1>', run)
+btn_quote.bind('<ButtonRelease-1>', run_quote)
+
+
+def run_weighted(self):
+    if btn_quote['state'] == 'normal' or 'active':
+        ep_scripts.calc_weighted(var_file)
+
+btn_weighted.bind('<ButtonRelease-1>', run_weighted)
 
 
 def select_and_focus(self):
@@ -75,11 +85,15 @@ for rb in rbs_heading:
 
 def true_false(var, unknown, w):
     if var_file.get():
-        btn_generate['state'] = 'normal'
-        btn_generate['text'] = 'Generate table!'
+        btn_quote['state'] = 'normal'
+        btn_quote['text'] = 'Generate table for quote!'
+        btn_weighted['state'] = 'normal'
+        btn_weighted['text'] = 'Calculate weighted words!'
     else:
-        btn_generate['state'] = 'disabled'
-        btn_generate['text'] = 'Generate table'
+        btn_quote['state'] = 'disabled'
+        btn_quote['text'] = 'Generate table for quote'
+        btn_weighted['state'] = 'disabled'
+        btn_weighted['text'] = 'Calculate weighted words'
 
 var_file.trace('w', true_false)
 
