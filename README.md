@@ -62,15 +62,6 @@ Please select the following option when exporting the statistics from memoQ
 
 ![Format](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_format.png)
 
-## Known issues and workarounds
-
-### Garbled UTF-8 CSV files opened with Shift-JIS Excel
-If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an environment whose default encoding is Shift-JIS or any other non-Unicode encoding, the characters are likely to be garbled. There are many remedies to this, but the simplest solutions are as follows:
-
-- Change the extension from .csv to .txt. A dialog window pops up and allows you to select the encoding
-- Open the CSV files with Notepad. Rows are displayed merely as lines and the items are not separated, but at least they are displayed correctly
-- Download CSV openers like [OpenOffice](https://www.openoffice.org/product/calc.html) Calc
-
 ## Features to come
 ### Working on
 - Make the code more [readable](http://www.amazon.com/dp/0596802293)
@@ -82,6 +73,7 @@ If you simply open a CSV file encoded with UTF-8 with Microsoft Excel in an envi
 ### Maybe later
 - Save last used settings
 - Make the weighted words compatible with non-Excel programs
+- Open the CSV files from inside the program
 
 ### Features not coming
 - Support HTML format to count characters. It turned out we can use word counts for Asian characters
@@ -91,6 +83,9 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
+
+### v1.4.1, June 14, 2016
+- * Correct the wrong equations
 
 ### v1.4,0, June 14, 2016
 - Calculate the weighted words and translation and proofreading time
@@ -127,3 +122,6 @@ Dear colleague translators and PMs, please help me brush up my English on this p
 You can use it for free.
 
 © 2016 Shun Sakurai
+
+## Weighted words equations
+

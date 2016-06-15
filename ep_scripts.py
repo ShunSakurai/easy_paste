@@ -100,9 +100,9 @@ def calc_weighted(var_file):
     lines.append([r'If check 100% match is No, delete values in Repeated and 100%'])
     lines.append(['Chargeable words per day (can be changed) :', 2000, '', '', '', '', ''])
     lines.append(['Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match', 'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words'])
-    translation_time = '=(SUM(OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -5, 2))/100*25+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -3)/100*60+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -2)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -1))/B$2*8*4/5'
-    proof_time = '=(SUM(OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -5, 2))/100*25+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -3)/100*60+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -7)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -6)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -2)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -1))/B$2*8/5'
-    total_time = '=SUM(OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -2, 2))'
+    translation_time = '=(SUM(OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -5, 1, 2))/100*25+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -3)/100*60+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -2)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -1))/B$2*8*4/5'
+    proof_time = '=(SUM(OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -6, 1, 2))/100*25+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -4)/100*60+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -8)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -7)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -3)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -2))/B$2*8/5'
+    total_time = '=SUM(OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -2, 1, 2))'
     weighted_words = '=OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -1)*B$2/8'
 
     for row in analysis_read:
