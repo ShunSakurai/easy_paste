@@ -1,14 +1,16 @@
 # easy_paste
 A tool for generating easy-to-paste tables for quotes and weighted words from the analysis exported from memoQ
 
-Japanese README will also be available upon request.
-
 ![Concept](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_concept.png)
 
 ## Description
 You don't have to manually add up the number of words for creating quotes anymore. This tool generates easy-to-paste tables for quotes from the analysis exported from memoQ.
-You can also calculate the weighted words for the files.
+
+You can also calculate the weighted words and the translation and proofreading time for the files. memoQ now [tells us the weighted words](https://www.memoq.com/memoq-build-june), but this tool is still useful in that it provides the estimated time.
+
 This program is coded in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
+
+Japanese README will also be available upon request.
 
 ## Installation
 This tool is currently only available for Windows at [Releases](https://github.com/ShunSakurai/easy_paste/releases).
@@ -25,6 +27,13 @@ This program needs to be **kept in the folder** to work. It does not work by its
 If you have the Python environment installed, you can run the source code with `python(3) easy_paste.py` or `import easy_paste` even on Mac and on any OS.
 
 ## Usage
+
+### memoQ analysis file types
+Please select the following option when exporting the statistics from memoQ
+
+- CSV (Per-file, Trados-compatible)
+
+![Format](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_format.png)
 
 ### Generating a table
 
@@ -49,18 +58,14 @@ If you have the Python environment installed, you can run the source code with `
 ![Four heading formats](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_heading.png)
 
 ### Calculating weighted words
+The basic procedure is the same as in 'Generating a table'
 
-- The basic procedure is the same as in 'Generating a table'
 - Click "weighted words!"
 - A CSV file starting with "weighted_" is generated in the same folder as the original CSV file
 - Open the file with Microsoft Excel
+- You can change the words per day and the result updates accordingly
 
-### memoQ analysis file types
-Please select the following option when exporting the statistics from memoQ
-
-- CSV (Per-file, Trados-compatible)
-
-![Format](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_format.png)
+![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet.png)
 
 ## Features to come
 ### Working on
@@ -83,6 +88,10 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
+
+### v1.4.4, June 15, 2016
+- * Handle file names without a period '.'
+- Make small improvements
 
 ### v1.4.3, June 15, 2016
 - Open the folder from inside the program
@@ -126,6 +135,3 @@ Dear colleague translators and PMs, please help me brush up my English on this p
 You can use it for free.
 
 © 2016 Shun Sakurai
-
-## Weighted words equations
-

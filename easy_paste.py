@@ -63,7 +63,7 @@ btn_file.bind('<ButtonRelease-1>', import_file)
 
 def run_quote(self):
     if btn_quote['state'] == 'normal' or 'active':
-        ep_scripts.calc_sum(var_file, var_rep100, var_heading)
+        ep_scripts.calc_quote(var_file, var_rep100, var_heading)
 
 btn_quote.bind('<ButtonRelease-1>', run_quote)
 
@@ -96,16 +96,12 @@ for rb in rbs_heading:
 def true_false(var, unknown, w):
     if var_file.get():
         btn_quote['state'] = 'normal'
-        btn_quote['text'] = 'Generate table for quote!'
         btn_weighted['state'] = 'normal'
-        btn_weighted['text'] = 'Calculate weighted words!'
         btn_folder['state'] = 'normal'
-        btn_folder['text'] = 'Open folder!'
     else:
         btn_quote['state'] = 'disabled'
-        btn_quote['text'] = 'Generate table for quote'
+        btn_weighted['state'] = 'disabled'
         btn_folder['state'] = 'disabled'
-        btn_folder['text'] = 'Open folder'
 
 var_file.trace('w', true_false)
 
