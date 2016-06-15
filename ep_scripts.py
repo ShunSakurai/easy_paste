@@ -4,6 +4,11 @@ py ep_scripts.py
 '''
 import csv
 
+csv_indices_joined = [[32], [16, 20, 24, 28], [4, 8, 12]]
+csv_indices_separate = [[32], [16, 20, 24, 28], [12], [4, 8]]
+csv_indices_weighted = [[4, 8], [12], [16], [20], [24], [28], [32]]
+
+# Strings to use for quotes
 headings_joined = {
     'short': ['New Words', 'Fuzzy Matches', 'Repetitions and 100% Matches'],
     'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches', 'Translation -  Repetitions and 100% Matchs']}
@@ -12,9 +17,15 @@ headings_separate = {
     'short': ['New Words', 'Fuzzy Matches', '100% Matches', 'Repetitions'],
     'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches', 'Translation - 100% Matchs', 'Translation -  Repetitions']}
 
-csv_indices_joined = [[32], [16, 20, 24, 28], [4, 8, 12]]
-csv_indices_separate = [[32], [16, 20, 24, 28], [12], [4, 8]]
-csv_indices_weighted = [[4, 8], [12], [16], [20], [24], [28], [32]]
+# Strings to use for weighted words
+row_1 = [r'If check 100% match is No, delete values in Repeated and 100%']
+row_2 = ['Chargeable words per day (can be changed) :', 2000, '', '', '', '', '']
+row_3 = ['Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match', 'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words']
+current_cell = 'INDIRECT(ADDRESS(ROW(), COLUMN()))'
+translation_time = '=(SUM(OFFSET(' + current_cell + ', 0, -5, 1, 2))/100*25+OFFSET(' + current_cell + ', 0, -3)/100*60+OFFSET(' + current_cell + ', 0, -2)+OFFSET(' + current_cell + ', 0, -1))/B$2*8*4/5'
+proof_time = '=(SUM(OFFSET(' + current_cell + ', 0, -6, 1, 2))/100*25+OFFSET(' + current_cell + ', 0, -4)/100*60+OFFSET(' + current_cell + ', 0, -8)+OFFSET(' + current_cell + ', 0, -7)+OFFSET(' + current_cell + ', 0, -3)+OFFSET(' + current_cell + ', 0, -2))/B$2*8/5'
+total_time = '=SUM(OFFSET(' + current_cell + ', 0, -2, 1, 2))'
+weighted_words = '=OFFSET(' + current_cell + ', 0, -1)*B$2/8'
 
 
 def addup_unit(row, index_list):
@@ -82,12 +93,12 @@ def calc_sum(var_file, var_rep100, var_heading):
     quote_write.writerows(lines)
     quote_file.close()
 
-    print('\nSuccessfully created:\n' + quote_part_path + '\n' +
-          'Click [x] on the tk window and close the program.')
+    print('\n' + '-' * 70)
+    print('Successfully created:\n' + quote_part_path)
+    print('\nClick [x] on the tk window to close the program.')
 
 
 def calc_weighted(var_file):
-    print('started')
     analysis_path = var_file.get()
     dl = detect_delimiter(analysis_path)
     analysis_read = csv.reader(open(analysis_path, encoding='utf-16'), delimiter=dl)
@@ -97,13 +108,8 @@ def calc_weighted(var_file):
 
     csv_indices = csv_indices_weighted
     lines = []
-    lines.append([r'If check 100% match is No, delete values in Repeated and 100%'])
-    lines.append(['Chargeable words per day (can be changed) :', 2000, '', '', '', '', ''])
-    lines.append(['Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match', 'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words'])
-    translation_time = '=(SUM(OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -5, 1, 2))/100*25+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -3)/100*60+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -2)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -1))/B$2*8*4/5'
-    proof_time = '=(SUM(OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -6, 1, 2))/100*25+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -4)/100*60+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -8)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -7)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -3)+OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -2))/B$2*8/5'
-    total_time = '=SUM(OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -2, 1, 2))'
-    weighted_words = '=OFFSET(INDIRECT(ADDRESS(ROW(), COLUMN())), 0, -1)*B$2/8'
+    for i in [row_1, row_2, row_3]:
+        lines.append(i)
 
     for row in analysis_read:
         if len(row[0].rsplit('.', 1)) == 1:
@@ -119,8 +125,9 @@ def calc_weighted(var_file):
     quote_write.writerows(lines)
     weighted_file.close()
 
-    print('\nSuccessfully created:\n' + weighted_part_path + '\n' +
-          'Click [x] on the tk window and close the program.')
+    print('\n' + '-' * 70)
+    print('Successfully created:\n' + weighted_part_path)
+    print('\nPlease open it with Microsoft Excel.\nClick [x] on the tk window to close the program.')
 
 if __name__ == "__main__":
     import doctest
