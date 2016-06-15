@@ -84,6 +84,10 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
+### v1.4.3, June 15, 2016
+- Open the folder from inside the program
+- Make the code slightly less messy
+
 ### v1.4.1, June 14, 2016
 - * Correct the wrong equations
 

@@ -50,6 +50,9 @@ btn_quote.grid(columnspan=2, pady=5)
 btn_weighted = tkinter.Button(text='Calculate weighted words', state='disabled')
 btn_weighted.grid(columnspan=2, pady=5)
 
+btn_folder = tkinter.Button(text='Open folder', state='disabled')
+btn_folder.grid(columnspan=2, pady=5)
+
 
 def import_file(self):
     f_file = tkinter.filedialog.askopenfilename(**args_file)
@@ -72,6 +75,13 @@ def run_weighted(self):
 btn_weighted.bind('<ButtonRelease-1>', run_weighted)
 
 
+def run_folder(self):
+    if btn_folder['state'] == 'normal' or 'active':
+        ep_scripts.open_folder(var_file)
+
+btn_folder.bind('<ButtonRelease-1>', run_folder)
+
+
 def select_and_focus(self):
     self.widget.select()
     self.widget.focus()
@@ -89,11 +99,13 @@ def true_false(var, unknown, w):
         btn_quote['text'] = 'Generate table for quote!'
         btn_weighted['state'] = 'normal'
         btn_weighted['text'] = 'Calculate weighted words!'
+        btn_folder['state'] = 'normal'
+        btn_folder['text'] = 'Open folder!'
     else:
         btn_quote['state'] = 'disabled'
         btn_quote['text'] = 'Generate table for quote'
-        btn_weighted['state'] = 'disabled'
-        btn_weighted['text'] = 'Calculate weighted words'
+        btn_folder['state'] = 'disabled'
+        btn_folder['text'] = 'Open folder'
 
 var_file.trace('w', true_false)
 

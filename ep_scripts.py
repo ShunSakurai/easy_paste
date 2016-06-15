@@ -3,6 +3,7 @@ cd dropbox/codes/easy_paste
 py ep_scripts.py
 '''
 import csv
+import os
 
 csv_indices_joined = [[32], [16, 20, 24, 28], [4, 8, 12]]
 csv_indices_separate = [[32], [16, 20, 24, 28], [12], [4, 8]]
@@ -128,6 +129,13 @@ def calc_weighted(var_file):
     print('\n' + '-' * 70)
     print('Successfully created:\n' + weighted_part_path)
     print('\nPlease open it with Microsoft Excel.\nClick [x] on the tk window to close the program.')
+
+
+def open_folder(var_file):
+    analysis_path = var_file.get()
+    analysis_divided = analysis_path.rsplit('/', 1)
+    folder_full_path = analysis_divided[0]
+    os.startfile(folder_full_path)
 
 if __name__ == "__main__":
     import doctest

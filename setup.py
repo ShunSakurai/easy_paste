@@ -6,6 +6,7 @@ Libraries used:
 import tkinter
 import tkinter.filedialog
 import csv
+import os
 import doctest
 '''
 from distutils.core import setup
@@ -16,7 +17,7 @@ setup(
         'author': 'Shun Sakurai',
         'dest_base': 'Easy Paste',
         'script': 'easy_paste.py',
-        'version': '1.4.1',
+        'version': '1.4.3',
     }],
     options={'py2exe': {
         'bundle_files': 2,
