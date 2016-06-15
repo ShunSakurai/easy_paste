@@ -2,6 +2,9 @@
 cd dropbox/codes/easy_paste
 py -3.4 setup.py py2exe
 
+rmdir /s __pycache__
+rmdir /s dist
+
 Libraries used:
 import tkinter
 import tkinter.filedialog
@@ -17,7 +20,7 @@ setup(
         'author': 'Shun Sakurai',
         'dest_base': 'Easy Paste',
         'script': 'easy_paste.py',
-        'version': '1.4.3',
+        'version': '1.4.4',
     }],
     options={'py2exe': {
         'bundle_files': 2,

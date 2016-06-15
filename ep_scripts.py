@@ -12,16 +12,19 @@ csv_indices_weighted = [[4, 8], [12], [16], [20], [24], [28], [32]]
 # Strings to use for quotes
 headings_joined = {
     'short': ['New Words', 'Fuzzy Matches', 'Repetitions and 100% Matches'],
-    'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches', 'Translation -  Repetitions and 100% Matchs']}
+    'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches',
+             'Translation -  Repetitions and 100% Matchs']}
 
 headings_separate = {
     'short': ['New Words', 'Fuzzy Matches', '100% Matches', 'Repetitions'],
-    'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches', 'Translation - 100% Matchs', 'Translation -  Repetitions']}
+    'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches',
+             'Translation - 100% Matchs', 'Translation -  Repetitions']}
 
 # Strings to use for weighted words
 row_1 = [r'If check 100% match is No, delete values in Repeated and 100%']
 row_2 = ['Chargeable words per day (can be changed) :', 2000, '', '', '', '', '']
-row_3 = ['Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match', 'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words']
+row_3 = ['Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match',
+                 'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words']
 current_cell = 'INDIRECT(ADDRESS(ROW(), COLUMN()))'
 translation_time = '=(SUM(OFFSET(' + current_cell + ', 0, -5, 1, 2))/100*25+OFFSET(' + current_cell + ', 0, -3)/100*60+OFFSET(' + current_cell + ', 0, -2)+OFFSET(' + current_cell + ', 0, -1))/B$2*8*4/5'
 proof_time = '=(SUM(OFFSET(' + current_cell + ', 0, -6, 1, 2))/100*25+OFFSET(' + current_cell + ', 0, -4)/100*60+OFFSET(' + current_cell + ', 0, -8)+OFFSET(' + current_cell + ', 0, -7)+OFFSET(' + current_cell + ', 0, -3)+OFFSET(' + current_cell + ', 0, -2))/B$2*8/5'
@@ -52,7 +55,6 @@ def shorten_fname(file_name):
         fname = lan + file_name.rsplit('\\', 1)[1].strip('"')
         return fname
     elif '.' in file_name:
-        fname = file_name
         fname = file_name.rsplit('\\', 1)[1]
         return fname
     else:
