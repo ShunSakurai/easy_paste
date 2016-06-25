@@ -10,6 +10,8 @@ import tkinter
 import tkinter.filedialog
 import csv
 import os
+import subprocess
+import sys
 import doctest
 '''
 from distutils.core import setup
@@ -20,7 +22,7 @@ setup(
         'author': 'Shun Sakurai',
         'dest_base': 'Easy Paste',
         'script': 'easy_paste.py',
-        'version': '1.4.4',
+        'version': '1.4.5',
     }],
     options={'py2exe': {
         'bundle_files': 2,

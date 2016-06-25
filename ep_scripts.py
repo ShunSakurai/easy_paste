@@ -20,16 +20,25 @@ headings_separate = {
     'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches',
              'Translation - 100% Matchs', 'Translation -  Repetitions']}
 
-# Strings to use for weighted words
+# Strings and function to use for weighted words
 row_1 = [r'If check 100% match is No, delete values in Repeated and 100%']
 row_2 = ['Chargeable words per day (can be changed) :', 2000, '', '', '', '', '']
-row_3 = ['Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match',
-                 'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words']
-current_cell = 'INDIRECT(ADDRESS(ROW(), COLUMN()))'
-translation_time = ''.join(['=(SUM(OFFSET(', current_cell, ', 0, -5, 1, 2))/100*25+OFFSET(', current_cell, ', 0, -3)/100*60+OFFSET(', current_cell, ', 0, -2)+OFFSET(', current_cell, ', 0, -1))/B$2*8*4/5'])
-proof_time = ''.join(['=(SUM(OFFSET(', current_cell, ', 0, -6, 1, 2))/100*25+OFFSET(', current_cell, ', 0, -4)/100*60+OFFSET(', current_cell, ', 0, -8)+OFFSET(', current_cell, ', 0, -7)+OFFSET(', current_cell, ', 0, -3)+OFFSET(', current_cell, ', 0, -2))/B$2*8/5'])
-total_time = ''.join(['=SUM(OFFSET(', current_cell, ', 0, -2, 1, 2))'])
-weighted_words = ''.join(['=OFFSET(', current_cell, ', 0, -1)*B$2/8'])
+row_3 = [
+    'Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match',
+    'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words']
+c = 'ABCDEFGHIJKLM'
+
+
+def return_equations(r):
+    translation_time = ''.join([
+        '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
+        c[6], r, '+', c[7], r, ')/B$2*', r, '*4/5'])
+    proof_time = ''.join([
+        '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
+        c[1], r, '+', c[2], r, '+', c[6], r, '+', c[7], r, ')/B$2*', r, '/5'])
+    total_time = ''.join(['=SUM(', c[8], r, ':', c[9], r, ')'])
+    weighted_words = ''.join(['=', c[10], r, '*(B$2/', r, ')'])
+    return [translation_time, proof_time, total_time, weighted_words]
 
 
 def addup_unit(row, index_list):
@@ -43,6 +52,11 @@ def detect_delimiter(fn):
     f = open(fn, encoding='utf-16')
     delimiter = f.read()[0]
     return delimiter
+
+
+def print_success(path):
+    print('\n', '-' * 70, '\nSuccessfully created:\n', path)
+    print('\nClick [x] on the tk window to close the program.')
 
 
 def shorten_fname(file_name):
@@ -98,17 +112,20 @@ def calc_quote(var_file, var_rep100, var_heading):
     quote_write.writerows(lines)
     quote_file.close()
 
-    print('\n', '-' * 70, '\nSuccessfully created:\n', part_path)
-    print('\nClick [x] on the tk window to close the program.')
+    print_success(part_path)
 
 
 def calc_weighted(var_file):
     analysis_path = var_file.get()
     dl = detect_delimiter(analysis_path)
-    analysis_read = csv.reader(open(analysis_path, encoding='utf-16'), delimiter=dl)
+    analysis_read = csv.reader(
+        open(analysis_path, encoding='utf-16'), delimiter=dl)
     analysis_divided = analysis_path.rsplit('/', 2)
-    full_path = ''.join([analysis_divided[0], '/', analysis_divided[1], '/weighted_', analysis_divided[2]])
-    part_path = ''.join([analysis_divided[1], '/weighted_', analysis_divided[2]])
+    full_path = ''.join([
+        analysis_divided[0], '/', analysis_divided[1],
+        '/weighted_', analysis_divided[2]])
+    part_path = ''.join([
+        analysis_divided[1], '/weighted_', analysis_divided[2]])
 
     csv_indices = csv_indices_weighted
 
@@ -117,10 +134,13 @@ def calc_weighted(var_file):
         lines.append(i)
     next(analysis_read)
     next(analysis_read)
+    row_num = 3
     for row in analysis_read:
+        row_num += 1
+        r = str(row_num)
         fname = shorten_fname(row[0])
         words = [addup_unit(row, csv_indices[i]) for i in range(len(csv_indices))]
-        equations = [translation_time, proof_time, total_time, weighted_words]
+        equations = return_equations(r)
         lines.append([fname] + words + equations)
 
     weighted_file = open(full_path, 'w', encoding='utf-8')
@@ -128,8 +148,7 @@ def calc_weighted(var_file):
     quote_write.writerows(lines)
     weighted_file.close()
 
-    print('\n', '-' * 70, '\nSuccessfully created:\n', part_path)
-    print('\nPlease open it with Microsoft Excel.\nClick [x] on the tk window to close the program.')
+    print_success(part_path)
 
 
 def open_folder(var_file):

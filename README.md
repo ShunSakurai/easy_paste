@@ -23,7 +23,7 @@ Installer is now under development. In the meantime, please follow the steps bel
 - (Optional) Move the folder to C:\Program Files
 - (Optional) Create a shortcut of the .exe file and add it to your Desktop, to your tools folder, or to C:\ProgramData\Microsoft\Windows\Start Menu\Programs (this way you can run the program from Windows Start Menu)
 
-When you use an updated version, you only have to copy and overwrite the files and folders with newer dates.
+If you already have an old version installed, you only have to copy and overwrite the files and folders with newer dates.
 This program needs to be **kept in the folder** to work. It does not work by itself.
 
 If you have the Python environment installed, you can run the source code with `python(3) easy_paste.py` or `import easy_paste` even on Mac and on any OS.
@@ -64,7 +64,7 @@ The basic procedure is the same as in 'Generating a table'
 
 - Click "weighted words!"
 - A CSV file starting with "weighted_" is generated in the same folder as the original CSV file
-- Open the file with Microsoft Excel
+- Open the exported CSV file
 - You can change the words per day and the result updates accordingly
 
 ![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet.png)
@@ -79,7 +79,6 @@ The basic procedure is the same as in 'Generating a table'
 
 ### Maybe later
 - Save last used settings
-- Make the weighted words compatible with non-Excel programs
 - Open the CSV files from inside the program
 
 ### Features not coming
@@ -90,6 +89,9 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
+
+### Newest version
+- Make the weighted words compatible with non-Excel programs
 
 ### v1.4.4, June 15, 2016
 - * Handle file names without a period '.'
@@ -102,7 +104,7 @@ For detailed history, please go to [Releases](https://github.com/ShunSakurai/eas
 ### v1.4.1, June 14, 2016
 - * Correct the wrong equations
 
-### v1.4,0, June 14, 2016
+### v1.4.0, June 14, 2016
 - Calculate the weighted words and translation and proofreading time
 
 ### v1.3.2, May 18, 2016
