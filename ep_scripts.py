@@ -4,6 +4,8 @@ py ep_scripts.py
 '''
 import csv
 import os
+import subprocess
+import sys
 
 csv_indices_joined = [[32], [16, 20, 24, 28], [4, 8, 12]]
 csv_indices_separate = [[32], [16, 20, 24, 28], [12], [4, 8]]
@@ -155,7 +157,10 @@ def open_folder(var_file):
     analysis_path = var_file.get()
     analysis_divided = analysis_path.rsplit('/', 1)
     folder_full_path = analysis_divided[0]
-    os.startfile(folder_full_path)
+    if sys.platform.startswith('win'):
+        os.startfile(folder_full_path)
+    else:
+        subprocess.call(['open', folder_full_path])
 
 if __name__ == "__main__":
     import doctest

@@ -91,6 +91,7 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
 ### Newest version
+- Open the folder from inside the program on non-Windows platform
 - Make the weighted words compatible with non-Excel programs
 
 ### v1.4.4, June 15, 2016

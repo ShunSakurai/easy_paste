@@ -22,7 +22,7 @@ setup(
         'author': 'Shun Sakurai',
         'dest_base': 'Easy Paste',
         'script': 'easy_paste.py',
-        'version': '1.4.5',
+        'version': '1.4.6',
     }],
     options={'py2exe': {
         'bundle_files': 2,
