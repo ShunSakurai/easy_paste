@@ -26,21 +26,21 @@ headings_separate = {
 row_1 = [r'If check 100% match is No, delete values in Repeated and 100%']
 row_2 = ['Chargeable words per day (can be changed) :', 2000, '', '', '', '', '']
 row_3 = [
-    'Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match',
-    'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words']
+    'Item', 'Wds', 'TrHrs', 'PrHrs', 'MaxHrs', 'DueDate',
+    'Reps', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'New']
 c = 'ABCDEFGHIJKLM'
 
 
 def return_equations(r):
     translation_time = ''.join([
-        '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
-        c[6], r, '+', c[7], r, ')/B$2*', r, '*4/5'])
+        '=(((', c[8], r, '+', c[9], r, ')*0.25)+(', c[10], r, '*0.60)+',
+        c[11], r, '+', c[12], r, ')/', c[1], '$2*8*4/5'])
     proof_time = ''.join([
-        '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
-        c[1], r, '+', c[2], r, '+', c[6], r, '+', c[7], r, ')/B$2*', r, '/5'])
-    total_time = ''.join(['=SUM(', c[8], r, ':', c[9], r, ')'])
-    weighted_words = ''.join(['=', c[10], r, '*(B$2/', r, ')'])
-    return [translation_time, proof_time, total_time, weighted_words]
+        '=(((', c[8], r, '+', c[9], r, ')*0.25)+(', c[10], r, '*0.60)+',
+        c[6], r, '+', c[7], r, '+', c[11], r, '+', c[12], r, ')/', c[1], '$2*8/5'])
+    total_time = ''.join(['=SUM(', c[2], r, ':', c[3], r, ')'])
+    weighted_words = ''.join(['=', c[4], r, '*(', c[1], '$2/8)'])
+    return [weighted_words, translation_time, proof_time, total_time]
 
 
 def addup_unit(row, index_list):
@@ -102,10 +102,14 @@ def quote_content(analysis_read, var_rep100, var_heading):
 def calc_quote(var_file, var_rep100, var_heading):
     analysis_path = var_file.get()
     dl = detect_delimiter(analysis_path)
-    analysis_read = csv.reader(open(analysis_path, encoding='utf-16'), delimiter=dl)
+    analysis_read = csv.reader(
+        open(analysis_path, encoding='utf-16'), delimiter=dl)
     analysis_divided = analysis_path.rsplit('/', 2)
-    full_path = ''.join([analysis_divided[0], '/', analysis_divided[1], '/to_paste(utf-8, comma)', analysis_divided[2]])
-    part_path = ''.join([analysis_divided[1], '/to_paste(utf-8, comma)', analysis_divided[2]])
+    full_path = ''.join([
+        analysis_divided[0], '/', analysis_divided[1],
+        '/to_paste(utf-8, comma)', analysis_divided[2]])
+    part_path = ''.join([
+        analysis_divided[1], '/to_paste(utf-8, comma)', analysis_divided[2]])
 
     lines = quote_content(analysis_read, var_rep100, var_heading)
 
@@ -143,7 +147,7 @@ def calc_weighted(var_file):
         fname = shorten_fname(row[0])
         words = [addup_unit(row, csv_indices[i]) for i in range(len(csv_indices))]
         equations = return_equations(r)
-        lines.append([fname] + words + equations)
+        lines.append([fname] + equations + [''] + words)
 
     weighted_file = open(full_path, 'w', encoding='utf-8')
     quote_write = csv.writer(weighted_file, delimiter=',', lineterminator='\n')

@@ -90,7 +90,8 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### Newest version
+### v1.4.7, June 25, 2016
+- Change the weighted word and time format
 - Open the folder from inside the program on non-Windows platform
 - Make the weighted words compatible with non-Excel programs
 
