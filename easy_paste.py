@@ -63,21 +63,22 @@ btn_file.bind('<ButtonRelease-1>', import_file)
 
 def run_quote(self):
     if btn_quote['state'] == 'normal' or 'active':
-        ep_scripts.calc_quote(var_file, var_rep100, var_heading)
+        ep_scripts.calc_quote(
+            var_file.get(), var_rep100.get(), var_heading.get())
 
 btn_quote.bind('<ButtonRelease-1>', run_quote)
 
 
 def run_weighted(self):
     if btn_quote['state'] == 'normal' or 'active':
-        ep_scripts.calc_weighted(var_file)
+        ep_scripts.calc_weighted(var_file.get())
 
 btn_weighted.bind('<ButtonRelease-1>', run_weighted)
 
 
 def run_folder(self):
     if btn_folder['state'] == 'normal' or 'active':
-        ep_scripts.open_folder(var_file)
+        ep_scripts.open_folder(var_file.get())
 
 btn_folder.bind('<ButtonRelease-1>', run_folder)
 
