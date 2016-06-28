@@ -56,7 +56,8 @@ btn_folder.grid(columnspan=2, pady=5)
 
 def import_file(self):
     f_file = tkinter.filedialog.askopenfilename(**args_file)
-    var_file.set(f_file)
+    if f_file:
+        var_file.set(f_file)
 
 btn_file.bind('<ButtonRelease-1>', import_file)
 

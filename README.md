@@ -98,6 +98,7 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
 ### Newest version
+- Keep the entry fields uncleared when open file dialog is canceled
 - Support other memoQ analysis formats
 
 ### v1.4.7, June 25, 2016
