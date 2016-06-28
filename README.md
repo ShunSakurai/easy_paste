@@ -31,16 +31,23 @@ If you have the Python environment installed, you can run the source code with `
 ## Usage
 
 ### memoQ analysis file types
-Please select the following option when exporting the statistics from memoQ
+Please select one of the following options when exporting the statistics from memoQ
 
-- CSV (Per-file, Trados-compatible)
+From Documents tab > Statistics:
+- CSV (Per-file, Trados-compatible) This format is recommended
+- CSV (Per-file, all information)
 
 ![Format](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_format.png)
+
+From Project home > Overview > Reports > Analysis:
+- CSV file exported by clicking 'export'
+
+![Format](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_format2.png)
 
 ### Generating a table
 
 - You can open the program by double-clicking Easy Paste.exe or its alias.
-- Choose a Trados-compatible CSV file exported from memoQ's statistics
+- Choose a CSV file exported from memoQ's statistics in above mentioned format
 - Click "Generate table for quote!"
 - A CSV file starting with "to_paste" is generated in the same folder as the original CSV file
 
@@ -89,6 +96,9 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
+
+### Newest version
+- Support other memoQ analysis formats
 
 ### v1.4.7, June 25, 2016
 - Change the weighted word and time format

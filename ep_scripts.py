@@ -7,9 +7,14 @@ import os
 import subprocess
 import sys
 
-csv_indices_joined = [[32], [16, 20, 24, 28], [4, 8, 12]]
-csv_indices_separate = [[32], [16, 20, 24, 28], [12], [4, 8]]
-csv_indices_weighted = [[4, 8], [12], [16], [20], [24], [28], [32]]
+encodings = ['utf-16', 'utf-8']
+
+csv_indices_trados = [4, 8, 12, 16, 20, 24, 28, 32]
+csv_indices_all = [11, 19, 27, 35, 43, 51, 59, 67]
+
+slice_group_joined = [[7, 8], [3, 7], [0, 3]]
+slice_group_separate = [[7, 8], [3, 7], [2, 3], [0, 2]]
+slice_group_weighted = [[0, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8]]
 
 # Strings to use for quotes
 headings_joined = {
@@ -39,10 +44,22 @@ def addup_unit(row, index_list):
     return unit_sum
 
 
-def detect_delimiter(fn):
-    f = open(fn, encoding='utf-16')
-    delimiter = f.read()[0]
-    return delimiter
+def detect_file_type_and_delimiter(fn):
+    delimiter = ''
+    for enc in encodings:
+        try:
+            f = open(fn, encoding=enc)
+            content = f.readline()
+            delimiter = content[0]
+            if 'Context TM' in content:
+                csv_indices = csv_indices_trados
+            elif 'X-translated' in content:
+                csv_indices = csv_indices_all
+            return csv_indices, enc, delimiter
+        except:
+            pass
+    if not delimiter:
+        print('File type and delimiter could not be identified.')
 
 
 def get_paths_to_write(str_file_path, prefix):
@@ -88,6 +105,13 @@ def shorten_fname(file_name):
         return fname
 
 
+def slice_indices(csv_indices, slice_group):
+    csv_indices_grouped = []
+    for group in slice_group:
+        csv_indices_grouped.append(csv_indices[group[0]:group[1]])
+    return csv_indices_grouped
+
+
 def write_lines_to_full_path(full_path, lines):
     result_file = open(full_path, 'w', encoding='utf-8')
     result_writer = csv.writer(result_file, delimiter=',', lineterminator='\n')
@@ -96,11 +120,7 @@ def write_lines_to_full_path(full_path, lines):
 
 
 # Main functions
-def provide_quote_lines(analysis_read, str_rep100, str_heading):
-    if str_rep100 == 'joined':
-        csv_indices, headings = csv_indices_joined, headings_joined
-    if str_rep100 == 'separate':
-        csv_indices, headings = csv_indices_separate, headings_separate
+def provide_quote_lines(analysis_read, csv_indices, headings):
     lines = []
     next(analysis_read)
     next(analysis_read)
@@ -108,15 +128,14 @@ def provide_quote_lines(analysis_read, str_rep100, str_heading):
         fname = shorten_fname(row[0])
         lines.append([fname])
         for i in range(len(csv_indices)):
-            label_sum = headings[str_heading][i]
+            label_sum = headings[i]
             unit_sum = addup_unit(row, csv_indices[i])
             lines.append([label_sum, unit_sum])
         lines.append(['\n'])
     return lines
 
 
-def provide_weighted_lines(analysis_read):
-    csv_indices = csv_indices_weighted
+def provide_weighted_lines(analysis_read, csv_indices):
     lines = []
     for i in [row_1, row_2, row_3]:
         lines.append(i)
@@ -134,23 +153,30 @@ def provide_weighted_lines(analysis_read):
 
 
 def calc_quote(str_file_path, str_rep100, str_heading):
-    dl = detect_delimiter(str_file_path)
+    indices, enc, dl = detect_file_type_and_delimiter(str_file_path)
+    if str_rep100 == 'joined':
+        csv_indices = slice_indices(indices, slice_group_joined)
+        headings = headings_joined[str_heading]
+    if str_rep100 == 'separate':
+        csv_indices = slice_indices(indices, slice_group_separate)
+        headings = headings_separate[str_heading]
     analysis_read = csv.reader(
-        open(str_file_path, encoding='utf-16'), delimiter=dl)
+        open(str_file_path, encoding=enc), delimiter=dl)
     full_path, part_path = get_paths_to_write(str_file_path, '/to_paste(utf-8, comma)')
 
-    lines = provide_quote_lines(analysis_read, str_rep100, str_heading)
+    lines = provide_quote_lines(analysis_read, csv_indices, headings)
     write_lines_to_full_path(full_path, lines)
     print_success(part_path)
 
 
 def calc_weighted(str_file_path):
-    dl = detect_delimiter(str_file_path)
+    indices, enc, dl = detect_file_type_and_delimiter(str_file_path)
+    csv_indices = slice_indices(indices, slice_group_weighted)
     analysis_read = csv.reader(
-        open(str_file_path, encoding='utf-16'), delimiter=dl)
+        open(str_file_path, encoding=enc), delimiter=dl)
     full_path, part_path = get_paths_to_write(str_file_path, '/weighted_')
 
-    lines = provide_weighted_lines(analysis_read)
+    lines = provide_weighted_lines(analysis_read, csv_indices)
     write_lines_to_full_path(full_path, lines)
     print_success(part_path)
 
