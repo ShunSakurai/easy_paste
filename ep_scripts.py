@@ -30,9 +30,12 @@ headings_separate = {
 # Strings and function to use for weighted words
 row_1 = [r'If check 100% match is No, delete values in Repeated and 100%']
 row_2 = ['Chargeable words per day (can be changed) :', 2000, '', '', '', '', '']
-row_3 = [
+row_3_time = [
     'Item', 'Wds', 'TrHrs', 'PrHrs', 'MaxHrs', 'DueDate',
     'Reps', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'New']
+row_3_words = [
+    'Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match',
+    'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words']
 c = 'ABCDEFGHIJKLM'
 
 
@@ -76,7 +79,7 @@ def print_success(path):
     print('\nClick [x] on the tk window to close the program.')
 
 
-def return_weighted_equations(r):
+def return_weighted_equations_time(r):
     translation_time = ''.join([
         '=(((', c[8], r, '+', c[9], r, ')*0.25)+(', c[10], r, '*0.60)+',
         c[11], r, '+', c[12], r, ')/', c[1], '$2*8*4/5'])
@@ -86,6 +89,18 @@ def return_weighted_equations(r):
     total_time = ''.join(['=SUM(', c[2], r, ':', c[3], r, ')'])
     weighted_words = ''.join(['=', c[4], r, '*(', c[1], '$2/8)'])
     return [weighted_words, translation_time, proof_time, total_time]
+
+
+def return_weighted_equations_words(r):
+    translation_time = ''.join([
+        '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
+        c[6], r, '+', c[7], r, ')/B$2*', r, '*4/5'])
+    proof_time = ''.join([
+        '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
+        c[1], r, '+', c[2], r, '+', c[6], r, '+', c[7], r, ')/B$2*', r, '/5'])
+    total_time = ''.join(['=SUM(', c[8], r, ':', c[9], r, ')'])
+    weighted_words = ''.join(['=', c[10], r, '*(B$2/', r, ')'])
+    return [translation_time, proof_time, total_time, weighted_words]
 
 
 def shorten_fname(file_name):
@@ -135,7 +150,11 @@ def provide_quote_lines(analysis_read, csv_indices, headings):
     return lines
 
 
-def provide_weighted_lines(analysis_read, csv_indices):
+def provide_weighted_lines(analysis_read, csv_indices, str_wwt_style):
+    if str_wwt_style == 'time_first':
+        row_3, func_equation = row_3_time, return_weighted_equations_time
+    elif str_wwt_style == 'words_first':
+        row_3, func_equation = row_3_words, return_weighted_equations_words
     lines = []
     for i in [row_1, row_2, row_3]:
         lines.append(i)
@@ -147,8 +166,11 @@ def provide_weighted_lines(analysis_read, csv_indices):
         r = str(row_num)
         fname = shorten_fname(row[0])
         words = [addup_unit(row, csv_indices[i]) for i in range(len(csv_indices))]
-        equations = return_weighted_equations(r)
-        lines.append([fname] + equations + [''] + words)
+        equations = func_equation(r)
+        if str_wwt_style == 'time_first':
+                lines.append([fname] + equations + [''] + words)
+        elif str_wwt_style == 'words_first':
+                lines.append([fname] + words + equations)
     return lines
 
 
@@ -157,7 +179,7 @@ def calc_quote(str_file_path, str_rep100, str_heading):
     if str_rep100 == 'joined':
         csv_indices = slice_indices(indices, slice_group_joined)
         headings = headings_joined[str_heading]
-    if str_rep100 == 'separate':
+    elif str_rep100 == 'separate':
         csv_indices = slice_indices(indices, slice_group_separate)
         headings = headings_separate[str_heading]
     analysis_read = csv.reader(
@@ -169,14 +191,14 @@ def calc_quote(str_file_path, str_rep100, str_heading):
     print_success(part_path)
 
 
-def calc_weighted(str_file_path):
+def calc_weighted(str_file_path, str_wwt_style):
     indices, enc, dl = detect_file_type_and_delimiter(str_file_path)
     csv_indices = slice_indices(indices, slice_group_weighted)
     analysis_read = csv.reader(
         open(str_file_path, encoding=enc), delimiter=dl)
     full_path, part_path = get_paths_to_write(str_file_path, '/weighted_')
 
-    lines = provide_weighted_lines(analysis_read, csv_indices)
+    lines = provide_weighted_lines(analysis_read, csv_indices, str_wwt_style)
     write_lines_to_full_path(full_path, lines)
     print_success(part_path)
 

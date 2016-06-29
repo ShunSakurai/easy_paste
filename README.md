@@ -73,8 +73,11 @@ The basic procedure is the same as in 'Generating a table'
 - A CSV file starting with "weighted_" is generated in the same folder as the original CSV file
 - Open the exported CSV file
 - You can change the words per day and the result updates accordingly
+- Beware that the time and weighted words are not rounded. Round the values if necessary using Excel's commands, etc.
+- You can choose the format from the following two formats
 
 ![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet.png)
+![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet2.png)
 
 ## Features to come
 ### Working on
@@ -90,6 +93,8 @@ The basic procedure is the same as in 'Generating a table'
 
 ### Features not coming
 - Support HTML format to count characters. It turned out we can use word counts for Asian characters
+- Open multiple analysis CSV files at once. The equations will become too complex
+- Append the results at the bottom instead of overwriting the existing file. The equations will become too complex
 
 Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4HdnKpFhvDDKXHfGUw0ccrb27xIIYgXyXV0-29199191293549) if you need any of the features as soon as possible.
 
@@ -97,7 +102,8 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### Newest version
+### v1.4.10, June 29, 2016
+- Support two weighted words and time formats
 - Keep the entry fields uncleared when open file dialog is canceled
 - Support other memoQ analysis formats
 
