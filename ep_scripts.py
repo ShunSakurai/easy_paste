@@ -7,7 +7,7 @@ import os
 import subprocess
 import sys
 
-encodings = ['utf-16', 'utf-8']
+encodings = ['utf-16', 'utf-8-sig']
 
 csv_indices_trados = [4, 8, 12, 16, 20, 24, 28, 32]
 csv_indices_all = [11, 19, 27, 35, 43, 51, 59, 67]
@@ -121,6 +121,10 @@ def shorten_fname(file_name):
 
 
 def slice_indices(csv_indices, slice_group):
+    r'''
+    >>> slice_indices([11, 19, 27, 35, 43, 51, 59, 67], [[7, 8], [3, 7], [2, 3], [0, 2]])
+    [[67], [35, 43, 51, 59], [27], [11, 19]]
+    '''
     csv_indices_grouped = []
     for group in slice_group:
         csv_indices_grouped.append(csv_indices[group[0]:group[1]])

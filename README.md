@@ -102,6 +102,9 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
+### v1.4.11, July 1, 2016
+- * Resolve an issue where decoding UTF-8 text with BOM fails
+
 ### v1.4.10, June 29, 2016
 - Support two weighted words and time formats
 - Keep the entry fields uncleared when open file dialog is canceled
