@@ -140,17 +140,36 @@ def write_lines_to_full_path(full_path, lines):
 
 # Main functions
 def provide_quote_lines(analysis_read, csv_indices, headings):
-    lines = []
+    num_items = len(csv_indices)
+    list_files = []
+    list_combined = []
     next(analysis_read)
     next(analysis_read)
     for row in analysis_read:
+        list_file = []
+        # list_file = [fname, new, fuzzy, 100 (and) rep]
         fname = shorten_fname(row[0])
-        lines.append([fname])
-        for i in range(len(csv_indices)):
-            label_sum = headings[i]
+        list_file.append(fname)
+        for i in range(num_items):
             unit_sum = addup_unit(row, csv_indices[i])
-            lines.append([label_sum, unit_sum])
-        lines.append(['\n'])
+            list_file.append(unit_sum)
+        list_files.append(list_file)
+
+        if list_file[0].startswith('['):
+            lan = list_file[0][1:list_file[0].find(']')]
+        # list_combined[i] = [lan, new, fuzzy, 100 (and) rep]
+        if list_combined and list_combined[-1][0] == lan:
+            for i in range(num_items):
+                list_combined[-1][i + 1] += list_file[i + 1]
+        else:
+            list_combined.append([lan] + list_file[1:])
+
+    lines = []
+    for list_file in list_files + list_combined:
+        lines.append([list_file[0]])
+        for i in range(num_items):
+            lines.append([headings[i], list_file[i + 1]])
+        lines.append([''])
     return lines
 
 
@@ -164,10 +183,10 @@ def provide_weighted_lines(analysis_read, csv_indices, str_wwt_style):
         lines.append(i)
     next(analysis_read)
     next(analysis_read)
-    row_num = 3
+    num_row = 3
     for row in analysis_read:
-        row_num += 1
-        r = str(row_num)
+        num_row += 1
+        r = str(num_row)
         fname = shorten_fname(row[0])
         words = [addup_unit(row, csv_indices[i]) for i in range(len(csv_indices))]
         equations = func_equation(r)
