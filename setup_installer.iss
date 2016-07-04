@@ -12,12 +12,12 @@ AppName=Easy Paste
 AppVersion={#ProgramVersion}
 AppVerName=Easy Paste v.{#ProgramVersion}
 AppPublisher=Shun Sakurai
-AppPublisherURL=vhttps://github.com/ShunSakurai/easy-paste
-AppSupportURL=vhttps://github.com/ShunSakurai/easy-paste
-AppUpdatesURL=vhttps://github.com/ShunSakurai/easy-paste
+AppPublisherURL=https://github.com/ShunSakurai/easy_paste
+AppSupportURL=https://github.com/ShunSakurai/easy_paste
+AppUpdatesURL=https://github.com/ShunSakurai/easy_paste
 DefaultDirName={pf}\Easy Paste
 DefaultGroupName=Easy Paste
-;InfoAfterFile=Z:\Users\sakuraishun\Dropbox\Codes\easy_paste\README.md
+;InfoAfterFile=C:\Users\sakuraishun\Dropbox\Codes\easy_paste\README.md
 OutputBaseFilename=easy_paste_installer_{#ProgramVersion}
 Compression=lzma
 SolidCompression=yes
@@ -30,11 +30,11 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "Z:\Users\sakuraishun\Dropbox\Codes\easy_paste\dist\Easy Paste.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\Users\sakuraishun\Dropbox\Codes\easy_paste\dist\library.zip"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\Users\sakuraishun\Dropbox\Codes\easy_paste\dist\python34.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\Users\sakuraishun\Dropbox\Codes\easy_paste\dist\tcl86t.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\Users\sakuraishun\Dropbox\Codes\easy_paste\dist\tk86t.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\sakuraishun\Dropbox\Codes\easy_paste\dist\Easy Paste.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\sakuraishun\Dropbox\Codes\easy_paste\dist\library.zip"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\sakuraishun\Dropbox\Codes\easy_paste\dist\python34.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\sakuraishun\Dropbox\Codes\easy_paste\dist\tcl86t.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\sakuraishun\Dropbox\Codes\easy_paste\dist\tk86t.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\sakuraishun\Dropbox\Codes\easy_paste\dist\tcl\*"; DestDir: "{app}\tcl"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
