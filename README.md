@@ -11,19 +11,15 @@ You don't have to manually add up the number of words for creating quotes anymor
 You can also calculate the weighted words and the translation and proofreading time for the files. memoQ now [tells us the weighted words](https://www.memoq.com/memoq-build-june), but this tool is still useful in that it provides the estimated time.
 
 This program is coded in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
+The icon was created with [アイコン ウィザード](http://freewareplace.web.fc2.com/) and the installer is created with [Inno Setup](http://www.jrsoftware.org/isdl.php).
 
 Japanese README will also be available upon request.
 
 ## Installation
 This tool is currently only available for Windows at [Releases](https://github.com/ShunSakurai/easy_paste/releases).
-Installer is now under development. In the meantime, please follow the steps below:
 
-- Download dist.zip and decompress it
-- Rename the folder to "easy_paste" or any name you like
-- (Optional) Move the folder to C:\Program Files
-- (Optional) Create a shortcut of the .exe file and add it to your Desktop, to your tools folder, or to C:\ProgramData\Microsoft\Windows\Start Menu\Programs (this way you can run the program from Windows Start Menu)
+All you have to do is download and run the installer.
 
-If you already have an old version installed, you only have to copy and overwrite the files and folders with newer dates.
 This program needs to be **kept in the folder** to work. It does not work by itself.
 
 If you have the Python environment installed, you can run the source code with `python(3) easy_paste.py` or `import easy_paste` even on Mac and on any OS.
@@ -82,8 +78,6 @@ The basic procedure is the same as in 'Generating a table'
 ## Features to come
 ### Working on
 - Make the code more [readable](http://www.amazon.com/dp/0596802293)
-- Prepare the installer
-- Prepare the icon
 - Make the "Open files" dialog more useful
 - Create your own heading formats
 
@@ -101,6 +95,10 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 ## History
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
+
+### v1.5.2, July 4, 2016
+- Create the installer
+- Create the icon
 
 ### v1.5.0, July 2, 2016
 - Sum up the word counts of the same language
