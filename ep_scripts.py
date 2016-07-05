@@ -40,6 +40,16 @@ c = 'ABCDEFGHIJKLM'
 
 
 # Utility functions
+def add_num_to_md_list(md_list, num):
+    r'''
+    >>> add_num_to_md_list([[67], [35, 43, 51, 59], [27], [11, 19]], 1)
+    [[68], [36, 44, 52, 60], [28], [12, 20]]
+    '''
+    for i in range(len(md_list)):
+        md_list[i] = [j + 1 for j in md_list[i]]
+    return md_list
+
+
 def addup_unit(row, index_list):
     unit_sum = 0
     for i in index_list:
@@ -47,15 +57,21 @@ def addup_unit(row, index_list):
     return unit_sum
 
 
-def detect_file_type_and_delimiter(fn):
+def detect_file_type_and_delimiter(str_unit, fn):
     delimiter = ''
     for enc in encodings:
         try:
             f = open(fn, encoding=enc)
             content = f.readline()
             delimiter = content[0]
-            if 'Context TM' in content:
+            if 'Context TM' in content and str_unit == 'word':
                 csv_indices = csv_indices_trados
+            elif 'Context TM' in content and str_unit == 'char':
+                print(
+                    '-' * 70,
+                    '\nThe Trados Compatible CSV doesn\'t support Characters.',
+                    '\nPlease use another format.\n')
+                return
             elif 'X-translated' in content:
                 csv_indices = csv_indices_all
             return csv_indices, enc, delimiter
@@ -75,7 +91,7 @@ def get_paths_to_write(str_file_path, prefix):
 
 
 def print_success(path):
-    print('\n', '-' * 70, '\nSuccessfully created:\n', path)
+    print('-' * 70, '\nSuccessfully created:\n', path)
     print('\nClick [x] on the tk window to close the program.')
 
 
@@ -197,14 +213,16 @@ def provide_weighted_lines(analysis_read, csv_indices, str_wwt_style):
     return lines
 
 
-def calc_quote(str_file_path, str_rep100, str_heading):
-    indices, enc, dl = detect_file_type_and_delimiter(str_file_path)
+def calc_quote(str_unit, str_file_path, str_rep100, str_heading):
+    indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
     if str_rep100 == 'joined':
         csv_indices = slice_indices(indices, slice_group_joined)
         headings = headings_joined[str_heading]
     elif str_rep100 == 'separate':
         csv_indices = slice_indices(indices, slice_group_separate)
         headings = headings_separate[str_heading]
+    if str_unit == 'char':
+        csv_indices = add_num_to_md_list(csv_indices, 1)
     analysis_read = csv.reader(
         open(str_file_path, encoding=enc), delimiter=dl)
     full_path, part_path = get_paths_to_write(str_file_path, '/to_paste(utf-8, comma)')
@@ -214,9 +232,11 @@ def calc_quote(str_file_path, str_rep100, str_heading):
     print_success(part_path)
 
 
-def calc_weighted(str_file_path, str_wwt_style):
-    indices, enc, dl = detect_file_type_and_delimiter(str_file_path)
+def calc_weighted(str_unit, str_file_path, str_wwt_style):
+    indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
     csv_indices = slice_indices(indices, slice_group_weighted)
+    if str_unit == 'char':
+        csv_indices = add_num_to_md_list(csv_indices, 1)
     analysis_read = csv.reader(
         open(str_file_path, encoding=enc), delimiter=dl)
     full_path, part_path = get_paths_to_write(str_file_path, '/weighted_')

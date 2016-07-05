@@ -17,6 +17,18 @@ btn_file = tkinter.Button(text='Import Analysis')
 var_file = tkinter.StringVar(tk_F)
 btn_file.grid(columnspan=2, pady=5)
 
+lable_unit = tkinter.Label(text='Unit')
+lable_unit.grid(sticky='w', padx=10)
+
+units = [('Word', 'word'), ('Character', 'char')]
+var_unit = tkinter.StringVar()
+var_unit.set('word')
+rbs_unit = []
+for label, unit in units:
+    rb_unit = tkinter.Radiobutton(text=label, variable=var_unit, value=unit)
+    rb_unit.grid(row=2, column=units.index((label, unit)), sticky='w', padx=5)
+    rbs_unit.append(rb_unit)
+
 ent_file = tkinter.Entry(width=40, textvariable=var_file)
 ent_file.grid(columnspan=2, pady=5)
 
@@ -29,7 +41,7 @@ var_rep100.set('joined')
 rbs_rep100 = []
 for label, rep100 in rep100s:
     rb_rep100 = tkinter.Radiobutton(text=label, variable=var_rep100, value=rep100)
-    rb_rep100.grid(row=3, column=rep100s.index((label, rep100)), sticky='w', padx=5)
+    rb_rep100.grid(row=5, column=rep100s.index((label, rep100)), sticky='w', padx=5)
     rbs_rep100.append(rb_rep100)
 
 lable_heading = tkinter.Label(text='Headings')
@@ -41,7 +53,7 @@ var_heading.set('short')
 rbs_heading = []
 for label, heading in headings:
     rb_heading = tkinter.Radiobutton(text=label, variable=var_heading, value=heading)
-    rb_heading.grid(row=5, column=headings.index((label, heading)), sticky='w', padx=5)
+    rb_heading.grid(row=7, column=headings.index((label, heading)), sticky='w', padx=5)
     rbs_heading.append(rb_heading)
 
 btn_quote = tkinter.Button(text='Generate table for quote', state='disabled')
@@ -58,7 +70,7 @@ var_wwt_style.set('time_first')
 rbs_wwt_style = []
 for label, wwt_style in wwt_styles:
     rb_wwt_style = tkinter.Radiobutton(text=label, variable=var_wwt_style, value=wwt_style)
-    rb_wwt_style.grid(row=8, column=wwt_styles.index((label, wwt_style)), sticky='w', padx=5)
+    rb_wwt_style.grid(row=10, column=wwt_styles.index((label, wwt_style)), sticky='w', padx=5)
     rbs_wwt_style.append(rb_wwt_style)
 
 btn_weighted = tkinter.Button(text='Calculate weighted words', state='disabled')
@@ -79,14 +91,15 @@ btn_file.bind('<ButtonRelease-1>', import_file)
 def run_quote(self):
     if btn_quote['state'] == 'normal' or 'active':
         ep_scripts.calc_quote(
-            var_file.get(), var_rep100.get(), var_heading.get())
+            var_unit.get(), var_file.get(), var_rep100.get(), var_heading.get())
 
 btn_quote.bind('<ButtonRelease-1>', run_quote)
 
 
 def run_weighted(self):
     if btn_quote['state'] == 'normal' or 'active':
-        ep_scripts.calc_weighted(var_file.get(), var_wwt_style.get())
+        ep_scripts.calc_weighted(
+            var_unit.get(), var_file.get(), var_wwt_style.get())
 
 btn_weighted.bind('<ButtonRelease-1>', run_weighted)
 

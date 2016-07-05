@@ -31,7 +31,7 @@ If you have the Python environment installed, you can run the source code with `
 Please select one of the following options when exporting the statistics from memoQ
 
 From Documents tab > Statistics:
-- CSV (Per-file, Trados-compatible) This format is recommended
+- CSV (Per-file, Trados-compatible)
 - CSV (Per-file, all information)
 
 ![Format](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_format.png)
@@ -58,6 +58,7 @@ From Project home > Overview > Reports > Analysis:
 
 ### Options
 
+- You can choose the unit from "Word" or "Character." "Character" is only supported in all information CSV files or CSV files exported from "Reports." See [memoQ analysis file types](https://github.com/ShunSakurai/easy_paste#memoq-analysis-file-types) for details
 - You can choose the format from "New, Fuzzy, and 100% and Repetitions" or ""New, Fuzzy, 100%, and Repetitions""
 - You can choose the heading from "New Words" or "Translation -  New Words." I will add an option to create your own heading formats
 
@@ -87,7 +88,7 @@ The basic procedure is the same as in 'Generating a table'
 - Open the CSV files from inside the program
 
 ### Features not coming
-- Support HTML format to count characters. It turned out we can use word counts for Asian characters
+- Support HTML format to count characters. It turned out some CSV formats include character counts
 - Open multiple analysis CSV files at once. The equations will become too complex
 - Append the results at the bottom instead of overwriting the existing file. The equations will become too complex
 
@@ -98,6 +99,7 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
 ### Newest version
+- Support characters as the unit
 - Move the summed up word counts on top of the results
 
 ### v1.5.2, July 4, 2016
