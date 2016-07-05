@@ -165,7 +165,7 @@ def provide_quote_lines(analysis_read, csv_indices, headings):
             list_combined.append([lan] + list_file[1:])
 
     lines = []
-    for list_file in list_files + list_combined:
+    for list_file in list_combined + list_files:
         lines.append([list_file[0]])
         for i in range(num_items):
             lines.append([headings[i], list_file[i + 1]])

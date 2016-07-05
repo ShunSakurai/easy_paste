@@ -97,6 +97,9 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
+### Newest version
+- Move the summed up word counts on top of the results
+
 ### v1.5.2, July 4, 2016
 - Create the installer
 - Create the icon
