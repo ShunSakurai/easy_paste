@@ -227,7 +227,9 @@ def calc_quote(str_unit, str_file_path, str_rep100, str_heading):
         open(str_file_path, encoding=enc), delimiter=dl)
     full_path, part_path = get_paths_to_write(str_file_path, '/to_paste(utf-8, comma)')
 
-    lines = provide_quote_lines(analysis_read, csv_indices, headings)
+    str_options = ' '.join(['Options:', str_unit, str_rep100, str_heading])
+    print(str_options)
+    lines = [[str_options], ['']] + provide_quote_lines(analysis_read, csv_indices, headings)
     write_lines_to_full_path(full_path, lines)
     print_success(part_path)
 

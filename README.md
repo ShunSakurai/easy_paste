@@ -98,7 +98,8 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### Newest version
+### v1.5.5, July 5, 2016
+- Display the options for quotes in the results
 - Support characters as the unit
 - Move the summed up word counts on top of the results
 

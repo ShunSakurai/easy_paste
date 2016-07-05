@@ -23,7 +23,7 @@ setup(
         'dest_base': 'Easy Paste',
         'icon_resources': [(1, './icons/easy_paste_icon.ico')],
         'script': 'easy_paste.py',
-        'version': '1.5.4',
+        'version': '1.5.5',
     }],
     options={'py2exe': {
         'bundle_files': 2,
