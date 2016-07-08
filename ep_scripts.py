@@ -81,6 +81,21 @@ def detect_file_type_and_delimiter(str_unit, fn):
         print('File type and delimiter could not be identified.')
 
 
+def dir_from_str_path(str_path):
+    r'''
+    >>> dir_from_str_path('C:\\easy_paste\\files\\Analysis-GitHub Readme.csv')
+    'C:/easy_paste/files'
+    '''
+    str_path = str_path.replace('\\', '/')
+    if str_path.endswith('/'):
+        str_path_dir = str_path.rstrip('/')
+    elif '.' in str_path.rsplit('/', 1)[-1]:
+        str_path_dir = str_path.rsplit('/', 1)[0]
+    else:
+        str_path_dir = str_path
+    return str_path_dir
+
+
 def get_paths_to_write(str_file_path, prefix):
     analysis_divided = str_file_path.rsplit('/', 2)
     part_path = ''.join([

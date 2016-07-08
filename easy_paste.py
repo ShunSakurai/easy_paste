@@ -81,7 +81,8 @@ btn_folder.grid(columnspan=2, pady=5)
 
 
 def import_file(self):
-    f_file = tkinter.filedialog.askopenfilename(**args_file)
+    initial_dir = ep_scripts.dir_from_str_path(var_file.get())
+    f_file = tkinter.filedialog.askopenfilename(initialdir=initial_dir, **args_file)
     if f_file:
         var_file.set(f_file)
 
