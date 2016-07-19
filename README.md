@@ -174,4 +174,6 @@ Dear colleague translators and PMs, please help me brush up my English on this p
 ## License
 You can use it for free.
 
+Please note that this tool is not officially tested and approved by our company. I try my best to maintain the accuracy and the compatibility, but please agree to use it 'at your own risk.'
+
 © 2016 Shun Sakurai
