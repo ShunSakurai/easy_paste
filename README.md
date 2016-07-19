@@ -98,7 +98,7 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### Newest version
+### v1.5.7, July 19, 2016
 - Make the path in the entry field the initial path when choosing the file
 
 ### v1.5.6, July 5, 2016
