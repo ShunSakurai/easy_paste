@@ -20,12 +20,12 @@ slice_group_weighted = [[0, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8]]
 headings_joined = {
     'short': ['New Words', 'Fuzzy Matches', 'Repetitions and 100% Matches'],
     'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches',
-             'Translation -  Repetitions and 100% Matchs']}
+             'Translation -  Repetitions and 100% Matches']}
 
 headings_separate = {
     'short': ['New Words', 'Fuzzy Matches', '100% Matches', 'Repetitions'],
     'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches',
-             'Translation - 100% Matchs', 'Translation -  Repetitions']}
+             'Translation - 100% Matches', 'Translation -  Repetitions']}
 
 # Strings and function to use for weighted words
 row_1 = [r'If check 100% match is No, delete values in Repeated and 100%']
