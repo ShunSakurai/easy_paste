@@ -23,11 +23,15 @@ setup(
         'dest_base': 'Easy Paste',
         'icon_resources': [(1, './icons/easy_paste_icon.ico')],
         'script': 'easy_paste.py',
-        'version': '1.5.7',
+        'version': '1.5.8',
     }],
     options={'py2exe': {
         'bundle_files': 2,
         'compressed': True,
-        'excludes': ['_bz2', '_frozen_importlib', '_hashlib', '_lzma', '_ssl', 'argparse', 'calendar', 'datetime', 'difflib', 'inspect', 'locale', 'optparse', 'pdb', 'pickle', 'pydoc', 'pyexpat', 'pyreadline', 'zipfile'],
+        'excludes': [
+            '_bz2', '_frozen_importlib', '_hashlib', '_lzma', '_ssl',
+            'argparse', 'calendar', 'datetime', 'difflib', 'inspect',
+            'locale', 'optparse', 'pdb', 'pickle', 'pydoc', 'pyexpat',
+            'pyreadline', 'zipfile'],
     }}
 )
