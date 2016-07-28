@@ -1,9 +1,6 @@
 '''
 cd dropbox/codes/easy_paste
-rmdir /s dist
 py -3.4 setup.py py2exe
-
-rmdir /s __pycache__
 
 Libraries used:
 import tkinter
@@ -14,6 +11,12 @@ import subprocess
 import sys
 import doctest
 '''
+import os
+import shutil
+
+if os.path.exists('dist'):
+    shutil.rmtree('dist')
+
 from distutils.core import setup
 import py2exe
 
@@ -35,3 +38,5 @@ setup(
             'pyreadline', 'zipfile'],
     }}
 )
+
+shutil.rmtree('__pycache__')
