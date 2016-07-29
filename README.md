@@ -25,6 +25,20 @@ This program needs to be **kept in the folder** to work. It does not work by its
 
 If you have the Python environment installed, you can run the source code with `python(3) easy_paste.py` or `import easy_paste` even on Mac and on any OS.
 
+## Build
+To convert the Python code to .exe file, and to create an installer, follow steps below.
+
+Requirements and procedures for the .exe file:
+
+- [py2exe](http://www.py2exe.org/)
+- Python 3.4 (py2exe is not compatible with Python 3.5 as far as I know)
+- Run `py -3.4 setup.py py2exe` on a Windows machine
+
+Requirements and procedures for the installer:
+
+- [Inno Setup](http://www.jrsoftware.org/isdl.php)
+- Open setup_installer.iss with Inno Setup Compiler and click Build > Compile
+
 ## Usage
 
 ### memoQ analysis file types
@@ -42,7 +56,6 @@ From Project home > Overview > Reports > Analysis:
 ![Format](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_format2.png)
 
 ### Generating a table
-
 - You can open the program by double-clicking Easy Paste.exe or its alias.
 - Choose a CSV file exported from memoQ's statistics in above mentioned format
 - Click "Generate table for quote!"
@@ -51,13 +64,11 @@ From Project home > Overview > Reports > Analysis:
 ![UI](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_ui.png)
 
 ### Copying and pasting the table
-
 - Open the exported CSV file
 - You can easily copy and paste the table to your quote
 - Paste with "Keep Text Only" option in order to avoid messing up the font and the format
 
 ### Options
-
 - You can choose the unit from "Word" or "Character." "Character" is only supported in all information CSV files or CSV files exported from "Reports." See [memoQ analysis file types](https://github.com/ShunSakurai/easy_paste#memoq-analysis-file-types) for details
 - You can choose the format from "New, Fuzzy, and 100% and Repetitions" or ""New, Fuzzy, 100%, and Repetitions""
 - You can choose the heading from "New Words" or "Translation -  New Words." I will add an option to create your own heading formats
