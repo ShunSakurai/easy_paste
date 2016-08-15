@@ -29,6 +29,18 @@ for label, unit in units:
     rb_unit.grid(row=2, column=units.index((label, unit)), sticky='w', padx=5)
     rbs_unit.append(rb_unit)
 
+lable_newfuzzy = tkinter.Label(text=r'50-74% matches')
+lable_newfuzzy.grid(sticky='w', padx=10)
+
+newfuzzys = [('New', 'new'), ('Fuzzy', 'fuzzy')]
+var_newfuzzy = tkinter.StringVar()
+var_newfuzzy.set('new')
+rbs_newfuzzy = []
+for label, newfuzzy in newfuzzys:
+    rb_newfuzzy = tkinter.Radiobutton(text=label, variable=var_newfuzzy, value=newfuzzy)
+    rb_newfuzzy.grid(row=4, column=newfuzzys.index((label, newfuzzy)), sticky='w', padx=5)
+    rbs_newfuzzy.append(rb_newfuzzy)
+
 ent_file = tkinter.Entry(width=40, textvariable=var_file)
 ent_file.grid(columnspan=2, pady=5)
 
@@ -41,7 +53,7 @@ var_rep100.set('joined')
 rbs_rep100 = []
 for label, rep100 in rep100s:
     rb_rep100 = tkinter.Radiobutton(text=label, variable=var_rep100, value=rep100)
-    rb_rep100.grid(row=5, column=rep100s.index((label, rep100)), sticky='w', padx=5)
+    rb_rep100.grid(row=7, column=rep100s.index((label, rep100)), sticky='w', padx=5)
     rbs_rep100.append(rb_rep100)
 
 lable_heading = tkinter.Label(text='Headings')
@@ -53,7 +65,7 @@ var_heading.set('short')
 rbs_heading = []
 for label, heading in headings:
     rb_heading = tkinter.Radiobutton(text=label, variable=var_heading, value=heading)
-    rb_heading.grid(row=7, column=headings.index((label, heading)), sticky='w', padx=5)
+    rb_heading.grid(row=9, column=headings.index((label, heading)), sticky='w', padx=5)
     rbs_heading.append(rb_heading)
 
 btn_quote = tkinter.Button(text='Generate table for quote', state='disabled')
@@ -70,7 +82,7 @@ var_wwt_style.set('time_first')
 rbs_wwt_style = []
 for label, wwt_style in wwt_styles:
     rb_wwt_style = tkinter.Radiobutton(text=label, variable=var_wwt_style, value=wwt_style)
-    rb_wwt_style.grid(row=10, column=wwt_styles.index((label, wwt_style)), sticky='w', padx=5)
+    rb_wwt_style.grid(row=12, column=wwt_styles.index((label, wwt_style)), sticky='w', padx=5)
     rbs_wwt_style.append(rb_wwt_style)
 
 btn_weighted = tkinter.Button(text='Calculate weighted words', state='disabled')
@@ -92,7 +104,8 @@ btn_file.bind('<ButtonRelease-1>', import_file)
 def run_quote(self):
     if btn_quote['state'] == 'normal' or 'active':
         ep_scripts.calc_quote(
-            var_unit.get(), var_file.get(), var_rep100.get(), var_heading.get())
+            var_unit.get(), var_newfuzzy.get(), var_file.get(),
+            var_rep100.get(), var_heading.get())
 
 btn_quote.bind('<ButtonRelease-1>', run_quote)
 
@@ -100,7 +113,8 @@ btn_quote.bind('<ButtonRelease-1>', run_quote)
 def run_weighted(self):
     if btn_quote['state'] == 'normal' or 'active':
         ep_scripts.calc_weighted(
-            var_unit.get(), var_file.get(), var_wwt_style.get())
+            var_unit.get(), var_newfuzzy.get(), var_file.get(),
+            var_wwt_style.get())
 
 btn_weighted.bind('<ButtonRelease-1>', run_weighted)
 

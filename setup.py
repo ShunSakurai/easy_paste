@@ -26,7 +26,7 @@ dict_console = {
     'dest_base': 'Easy Paste',
     'icon_resources': [(1, './icons/easy_paste_icon.ico')],
     'script': 'easy_paste.py',
-    'version': '1.5.8',
+    'version': '1.5.10',
 }
 dict_options = {
     'bundle_files': 2,
@@ -41,7 +41,7 @@ dict_options = {
 
 setup(
     console=[dict_console],
-    options={'py2exe': {dict_options}}
+    options={'py2exe': dict_options}
 )
 
 shutil.rmtree('__pycache__')

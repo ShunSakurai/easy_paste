@@ -12,20 +12,32 @@ encodings = ['utf-16', 'utf-8-sig']
 csv_indices_trados = [4, 8, 12, 16, 20, 24, 28, 32]
 csv_indices_all = [11, 19, 27, 35, 43, 51, 59, 67]
 
-slice_group_joined = [[7, 8], [3, 7], [0, 3]]
-slice_group_separate = [[7, 8], [3, 7], [2, 3], [0, 2]]
-slice_group_weighted = [[0, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8]]
+dict_slice_groups = {
+    'new': {
+        'joined': [[6, 8], [3, 6], [0, 3]],
+        'separate': [[6, 8], [3, 6], [2, 3], [0, 2]],
+        'weighted': [[0, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8]]
+    },
+    'fuzzy': {
+        'joined': [[7, 8], [3, 7], [0, 3]],
+        'separate': [[7, 8], [3, 7], [2, 3], [0, 2]],
+        'weighted': [[0, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8]]
+    }
+}
 
 # Strings to use for quotes
-headings_joined = {
-    'short': ['New Words', 'Fuzzy Matches', 'Repetitions and 100% Matches'],
-    'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches',
-             'Translation -  Repetitions and 100% Matches']}
-
-headings_separate = {
-    'short': ['New Words', 'Fuzzy Matches', '100% Matches', 'Repetitions'],
-    'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches',
-             'Translation - 100% Matches', 'Translation -  Repetitions']}
+dict_headings = {
+    'joined': {
+        'short': ['New Words', 'Fuzzy Matches', 'Repetitions and 100% Matches'],
+        'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches',
+                 'Translation -  Repetitions and 100% Matches']
+    },
+    'separate': {
+        'short': ['New Words', 'Fuzzy Matches', '100% Matches', 'Repetitions'],
+        'long': ['Translation -  New Words', 'Translation -  Fuzzy Matches',
+                 'Translation - 100% Matches', 'Translation -  Repetitions']
+    }
+}
 
 # Strings and function to use for weighted words
 row_1 = [r'If check 100% match is No, delete values in Repeated and 100%']
@@ -230,30 +242,26 @@ def provide_weighted_lines(analysis_read, csv_indices, str_wwt_style):
     return lines
 
 
-def calc_quote(str_unit, str_file_path, str_rep100, str_heading):
+def calc_quote(str_unit, str_newfuzzy, str_file_path, str_rep100, str_heading):
     indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
-    if str_rep100 == 'joined':
-        csv_indices = slice_indices(indices, slice_group_joined)
-        headings = headings_joined[str_heading]
-    elif str_rep100 == 'separate':
-        csv_indices = slice_indices(indices, slice_group_separate)
-        headings = headings_separate[str_heading]
+    csv_indices = slice_indices(indices, dict_slice_groups[str_newfuzzy][str_rep100])
+    headings = dict_headings[str_rep100][str_heading]
     if str_unit == 'char':
         csv_indices = add_num_to_md_list(csv_indices, 1)
     analysis_read = csv.reader(
         open(str_file_path, encoding=enc), delimiter=dl)
     full_path, part_path = get_paths_to_write(str_file_path, '/to_paste(utf-8, comma)')
 
-    str_options = ' '.join(['Options:', str_unit, str_rep100, str_heading])
+    str_options = ' '.join(['Options:', str_unit, str_newfuzzy, str_rep100, str_heading])
     print(str_options)
     lines = [[str_options], ['']] + provide_quote_lines(analysis_read, csv_indices, headings)
     write_lines_to_full_path(full_path, lines)
     print_success(part_path)
 
 
-def calc_weighted(str_unit, str_file_path, str_wwt_style):
+def calc_weighted(str_unit, str_newfuzzy, str_file_path, str_wwt_style):
     indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
-    csv_indices = slice_indices(indices, slice_group_weighted)
+    csv_indices = slice_indices(indices, dict_slice_groups[str_newfuzzy]['weighted'])
     if str_unit == 'char':
         csv_indices = add_num_to_md_list(csv_indices, 1)
     analysis_read = csv.reader(

@@ -70,6 +70,7 @@ From Project home > Overview > Reports > Analysis:
 
 ### Options
 - You can choose the unit from "Word" or "Character." "Character" is only supported in all information CSV files or CSV files exported from "Reports." See [memoQ analysis file types](https://github.com/ShunSakurai/easy_paste#memoq-analysis-file-types) for details
+- You can choose 50-74% matches are included in whether "New" or "Fuzzy"
 - You can choose the format from "New, Fuzzy, and 100% and Repetitions" or ""New, Fuzzy, 100%, and Repetitions""
 - You can choose the heading from "New Words" or "Translation -  New Words." I will add an option to create your own heading formats
 
@@ -109,7 +110,8 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### Newest version
+### v1.5.10, August 16, 2016
+- Ask 50-74% matches are whether new or fuzzy
 - Semiautomate the set-up process with shutil module
 
 ### v1.5.8, July 27, 2016
