@@ -91,6 +91,9 @@ btn_weighted.grid(columnspan=2, pady=10)
 btn_folder = tkinter.Button(text='Open folder', state='disabled')
 btn_folder.grid(columnspan=2, pady=5)
 
+btn_readme = tkinter.Button(text='Read readme', command=ep_scripts.open_readme)
+btn_readme.grid(columnspan=2, pady=5)
+
 
 def import_file(self):
     initial_dir = ep_scripts.dir_from_str_path(var_file.get())
@@ -157,4 +160,5 @@ root.bind('<Return>', return_to_click)
 
 top = tk_F.winfo_toplevel()
 top.resizable(False, False)
+print('tk window is ready to use.')
 tk_F.mainloop()

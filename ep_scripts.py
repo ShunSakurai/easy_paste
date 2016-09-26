@@ -6,6 +6,7 @@ import csv
 import os
 import subprocess
 import sys
+import webbrowser
 
 encodings = ['utf-16', 'utf-8-sig']
 
@@ -108,6 +109,7 @@ def dir_from_str_path(str_path):
     return str_path_dir
 
 
+
 def get_paths_to_write(str_file_path, prefix):
     analysis_divided = str_file_path.rsplit('/', 2)
     part_path = ''.join([
@@ -115,6 +117,11 @@ def get_paths_to_write(str_file_path, prefix):
     full_path = ''.join([
         analysis_divided[0], '/', part_path])
     return full_path, part_path
+
+
+def open_readme():
+    webbrowser.open_new_tab(
+        'https://github.com/ShunSakurai/easy_paste/blob/master/README.md')
 
 
 def print_success(path):
