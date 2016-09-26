@@ -110,7 +110,8 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### Newest version
+### v1.6.0, September 27, 2016
+- Check for and download updates online
 - Support X-translated segments
 - Make usability improvements
 - * Correct incorrect equations in weighted words in the second format

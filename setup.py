@@ -11,38 +11,34 @@ import subprocess
 import sys
 import doctest
 '''
-import os
-import shutil
-
-if os.path.exists('dist'):
-    shutil.rmtree('dist')
-
-from distutils.core import setup
-import py2exe
-
 
 dict_console = {
     'author': 'Shun Sakurai',
     'dest_base': 'Easy Paste',
     'icon_resources': [(1, './icons/easy_paste_icon.ico')],
     'script': 'easy_paste.py',
-    'version': '1.5.10',
+    'version': '1.6.0',
 }
 dict_options = {
     'bundle_files': 2,
     'compressed': True,
-    'excludes': [
-        '_bz2', '_frozen_importlib', '_hashlib', '_lzma', '_ssl',
-        'argparse', 'calendar', 'datetime', 'difflib', 'inspect',
-        'locale', 'optparse', 'pdb', 'pickle', 'pydoc', 'pyexpat',
-        'pyreadline', 'zipfile'],
+    'excludes': ['_ssl'],
 }
 
+if __name__ == "__main__":
+    import os
+    import shutil
 
-setup(
-    console=[dict_console],
-    options={'py2exe': dict_options}
-)
+    if os.path.exists('dist'):
+        shutil.rmtree('dist')
 
-shutil.rmtree('__pycache__')
-print('.exe file v' + dict_console['version'], 'created.')
+    from distutils.core import setup
+    import py2exe
+
+    setup(
+        console=[dict_console],
+        options={'py2exe': dict_options}
+    )
+
+    shutil.rmtree('__pycache__')
+    print('.exe file v' + dict_console['version'], 'created.')

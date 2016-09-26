@@ -94,6 +94,9 @@ btn_folder.grid(columnspan=2, pady=5)
 btn_readme = tkinter.Button(text='Read readme', command=ep_scripts.open_readme)
 btn_readme.grid(columnspan=2, pady=5)
 
+btn_update = tkinter.Button(text='Check for updates', command=ep_scripts.check_updates)
+btn_update.grid(columnspan=2, pady=5)
+
 
 def import_file(self):
     initial_dir = ep_scripts.dir_from_str_path(var_file.get())

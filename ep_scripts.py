@@ -2,10 +2,14 @@
 cd dropbox/codes/easy_paste
 py ep_scripts.py
 '''
+import setup
 import csv
 import os
+import os.path
+import re
 import subprocess
 import sys
+import urllib.request as ur
 import webbrowser
 
 encodings = ['utf-16', 'utf-8-sig']
@@ -70,6 +74,25 @@ def addup_unit(row, index_list):
     return unit_sum
 
 
+def check_updates():
+    print('-' * 70)
+    url_releases = 'https://github.com/ShunSakurai/easy_paste/releases'
+    try:
+        str_release_page = str(ur.urlopen(url_releases).read())
+    except:
+        print('Easy Paste could not connect to', url_releases)
+        return
+    pattern_version = re.compile(r'(?<=<span class="css-truncate-target">v)[0-9.]+(?=</span>)')
+    pattern_installer = re.compile(r'/ShunSakurai/easy_paste/releases/download/v([0-9.]+)/(easy_paste_installer_\1.0.exe)')
+    str_newest_version = pattern_version.search(str_release_page).group(0)
+    url_installer = pattern_installer.search(str_release_page)
+    if installed_version_is_newer(setup.dict_console['version'], str_newest_version):
+        print('You are using the newest version:', setup.dict_console['version'])
+        return
+    else:
+        download_update(str_newest_version, url_installer)
+
+
 def detect_file_type_and_delimiter(str_unit, fn):
     delimiter = ''
     for enc in encodings:
@@ -109,6 +132,21 @@ def dir_from_str_path(str_path):
     return str_path_dir
 
 
+def download_update(str_newest_version, url_installer):
+    print('Downloading the newest version', str_newest_version)
+    print('Your version is', setup.dict_console['version'])
+    download_folder = os.path.expanduser("~")+'/downloads/'
+    download_path = download_folder + url_installer.group(2)
+    d = ur.urlopen('https://github.com/' + url_installer.group(0))
+    with open(download_path, 'wb') as f:
+        f.write(d.read())
+    print('Starting the installer.')
+    if sys.platform.startswith('win'):
+        os.startfile(download_path)
+    else:
+        subprocess.call(['open', download_path])
+    return
+
 
 def get_paths_to_write(str_file_path, prefix):
     analysis_divided = str_file_path.rsplit('/', 2)
@@ -117,6 +155,19 @@ def get_paths_to_write(str_file_path, prefix):
     full_path = ''.join([
         analysis_divided[0], '/', part_path])
     return full_path, part_path
+
+
+def installed_version_is_newer(str_installed, str_online):
+    list_installed = str_installed.split('.')
+    list_online = str_online.split('.')
+    for i in range(3):
+        if int(list_installed[i]) < int(list_online[i]):
+            return False
+        elif int(list_installed[i]) > int(list_online[i]):
+            return True
+        else:
+            pass
+    return True
 
 
 def open_readme():
