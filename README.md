@@ -111,6 +111,7 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
 ### Newest version
+- Support X-translated segments
 - Make usability improvements
 - * Correct incorrect equations in weighted words in the second format
 
