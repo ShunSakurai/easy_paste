@@ -137,12 +137,12 @@ def return_weighted_equations_time(r):
 def return_weighted_equations_words(r):
     translation_time = ''.join([
         '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
-        c[6], r, '+', c[7], r, ')/B$2*', r, '*4/5'])
+        c[6], r, '+', c[7], r, ')/B$2*8*4/5'])
     proof_time = ''.join([
         '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
-        c[1], r, '+', c[2], r, '+', c[6], r, '+', c[7], r, ')/B$2*', r, '/5'])
+        c[1], r, '+', c[2], r, '+', c[6], r, '+', c[7], r, ')/B$2*8/5'])
     total_time = ''.join(['=SUM(', c[8], r, ':', c[9], r, ')'])
-    weighted_words = ''.join(['=', c[10], r, '*(B$2/', r, ')'])
+    weighted_words = ''.join(['=', c[10], r, '*(B$2/8)'])
     return [translation_time, proof_time, total_time, weighted_words]
 
 

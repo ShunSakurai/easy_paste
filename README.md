@@ -110,6 +110,9 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
+### Newest version
+- * Correct incorrect equations in weighted words in the second format
+
 ### v1.5.10, August 16, 2016
 - Ask 50-74% matches are whether new or fuzzy
 - Semiautomate the set-up process with shutil module
