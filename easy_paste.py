@@ -29,6 +29,9 @@ for label, unit in units:
     rb_unit.grid(row=2, column=units.index((label, unit)), sticky='w', padx=5)
     rbs_unit.append(rb_unit)
 
+ent_file = tkinter.Entry(width=40, textvariable=var_file)
+ent_file.grid(columnspan=2, pady=5)
+
 lable_newfuzzy = tkinter.Label(text=r'50-74% matches')
 lable_newfuzzy.grid(sticky='w', padx=10)
 
@@ -38,11 +41,8 @@ var_newfuzzy.set('new')
 rbs_newfuzzy = []
 for label, newfuzzy in newfuzzys:
     rb_newfuzzy = tkinter.Radiobutton(text=label, variable=var_newfuzzy, value=newfuzzy)
-    rb_newfuzzy.grid(row=4, column=newfuzzys.index((label, newfuzzy)), sticky='w', padx=5)
+    rb_newfuzzy.grid(row=5, column=newfuzzys.index((label, newfuzzy)), sticky='w', padx=5)
     rbs_newfuzzy.append(rb_newfuzzy)
-
-ent_file = tkinter.Entry(width=40, textvariable=var_file)
-ent_file.grid(columnspan=2, pady=5)
 
 lable_rep100 = tkinter.Label(text='Reps and 100%')
 lable_rep100.grid(sticky='w', padx=10)
