@@ -111,6 +111,7 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
 ### v1.6.2, October 23, 2016
+- Add MIT license
 - Avoid using comma in the exported CSV file
 - * Correct the position of the entry field
 
@@ -201,8 +202,11 @@ This is just a personal project and I do not really know what kind of contributi
 Dear colleague translators and PMs, please help me brush up my English on this page.
 
 ## License
+### Usage
 You can use it for free.
+© 2016 Shun Sakurai
 
 Please note that this tool is not officially tested and approved by our company. I try my best to maintain the accuracy and the compatibility, but please agree to use it 'at your own risk.'
 
-© 2016 Shun Sakurai
+###MIT License
+The code is protected under MIT License. Please see license.txt for details.
