@@ -45,7 +45,7 @@ dict_headings = {
 }
 
 # Strings and function to use for weighted words
-row_1 = [r'If check 100% match is No, delete values in Repeated and 100%']
+row_1 = [r'Delete values in Repeated and 100% if check 100% match is No.']
 row_2 = ['Chargeable words per day (can be changed) :', 2000, '', '', '', '', '']
 row_3_time = [
     'Item', 'Wds', 'TrHrs', 'PrHrs', 'MaxHrs', 'DueDate',

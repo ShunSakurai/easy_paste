@@ -110,7 +110,8 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### Newest version
+### v1.6.2, October 23, 2016
+- Avoid using comma in the exported CSV file
 - * Correct the position of the entry field
 
 ### v1.6.0, September 27, 2016
