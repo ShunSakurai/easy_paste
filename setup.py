@@ -7,8 +7,12 @@ import tkinter
 import tkinter.filedialog
 import csv
 import os
+import os.path
+import re
 import subprocess
 import sys
+import urllib.request as ur
+import webbrowser
 import doctest
 '''
 
@@ -17,12 +21,14 @@ dict_console = {
     'dest_base': 'Easy Paste',
     'icon_resources': [(1, './icons/easy_paste_icon.ico')],
     'script': 'easy_paste.py',
-    'version': '1.6.2',
+    'version': '1.6.3',
 }
 dict_options = {
     'bundle_files': 2,
     'compressed': True,
-    'excludes': ['_ssl'],
+    'excludes': [
+        '_bz2', '_frozen_importlib', '_lzma', 'argparse',
+        'pdb', 'pickle', 'pydoc', 'pyexpat', 'pyreadline']
 }
 
 if __name__ == "__main__":

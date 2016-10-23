@@ -110,7 +110,8 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### v1.6.2, October 23, 2016
+### v1.6.3, October 23, 2016
+- * Resolve the connection issue to the release page
 - Add MIT license
 - Avoid using comma in the exported CSV file
 - * Correct the position of the entry field
