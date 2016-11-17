@@ -3,10 +3,11 @@ cd dropbox/codes/easy_paste
 py -B easy_paste.py
 '''
 import ep_scripts
+import setup
 import tkinter
 import tkinter.filedialog
 
-print('Loading...')
+print('Loading v', setup.dict_console['version'], '...', sep='')
 
 root = tkinter.Tk()
 tk_F = tkinter.Frame(root)
