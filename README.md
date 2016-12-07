@@ -57,9 +57,9 @@ From Project home > Overview > Reports > Analysis:
 
 ### Generating a table
 - You can open the program by double-clicking Easy Paste.exe or its alias.
-- Choose a CSV file exported from memoQ's statistics in above mentioned format
+- Choose CSV files exported from memoQ's statistics in above mentioned format
 - Click "Generate table for quote!"
-- A CSV file starting with "to_paste" is generated in the same folder as the original CSV file
+- CSV files starting with "to_paste" is generated in the same folder as the original CSV files
 
 ![UI](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_ui.png)
 
@@ -80,9 +80,9 @@ From Project home > Overview > Reports > Analysis:
 The basic procedure is the same as in 'Generating a table'
 
 - Click "weighted words!"
-- A CSV file starting with "weighted_" is generated in the same folder as the original CSV file
+- CSV files starting with "weighted_" is generated in the same folder as the original CSV files
 - Open the exported CSV file
-- You can change the words per day and the result updates accordingly
+- You can change the check 100% matches options and the words per day options and the result updates accordingly
 - Beware that the time and weighted words are not rounded. Round the values if necessary using Excel's commands, etc.
 - You can choose the format from the following two formats
 
@@ -110,9 +110,9 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
-### v1.6.6, November 18, 2016
+### v1.6.6, December 7, 2016
 - Toggle "Check 100% matches" options
-- Display the version information at the start of the program
+- Support processing multiple analysis CSV files at once
 
 ### v1.6.4, November 18, 2016
 - Display the version information at the start of the program
