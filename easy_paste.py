@@ -14,8 +14,8 @@ tk_F = tkinter.Frame(root)
 
 args_file = {'filetypes' : [('csv', '*.csv')]}
 
-btn_file = tkinter.Button(text='Import Analysis')
-var_file = tkinter.StringVar(tk_F)
+btn_file = tkinter.Button(text='Import Analysis Files')
+var_files = tkinter.StringVar(tk_F)
 btn_file.grid(columnspan=2, pady=5)
 
 lable_unit = tkinter.Label(text='Unit')
@@ -30,7 +30,7 @@ for label, unit in units:
     rb_unit.grid(row=2, column=units.index((label, unit)), sticky='w', padx=5)
     rbs_unit.append(rb_unit)
 
-ent_file = tkinter.Entry(width=40, textvariable=var_file)
+ent_file = tkinter.Entry(width=40, textvariable=var_files)
 ent_file.grid(columnspan=2, pady=5)
 
 lable_newfuzzy = tkinter.Label(text=r'50-74% matches')
@@ -100,10 +100,10 @@ btn_update.grid(columnspan=2, pady=5)
 
 
 def import_file(self):
-    initial_dir = ep_scripts.dir_from_str_path(var_file.get())
-    f_file = tkinter.filedialog.askopenfilename(initialdir=initial_dir, **args_file)
-    if f_file:
-        var_file.set(f_file)
+    initial_dir = ep_scripts.dir_from_str_path(ep_scripts.divide_str_tuple(var_files.get())[0])
+    f_files = tkinter.filedialog.askopenfilenames(initialdir=initial_dir, **args_file)
+    if f_files:
+        var_files.set(f_files)
 
 btn_file.bind('<ButtonRelease-1>', import_file)
 
@@ -111,7 +111,7 @@ btn_file.bind('<ButtonRelease-1>', import_file)
 def run_quote(self):
     if btn_quote['state'] == 'normal' or 'active':
         ep_scripts.calc_quote(
-            var_unit.get(), var_newfuzzy.get(), var_file.get(),
+            var_unit.get(), var_newfuzzy.get(), var_files.get(),
             var_rep100.get(), var_heading.get())
 
 btn_quote.bind('<ButtonRelease-1>', run_quote)
@@ -120,7 +120,7 @@ btn_quote.bind('<ButtonRelease-1>', run_quote)
 def run_weighted(self):
     if btn_quote['state'] == 'normal' or 'active':
         ep_scripts.calc_weighted(
-            var_unit.get(), var_newfuzzy.get(), var_file.get(),
+            var_unit.get(), var_newfuzzy.get(), var_files.get(),
             var_wwt_style.get())
 
 btn_weighted.bind('<ButtonRelease-1>', run_weighted)
@@ -128,7 +128,7 @@ btn_weighted.bind('<ButtonRelease-1>', run_weighted)
 
 def run_folder(self):
     if btn_folder['state'] == 'normal' or 'active':
-        ep_scripts.open_folder(var_file.get())
+        ep_scripts.open_folder(var_files.get())
 
 btn_folder.bind('<ButtonRelease-1>', run_folder)
 
@@ -145,7 +145,7 @@ for rb in rbs_heading:
 
 
 def true_false(var, unknown, w):
-    if var_file.get():
+    if var_files.get():
         btn_quote['state'] = 'normal'
         btn_weighted['state'] = 'normal'
         btn_folder['state'] = 'normal'
@@ -154,7 +154,7 @@ def true_false(var, unknown, w):
         btn_weighted['state'] = 'disabled'
         btn_folder['state'] = 'disabled'
 
-var_file.trace('w', true_false)
+var_files.trace('w', true_false)
 
 
 def return_to_click(self):

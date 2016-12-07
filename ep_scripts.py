@@ -132,6 +132,19 @@ def dir_from_str_path(str_path):
     return str_path_dir
 
 
+def divide_str_tuple(str_tuple):
+    r'''
+    >>> divide_str_tuple(r'/Users/path/csv.csv {/Users/path/txt.txt}')
+    ['/Users/path/csv.csv', '/Users/path/txt.txt']
+
+    >>> divide_str_tuple(r' C:/Users/path/csv1.csv {C:/Users/path/csv2.csv} {C:\Users\path\txt1.txt} {C:\Users\path\txt2.txt}')
+    ['C:/Users/path/csv1.csv', 'C:/Users/path/csv2.csv', 'C:\\Users\\path\\txt1.txt', 'C:\\Users\\path\\txt2.txt']
+    '''
+    tuple_str_split = str_tuple.replace('{', ',').strip('(),').split(',')
+    list_from_str = [i.strip(' {},"\'') for i in tuple_str_split]
+    return list_from_str
+
+
 def download_update(str_newest_version, url_installer):
     print('Downloading the newest version', str_newest_version)
     print('Your version is', setup.dict_console['version'])
@@ -176,7 +189,10 @@ def open_readme():
 
 
 def print_success(path):
-    print('-' * 70, '\nSuccessfully created:\n', path)
+    print('-' * 70, '\n\rSuccessfully created:\n', path, sep='')
+
+
+def print_end():
     print('\nClick [x] on the tk window to close the program.')
 
 
@@ -300,38 +316,44 @@ def provide_weighted_lines(analysis_read, csv_indices, str_wwt_style):
     return lines
 
 
-def calc_quote(str_unit, str_newfuzzy, str_file_path, str_rep100, str_heading):
-    indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
-    csv_indices = slice_indices(indices, dict_slice_groups[str_newfuzzy][str_rep100])
-    headings = dict_headings[str_rep100][str_heading]
-    if str_unit == 'char':
-        csv_indices = add_num_to_md_list(csv_indices, 1)
-    analysis_read = csv.reader(
-        open(str_file_path, encoding=enc), delimiter=dl)
-    full_path, part_path = get_paths_to_write(str_file_path, '/to_paste(utf-8, comma)')
+def calc_quote(str_unit, str_newfuzzy, str_file_paths, str_rep100, str_heading):
+    for str_file_path in divide_str_tuple(str_file_paths):
+        indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
+        csv_indices = slice_indices(indices, dict_slice_groups[str_newfuzzy][str_rep100])
+        headings = dict_headings[str_rep100][str_heading]
+        if str_unit == 'char':
+            csv_indices = add_num_to_md_list(csv_indices, 1)
+        analysis_read = csv.reader(
+            open(str_file_path, encoding=enc), delimiter=dl)
+        full_path, part_path = get_paths_to_write(str_file_path, '/to_paste(utf-8, comma)')
 
-    str_options = ' '.join(['Options:', str_unit, str_newfuzzy, str_rep100, str_heading])
-    print(str_options)
-    lines = [[str_options], ['']] + provide_quote_lines(analysis_read, csv_indices, headings)
-    write_lines_to_full_path(full_path, lines)
-    print_success(part_path)
-
-
-def calc_weighted(str_unit, str_newfuzzy, str_file_path, str_wwt_style):
-    indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
-    csv_indices = slice_indices(indices, dict_slice_groups[str_newfuzzy]['weighted'])
-    if str_unit == 'char':
-        csv_indices = add_num_to_md_list(csv_indices, 1)
-    analysis_read = csv.reader(
-        open(str_file_path, encoding=enc), delimiter=dl)
-    full_path, part_path = get_paths_to_write(str_file_path, '/weighted_')
-
-    lines = provide_weighted_lines(analysis_read, csv_indices, str_wwt_style)
-    write_lines_to_full_path(full_path, lines)
-    print_success(part_path)
+        str_options = ' '.join(['Options:', str_unit, str_newfuzzy, str_rep100, str_heading])
+        print(str_options)
+        lines = [[str_options], ['']] + provide_quote_lines(analysis_read, csv_indices, headings)
+        write_lines_to_full_path(full_path, lines)
+        print_success(part_path)
+    print_end()
 
 
-def open_folder(str_file_path):
+def calc_weighted(str_unit, str_newfuzzy, str_file_paths, str_wwt_style):
+    for str_file_path in divide_str_tuple(str_file_paths):
+        indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
+        csv_indices = slice_indices(indices, dict_slice_groups[str_newfuzzy]['weighted'])
+        if str_unit == 'char':
+            csv_indices = add_num_to_md_list(csv_indices, 1)
+        analysis_read = csv.reader(
+            open(str_file_path, encoding=enc), delimiter=dl)
+        full_path, part_path = get_paths_to_write(str_file_path, '/weighted_')
+
+        lines = provide_weighted_lines(analysis_read, csv_indices, str_wwt_style)
+        write_lines_to_full_path(full_path, lines)
+        print_success(part_path)
+    print_end()
+
+
+
+def open_folder(str_file_paths):
+    str_file_path = divide_str_tuple(str_file_paths)[0]
     analysis_divided = str_file_path.rsplit('/', 1)
     folder_full_path = analysis_divided[0]
     if sys.platform.startswith('win'):
