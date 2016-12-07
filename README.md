@@ -57,9 +57,9 @@ From Project home > Overview > Reports > Analysis:
 
 ### Generating a table
 - You can open the program by double-clicking Easy Paste.exe or its alias.
-- Choose a CSV file exported from memoQ's statistics in above mentioned format
+- Choose CSV files exported from memoQ's statistics in above mentioned format
 - Click "Generate table for quote!"
-- A CSV file starting with "to_paste" is generated in the same folder as the original CSV file
+- CSV files starting with "to_paste" is generated in the same folder as the original CSV files
 
 ![UI](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_ui.png)
 
@@ -80,7 +80,7 @@ From Project home > Overview > Reports > Analysis:
 The basic procedure is the same as in 'Generating a table'
 
 - Click "weighted words!"
-- A CSV file starting with "weighted_" is generated in the same folder as the original CSV file
+- CSV files starting with "weighted_" is generated in the same folder as the original CSV files
 - Open the exported CSV file
 - You can change the words per day and the result updates accordingly
 - Beware that the time and weighted words are not rounded. Round the values if necessary using Excel's commands, etc.
