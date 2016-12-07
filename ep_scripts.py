@@ -45,8 +45,8 @@ dict_headings = {
 }
 
 # Strings and function to use for weighted words
-row_1 = [r'Delete values in Repeated and 100% if check 100% match is No.']
-row_2 = ['Chargeable words per day (can be changed) :', 2000, '', '', '', '', '']
+row_1 = ['Check 100% matches:', 'Yes']
+row_2 = ['Chargeable words per day:', 2000]
 row_3_time = [
     'Item', 'Wds', 'TrHrs', 'PrHrs', 'MaxHrs', 'DueDate',
     'Reps', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'New']
@@ -201,8 +201,10 @@ def return_weighted_equations_time(r):
         '=(((', c[8], r, '+', c[9], r, ')*0.25)+(', c[10], r, '*0.60)+',
         c[11], r, '+', c[12], r, ')/', c[1], '$2*8*4/5'])
     proof_time = ''.join([
-        '=(((', c[8], r, '+', c[9], r, ')*0.25)+(', c[10], r, '*0.60)+',
-        c[6], r, '+', c[7], r, '+', c[11], r, '+', c[12], r, ')/', c[1], '$2*8/5'])
+        '=(((',
+        c[8], r, '+', c[9], r, ')*0.25)+(', c[10], r, '*0.60)+(',
+        c[6], r, '+', c[7], r, ')*(B$1="Yes")+',
+        c[11], r, '+', c[12], r, ')/', c[1], '$2*8/5'])
     total_time = ''.join(['=SUM(', c[2], r, ':', c[3], r, ')'])
     weighted_words = ''.join(['=', c[4], r, '*(', c[1], '$2/8)'])
     return [weighted_words, translation_time, proof_time, total_time]
@@ -213,8 +215,10 @@ def return_weighted_equations_words(r):
         '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
         c[6], r, '+', c[7], r, ')/B$2*8*4/5'])
     proof_time = ''.join([
-        '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
-        c[1], r, '+', c[2], r, '+', c[6], r, '+', c[7], r, ')/B$2*8/5'])
+        '=(((',
+        c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+(',
+        c[1], r, '+', c[2], r, ')*(B$1="Yes")+',
+        c[6], r, '+', c[7], r, ')/B$2*8/5'])
     total_time = ''.join(['=SUM(', c[8], r, ':', c[9], r, ')'])
     weighted_words = ''.join(['=', c[10], r, '*(B$2/8)'])
     return [translation_time, proof_time, total_time, weighted_words]
