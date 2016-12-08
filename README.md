@@ -110,6 +110,9 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 "*" at the beginning means bug-fixing.
 For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
 
+### v1.6.7, December 8, 2016
+- * Correct issue with file paths without slashes
+
 ### v1.6.6, December 7, 2016
 - Toggle "Check 100% matches" options
 - Support processing multiple analysis CSV files at once

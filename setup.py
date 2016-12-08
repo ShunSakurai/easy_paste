@@ -21,7 +21,7 @@ dict_console = {
     'dest_base': 'Easy Paste',
     'icon_resources': [(1, './icons/easy_paste_icon.ico')],
     'script': 'easy_paste.py',
-    'version': '1.6.6',
+    'version': '1.6.7',
 }
 dict_options = {
     'bundle_files': 2,
@@ -34,9 +34,12 @@ dict_options = {
 if __name__ == "__main__":
     import os
     import shutil
+    import time
 
     if os.path.exists('dist'):
+        print('Removing the dist folder...')
         shutil.rmtree('dist')
+        time.sleep(1)
 
     from distutils.core import setup
     import py2exe

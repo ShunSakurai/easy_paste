@@ -229,16 +229,17 @@ def shorten_fname(file_name):
     >>> shorten_fname(r'[jpn] "Z:\Users\sakuraishun\Dropbox\Codes\easy_paste\README.md"')
     '[jpn]README.md'
     '''
+    file_name = file_name.replace('\\', '/')
     if '.' in file_name and file_name.startswith('['):
         lan = file_name[:file_name.find(']') + 1]
-        fname = lan + file_name.rsplit('\\', 1)[1].strip('"')
-        return fname
-    elif '.' in file_name:
-        fname = file_name.rsplit('\\', 1)[1]
-        return fname
+        fname = file_name.rsplit('/', 1)[1].strip('"')
+    elif '.' in file_name and '/' in file_name:
+        lan = ''
+        fname = file_name.rsplit('/', 1)[1]
     else:
+        lan = ''
         fname = file_name
-        return fname
+    return lan + fname
 
 
 def slice_indices(csv_indices, slice_group):
@@ -353,7 +354,6 @@ def calc_weighted(str_unit, str_newfuzzy, str_file_paths, str_wwt_style):
         write_lines_to_full_path(full_path, lines)
         print_success(part_path)
     print_end()
-
 
 
 def open_folder(str_file_paths):
