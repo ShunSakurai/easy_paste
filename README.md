@@ -8,7 +8,7 @@ A tool for generating easy-to-paste tables for quotes and weighted words from th
 ## Description
 You don't have to manually add up the number of words for creating quotes anymore. This tool generates easy-to-paste tables for quotes from the analysis exported from memoQ.
 
-You can also calculate the weighted words and the translation and proofreading time for the files. memoQ now [tells us the weighted words](https://www.memoq.com/memoq-build-june), but this tool is still useful in that it provides the estimated time.
+You can also calculate the weighted words and the translation and proofreading time for the files. memoQ now [tells us the weighted words](https://www.memoq.com/memoq-build-june), but this tool is still useful in that it can calculated the weighted words for sliced files, and it can provide the estimated time.
 
 This program is coded in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
 
@@ -21,9 +21,7 @@ This tool is currently only available for Windows at [Releases](https://github.c
 
 All you have to do for installation and upgrading is to download and run the installer.
 
-This program needs to be **kept in the folder** to work. It does not work by itself.
-
-If you have the Python environment installed, you can run the source code with `python(3) easy_paste.py` or `import easy_paste` even on Mac and on any OS.
+If you have the Python environment installed, you can run the source code with `python easy_paste.py`, `python3 easy_paste.py`, or `import easy_paste` even on Mac and on any OS.
 
 ## Build
 To convert the Python code to .exe file, and to create an installer, follow steps below.
@@ -55,10 +53,10 @@ From Project home > Overview > Reports > Analysis:
 
 ![Format](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_format2.png)
 
-### Generating a table
+### Generating a table for quote
 - You can open the program by double-clicking Easy Paste.exe or its alias.
 - Choose CSV files exported from memoQ's statistics in above mentioned format
-- Click "Generate table for quote!"
+- Click "Generate table for quote"
 - CSV files starting with "to_paste" is generated in the same folder as the original CSV files
 
 ![UI](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_ui.png)
@@ -77,9 +75,9 @@ From Project home > Overview > Reports > Analysis:
 ![Four heading formats](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_heading.png)
 
 ### Calculating weighted words
-The basic procedure is the same as in 'Generating a table'
+The basic procedure is the same as in 'Generating a table for quote'
 
-- Click "weighted words!"
+- Click "Calculate weighted words"
 - CSV files starting with "weighted_" is generated in the same folder as the original CSV files
 - Open the exported CSV file
 - You can change the check 100% matches options and the words per day options and the result updates accordingly
@@ -98,6 +96,7 @@ The basic procedure is the same as in 'Generating a table'
 ### Maybe later
 - Save last used settings
 - Open the CSV files from inside the program
+- Open the tables from inside the program
 
 ### Features not coming
 - Support HTML format to count characters. It turned out some CSV formats include character counts
