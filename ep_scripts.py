@@ -187,6 +187,13 @@ def installed_version_is_newer(str_installed, str_online):
     return True
 
 
+def open_file(str_file_path):
+    if sys.platform.startswith('win'):
+        os.startfile(str_file_path)
+    else:
+        subprocess.call(['open', str_file_path])
+
+
 def open_readme():
     webbrowser.open_new_tab(
         'https://github.com/ShunSakurai/easy_paste/blob/master/README.md')
@@ -325,7 +332,7 @@ def provide_weighted_lines(analysis_read, csv_indices, str_wwt_style):
     return lines
 
 
-def calc_quote(str_unit, str_newfuzzy, str_file_paths, str_rep100, str_heading):
+def calc_quote(str_unit, str_newfuzzy, str_file_paths, str_rep100, str_heading, str_result):
     for str_file_path in divide_str_tuple(str_file_paths):
         indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
         csv_indices = slice_indices(indices, dict_slice_groups[str_newfuzzy][str_rep100])
@@ -341,10 +348,12 @@ def calc_quote(str_unit, str_newfuzzy, str_file_paths, str_rep100, str_heading):
         lines = [[str_options], ['']] + provide_quote_lines(analysis_read, csv_indices, headings)
         write_lines_to_full_path(full_path, lines)
         print_success(part_path)
+        if str_result == '1':
+            open_file(full_path)
     print_end()
 
 
-def calc_weighted(str_unit, str_newfuzzy, str_file_paths, str_wwt_style):
+def calc_weighted(str_unit, str_newfuzzy, str_file_paths, str_wwt_style, str_result):
     for str_file_path in divide_str_tuple(str_file_paths):
         indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
         csv_indices = slice_indices(indices, dict_slice_groups[str_newfuzzy]['weighted'])
@@ -357,6 +366,8 @@ def calc_weighted(str_unit, str_newfuzzy, str_file_paths, str_wwt_style):
         lines = provide_weighted_lines(analysis_read, csv_indices, str_wwt_style)
         write_lines_to_full_path(full_path, lines)
         print_success(part_path)
+        if str_result == '1':
+            open_file(full_path)
     print_end()
 
 

@@ -93,7 +93,6 @@ The basic procedure is the same as in 'Generating a table for quote'
 - Create your own heading formats
 - Save last used settings
 - Create an empty table when no file is imported
-- Add the option to open the result CSV file after export
 - * Resolve an issue where analysis for grouped multilingual files fails
 
 ### Maybe later

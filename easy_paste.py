@@ -20,7 +20,7 @@ class Border(tkinter.Frame):
 args_file = {'filetypes' : [('csv', '*.csv')]}
 
 btn_file = tkinter.Button(text='Import Analysis Files')
-var_files = tkinter.StringVar(tk_F)
+var_files = tkinter.StringVar()
 btn_file.grid(columnspan=2, pady=5)
 
 ent_file = tkinter.Entry(width=40, textvariable=var_files)
@@ -28,8 +28,10 @@ ent_file.grid(columnspan=2, pady=5)
 
 row_open = ep_scripts.get_next_grid_row(root)
 
-cb_file = tkinter.Checkbutton(text='Open after export', state='disabled')
-cb_file.grid(row=row_open, column=0, pady=5)
+var_result = tkinter.StringVar()
+cb_result = tkinter.Checkbutton(text='Open after export', variable=var_result)
+cb_result.select()
+cb_result.grid(row=row_open, column=0, pady=5)
 
 btn_folder = tkinter.Button(text='Open folder', state='disabled')
 btn_folder.grid(row=row_open, column=1, pady=5)
@@ -138,7 +140,9 @@ def run_quote(self):
     if btn_quote['state'] == 'normal' or 'active':
         ep_scripts.calc_quote(
             var_unit.get(), var_newfuzzy.get(), var_files.get(),
-            var_rep100.get(), var_heading.get())
+            var_rep100.get(), var_heading.get(),
+            var_result.get()
+        )
 
 btn_quote.bind('<ButtonRelease-1>', run_quote)
 
@@ -147,7 +151,9 @@ def run_weighted(self):
     if btn_quote['state'] == 'normal' or 'active':
         ep_scripts.calc_weighted(
             var_unit.get(), var_newfuzzy.get(), var_files.get(),
-            var_wwt_style.get())
+            var_wwt_style.get(),
+            var_result.get()
+        )
 
 btn_weighted.bind('<ButtonRelease-1>', run_weighted)
 
