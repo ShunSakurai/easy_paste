@@ -89,14 +89,17 @@ The basic procedure is the same as in 'Generating a table for quote'
 
 ## Features to come
 ### Working on
-- Make the code more [readable](http://www.amazon.com/dp/0596802293)
 - Make the "Open files" dialog more useful
 - Create your own heading formats
+- Save last used settings
+- Create an empty table when no file is imported
+- Add the option to open the result CSV file after export
+- * Resolve an issue where analysis for grouped multilingual files fails
 
 ### Maybe later
-- Save last used settings
 - Open the CSV files from inside the program
 - Open the tables from inside the program
+- Retain the order of the slices of a file
 
 ### Features not coming
 - Support HTML format to count characters. It turned out some CSV formats include character counts
@@ -106,105 +109,8 @@ The basic procedure is the same as in 'Generating a table for quote'
 Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4HdnKpFhvDDKXHfGUw0ccrb27xIIYgXyXV0-29199191293549) if you need any of the features as soon as possible.
 
 ## History
+Please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases) for the detailed history.
 "*" at the beginning means bug-fixing.
-For detailed history, please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases).
-
-### v1.6.7, December 8, 2016
-- * Correct issue with file paths without slashes
-
-### v1.6.6, December 7, 2016
-- Toggle "Check 100% matches" options
-- Support processing multiple analysis CSV files at once
-
-### v1.6.4, November 18, 2016
-- Display the version information at the start of the program
-
-### v1.6.3, October 23, 2016
-- * Resolve the connection issue to the release page
-- Add MIT license
-- Avoid using comma in the exported CSV file
-- * Correct the position of the entry field
-
-### v1.6.0, September 27, 2016
-- Check for and download updates online
-- Support X-translated segments
-- Make usability improvements
-- * Correct incorrect equations in weighted words in the second format
-
-### v1.5.10, August 16, 2016
-- Ask 50-74% matches are whether new or fuzzy
-- Semiautomate the set-up process with shutil module
-
-### v1.5.8, July 27, 2016
-- Add disclaimer
-
-### v1.5.7, July 19, 2016
-- Make the path in the entry field the initial path when choosing the file
-
-### v1.5.6, July 5, 2016
-- * Resolve an issue where file names without language code cause an error
-
-### v1.5.5, July 5, 2016
-- Display the options for quotes in the results
-- Support characters as the unit
-- Move the summed up word counts on top of the results
-
-### v1.5.2, July 4, 2016
-- Create the installer
-- Create the icon
-
-### v1.5.0, July 2, 2016
-- Sum up the word counts of the same language
-
-### v1.4.11, July 1, 2016
-- * Resolve an issue where decoding UTF-8 text with BOM fails
-
-### v1.4.10, June 29, 2016
-- Support two weighted words and time formats
-- Keep the entry fields uncleared when open file dialog is canceled
-- Support other memoQ analysis formats
-
-### v1.4.7, June 25, 2016
-- Change the weighted word and time format
-- Open the folder from inside the program on non-Windows platform
-- Make the weighted words compatible with non-Excel programs
-
-### v1.4.4, June 15, 2016
-- * Handle file names without a period '.'
-- Make small improvements
-
-### v1.4.3, June 15, 2016
-- Open the folder from inside the program
-- Make the code slightly less messy
-
-### v1.4.1, June 14, 2016
-- * Correct the wrong equations
-
-### v1.4.0, June 14, 2016
-- Calculate the weighted words and translation and proofreading time
-
-### v1.3.2, May 18, 2016
-- Simplify the tool by deleting the option for characters or HTML files
-
-### v1.3.1, May 16, 2016
-- Move with the Tab key and select with the Enter key
-
-### v1.3.0, May 15, 2016
-- Display 101% (Repetition) and 100% joined or separately
-- Add contact information
-- Support multilingual projects
-- Add several heading formats such as "Translation - New Words"
-- Change the button name from Run to Generate table
-
-### v1.2.3, April 24, 2016
-- Add some spaces above and below buttons
-- Reduce the size of the dist folder
-
-### v1.2.1, April 22, 2016
-- * Include Context TM in Repetitions and 100% Matches
-- Add to GitHub
-- Support both semicolon and tab delimiters
-- Open the csv file and detect the delimiter
 
 ## Contribution
 This is just a personal project and I do not really know what kind of contribution I may get. Any [feedback](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4HdnKpFhvDDKXHfGUw0ccrb27xIIYgXyXV0-29199191293549) and contribution is welcome!
@@ -214,7 +120,7 @@ Dear colleague translators and PMs, please help me brush up my English on this p
 ## License
 ### Usage
 You can use it for free.
-© 2016 Shun Sakurai
+© 2016-2017 Shun Sakurai
 
 Please note that this tool is not officially tested and approved by our company. I try my best to maintain the accuracy and the compatibility, but please agree to use it 'at your own risk.'
 

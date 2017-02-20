@@ -100,14 +100,14 @@ def detect_file_type_and_delimiter(str_unit, fn):
             f = open(fn, encoding=enc)
             content = f.readline()
             delimiter = content[0]
-            if 'Context TM' in content and str_unit == 'word':
-                csv_indices = csv_indices_trados
-            elif 'Context TM' in content and str_unit == 'char':
+            if 'Context TM' in content and str_unit == 'char':
                 print(
                     '-' * 70,
-                    '\nThe Trados Compatible CSV doesn\'t support Characters.',
+                    '\nTrados Compatible CSV doesn\'t support Characters.',
                     '\nPlease use another format.\n')
                 return
+            elif 'Context TM' in content and str_unit == 'word':
+                csv_indices = csv_indices_trados
             elif 'X-translated' in content:
                 csv_indices = csv_indices_all
             return csv_indices, enc, delimiter
@@ -159,6 +159,10 @@ def download_update(str_newest_version, url_installer):
     else:
         subprocess.call(['open', download_path])
     return
+
+
+def get_next_grid_row(root):
+    return root.grid_size()[1] + 1
 
 
 def get_paths_to_write(str_file_path, prefix):
