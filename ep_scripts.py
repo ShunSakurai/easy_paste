@@ -380,6 +380,7 @@ def open_folder(str_file_paths):
     else:
         subprocess.call(['open', folder_full_path])
 
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()

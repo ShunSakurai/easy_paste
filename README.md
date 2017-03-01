@@ -87,16 +87,21 @@ The basic procedure is the same as in 'Generating a table for quote'
 ![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet.png)
 ![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet2.png)
 
+## Answers to FAQ, and known issues and workarounds
+
+### Equations are lost when re-saving the CSV
+When you save the weighted words table after editing it in Excel or Open Office, the equations are lost and only values are saved. After that, you cannot change the words/day and 100% review:Yes/No. To prevent this, try saving the file as Excel or Open Office formats.
+
 ## Features to come
 ### Working on
 - Make the "Open files" dialog more useful
 - Create your own heading formats
 - Save last used settings
 - Create an empty table when no file is imported
+- Add total row and columns
 - * Resolve an issue where analysis for grouped multilingual files fails
 
 ### Maybe later
-- Open the CSV files from inside the program
 - Open the tables from inside the program
 - Retain the order of the slices of a file
 
@@ -109,10 +114,11 @@ Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4Hd
 
 ## History
 Please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases) for the detailed history.
+
 "*" at the beginning means bug-fixing.
 
 ## Contribution
-This is just a personal project and I do not really know what kind of contribution I may get. Any [feedback](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4HdnKpFhvDDKXHfGUw0ccrb27xIIYgXyXV0-29199191293549) and contribution is welcome!
+This is just a personal project and I do not really know what kind of contribution I may get. Any [feedback](https://app.asana.com/0/264050103803746/list) and contribution is welcome!
 
 Dear colleague translators and PMs, please help me brush up my English on this page.
 

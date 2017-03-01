@@ -17,6 +17,7 @@ class Border(tkinter.Frame):
     def __init__(self):
         super().__init__(height=30)
 
+
 args_file = {'filetypes' : [('csv', '*.csv')]}
 
 btn_file = tkinter.Button(text='Import Analysis Files')
@@ -133,6 +134,7 @@ def import_file(self):
     if f_files:
         var_files.set(f_files)
 
+
 btn_file.bind('<ButtonRelease-1>', import_file)
 
 
@@ -143,6 +145,7 @@ def run_quote(self):
             var_rep100.get(), var_heading.get(),
             var_result.get()
         )
+
 
 btn_quote.bind('<ButtonRelease-1>', run_quote)
 
@@ -155,6 +158,7 @@ def run_weighted(self):
             var_result.get()
         )
 
+
 btn_weighted.bind('<ButtonRelease-1>', run_weighted)
 
 
@@ -162,12 +166,14 @@ def run_folder(self):
     if btn_folder['state'] == 'normal' or 'active':
         ep_scripts.open_folder(var_files.get())
 
+
 btn_folder.bind('<ButtonRelease-1>', run_folder)
 
 
 def select_and_focus(self):
     self.widget.select()
     self.widget.focus()
+
 
 for rb in rbs_rep100:
     rb.bind('<ButtonRelease-1>', select_and_focus)
@@ -186,11 +192,13 @@ def true_false(var, unknown, w):
         btn_weighted['state'] = 'disabled'
         btn_folder['state'] = 'disabled'
 
+
 var_files.trace('w', true_false)
 
 
 def return_to_click(self):
     tk_F.focus_get().event_generate('<ButtonRelease-1>')
+
 
 root.bind('<Return>', return_to_click)
 
