@@ -96,12 +96,12 @@ When you save the weighted words table after editing it in Excel or Open Office,
 ### Working on
 - Make the "Open files" dialog more useful
 - Create your own heading formats
-- Save last used settings
 - Create an empty table when no file is imported
 - Add total row and columns
 - * Resolve an issue where analysis for grouped multilingual files fails
 
 ### Maybe later
+- Save last used settings
 - Open the tables from inside the program
 - Retain the order of the slices of a file
 

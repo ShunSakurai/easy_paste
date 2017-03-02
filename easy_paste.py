@@ -138,12 +138,28 @@ def import_file(self):
 btn_file.bind('<ButtonRelease-1>', import_file)
 
 
+def get_quote_options():
+    dict_quote_options = {
+        'str_newfuzzy': var_newfuzzy.get(),
+        'str_rep100': var_rep100.get(),
+        'str_heading': var_heading.get()
+    }
+    return dict_quote_options
+
+
+def get_weighted_options():
+    dict_weighted_options = {
+        'str_wwt_style': var_wwt_style.get()
+    }
+    return dict_weighted_options
+
+
 def run_quote(self):
     if btn_quote['state'] == 'normal' or 'active':
+        dict_quote_options = get_quote_options()
         ep_scripts.calc_quote(
-            var_unit.get(), var_newfuzzy.get(), var_files.get(),
-            var_rep100.get(), var_heading.get(),
-            var_result.get()
+            var_unit.get(), var_files.get(),
+            var_result.get(), dict_quote_options
         )
 
 
@@ -151,11 +167,11 @@ btn_quote.bind('<ButtonRelease-1>', run_quote)
 
 
 def run_weighted(self):
+    dict_weighted_options = get_weighted_options()
     if btn_quote['state'] == 'normal' or 'active':
         ep_scripts.calc_weighted(
-            var_unit.get(), var_newfuzzy.get(), var_files.get(),
-            var_wwt_style.get(),
-            var_result.get()
+            var_unit.get(), var_files.get(),
+            var_result.get(), dict_weighted_options
         )
 
 
