@@ -116,10 +116,25 @@ for label, wwt_style in wwt_styles:
     rb_wwt_style.grid(row=row_style, column=wwt_styles.index((label, wwt_style)), sticky='w', padx=5)
     rbs_wwt_style.append(rb_wwt_style)
 
-row_about = ep_scripts.get_next_grid_row(root)
+lable_total = tkinter.Label(text='Calculate totals')
+lable_total.grid(sticky='w', padx=10)
+
+row_total = ep_scripts.get_next_grid_row(root)
+
+var_total_col = tkinter.StringVar()
+cb_total_col = tkinter.Checkbutton(text='Total columns', variable=var_total_col)
+cb_total_col.select()
+cb_total_col.grid(row=row_total, column=0, sticky='w', padx=5)
+
+var_total_row = tkinter.StringVar()
+cb_total_row = tkinter.Checkbutton(text='Total row', variable=var_total_row)
+cb_total_row.select()
+cb_total_row.grid(row=row_total, column=1, sticky='w', padx=5)
 
 frame_border3 = Border()
 frame_border3.grid()
+
+row_about = ep_scripts.get_next_grid_row(root)
 
 btn_readme = tkinter.Button(text='Read readme', command=ep_scripts.open_readme)
 btn_readme.grid(row=row_about, column=0, pady=5)
@@ -149,7 +164,9 @@ def get_quote_options():
 
 def get_weighted_options():
     dict_weighted_options = {
-        'str_wwt_style': var_wwt_style.get()
+        'str_wwt_style': var_wwt_style.get(),
+        'str_total_col': var_total_col.get(),
+        'str_total_row': var_total_row.get()
     }
     return dict_weighted_options
 
@@ -168,7 +185,7 @@ btn_quote.bind('<ButtonRelease-1>', run_quote)
 
 def run_weighted(self):
     dict_weighted_options = get_weighted_options()
-    if btn_quote['state'] == 'normal' or 'active':
+    if btn_weighted['state'] == 'normal' or 'active':
         ep_scripts.calc_weighted(
             var_unit.get(), var_files.get(),
             var_result.get(), dict_weighted_options
@@ -198,7 +215,7 @@ for rb in rbs_heading:
     rb.bind('<ButtonRelease-1>', select_and_focus)
 
 
-def true_false(var, unknown, w):
+def file_selected(var, unknown, w):
     if var_files.get():
         btn_quote['state'] = 'normal'
         btn_weighted['state'] = 'normal'
@@ -209,7 +226,7 @@ def true_false(var, unknown, w):
         btn_folder['state'] = 'disabled'
 
 
-var_files.trace('w', true_false)
+var_files.trace('w', file_selected)
 
 
 def return_to_click(self):

@@ -79,8 +79,9 @@ The basic procedure is the same as in 'Generating a table for quote'
 
 - Click "Calculate weighted words"
 - CSV files starting with "weighted_" is generated in the same folder as the original CSV files
-- Open the exported CSV file
+- The exported CSV file is automatically opened
 - You can change the check 100% matches options and the words per day options and the result updates accordingly
+- Total and subtotal are automatically calculated and corresponding row and columns are added
 - Beware that the time and weighted words are not rounded. Round the values if necessary using Excel's commands, etc.
 - You can choose the format from the following two formats
 
@@ -97,7 +98,6 @@ When you save the weighted words table after editing it in Excel or Open Office,
 - Make the "Open files" dialog more useful
 - Create your own heading formats
 - Create an empty table when no file is imported
-- Add total row and columns
 - * Resolve an issue where analysis for grouped multilingual files fails
 
 ### Maybe later

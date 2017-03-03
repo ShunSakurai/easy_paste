@@ -59,6 +59,7 @@ row_3_time = [
 row_3_words = [
     'Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match',
     'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words']
+row_3_total = ['', 'TrHrs Subtotal', 'PrHrs Subtotal']
 c = 'ABCDEFGHIJKLM'
 
 
@@ -213,7 +214,11 @@ def print_end():
     print('\nClick [x] on the tk window to close the program.')
 
 
-def return_weighted_equations_time(r):
+def return_total_column(l):
+    return ['Total'] + [''.join(['=sum(', c[i], '4:', c[i], str(l), ')']) for i in range(1, 13)]
+
+
+def return_weighted_equations_time(r, dict_weighted_options):
     translation_time = ''.join([
         '=(((', c[8], r, '+', c[9], r, ')*0.25)+(', c[10], r, '*0.60)+',
         c[11], r, '+', c[12], r, ')/', c[1], '$2*8*4/5'])
@@ -224,10 +229,11 @@ def return_weighted_equations_time(r):
         c[11], r, '+', c[12], r, ')/', c[1], '$2*8/5'])
     total_time = ''.join(['=SUM(', c[2], r, ':', c[3], r, ')'])
     weighted_words = ''.join(['=', c[4], r, '*(', c[1], '$2/8)'])
-    return [weighted_words, translation_time, proof_time, total_time]
+    equations = [weighted_words, translation_time, proof_time, total_time]
+    return equations
 
 
-def return_weighted_equations_words(r):
+def return_weighted_equations_words(r, dict_weighted_options):
     translation_time = ''.join([
         '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
         c[6], r, '+', c[7], r, ')/B$2*8*4/5'])
@@ -238,7 +244,20 @@ def return_weighted_equations_words(r):
         c[6], r, '+', c[7], r, ')/B$2*8/5'])
     total_time = ''.join(['=SUM(', c[8], r, ':', c[9], r, ')'])
     weighted_words = ''.join(['=', c[10], r, '*(B$2/8)'])
-    return [translation_time, proof_time, total_time, weighted_words]
+    equations = [translation_time, proof_time, total_time, weighted_words]
+    return equations
+
+
+def return_total_equations_time(r):
+    trhrs_subtotal = ''.join(['=sum(', c[2], '$4:', c[2], r, ')'])
+    prhrs_subtotal = ''.join(['=sum(', c[3], '$4:', c[3], r, ')'])
+    return ['', trhrs_subtotal, prhrs_subtotal]
+
+
+def return_total_equations_words(r):
+    trhrs_subtotal = ''.join(['=sum(', c[8], '$4:', c[8], r, ')'])
+    prhrs_subtotal = ''.join(['=sum(', c[9], '$4:', c[9], r, ')'])
+    return ['', trhrs_subtotal, prhrs_subtotal]
 
 
 def shorten_fname(file_name):
@@ -319,6 +338,9 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
         row_3, func_equation = row_3_time, return_weighted_equations_time
     elif dict_weighted_options['str_wwt_style'] == 'words_first':
         row_3, func_equation = row_3_words, return_weighted_equations_words
+    print(dict_weighted_options['str_total_col'])
+    if dict_weighted_options['str_total_col'] == '1':
+        row_3 += row_3_total
     lines = []
     for i in [row_1, row_2, row_3]:
         lines.append(i)
@@ -330,11 +352,19 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
         r = str(num_row)
         fname = shorten_fname(row[0])
         words = [addup_unit(row, csv_indices[i]) for i in range(len(csv_indices))]
-        equations = func_equation(r)
+        equations = func_equation(r, dict_weighted_options)
         if dict_weighted_options['str_wwt_style'] == 'time_first':
-                lines.append([fname] + equations + [''] + words)
+            row_body = [fname] + equations + [''] + words
+            if dict_weighted_options['str_total_col'] == '1':
+                row_body += return_total_equations_time(r)
         elif dict_weighted_options['str_wwt_style'] == 'words_first':
-                lines.append([fname] + words + equations)
+            row_body = [fname] + words + equations
+            if dict_weighted_options['str_total_col'] == '1':
+                row_body += return_total_equations_time(r)
+        lines.append(row_body)
+    if dict_weighted_options['str_total_row'] == '1':
+        lines.append([''])
+        lines.append(return_total_column(len(lines)))
     return lines
 
 
