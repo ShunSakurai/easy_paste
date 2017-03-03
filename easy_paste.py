@@ -53,9 +53,6 @@ for label, unit in units:
 frame_border1 = Border()
 frame_border1.grid()
 
-btn_quote = tkinter.Button(text='Generate table for quote', state='disabled')
-btn_quote.grid(columnspan=2, pady=10)
-
 lable_newfuzzy = tkinter.Label(text=r'50-74% matches')
 lable_newfuzzy.grid(sticky='w', padx=10)
 
@@ -95,11 +92,11 @@ for label, heading in headings:
     rb_heading.grid(row=row_heading, column=headings.index((label, heading)), sticky='w', padx=5)
     rbs_heading.append(rb_heading)
 
+btn_quote = tkinter.Button(text='Generate table for quote', state='disabled')
+btn_quote.grid(columnspan=2, pady=10)
+
 frame_border2 = Border()
 frame_border2.grid()
-
-btn_weighted = tkinter.Button(text='Calculate weighted words', state='disabled')
-btn_weighted.grid(columnspan=2, pady=10)
 
 lable_wwt_style = tkinter.Label(text='Weighted styles')
 lable_wwt_style.grid(sticky='w', padx=10)
@@ -130,6 +127,9 @@ var_total_row = tkinter.StringVar()
 cb_total_row = tkinter.Checkbutton(text='Total row', variable=var_total_row)
 cb_total_row.select()
 cb_total_row.grid(row=row_total, column=1, sticky='w', padx=5)
+
+btn_weighted = tkinter.Button(text='Calculate weighted words', state='disabled')
+btn_weighted.grid(columnspan=2, pady=10)
 
 frame_border3 = Border()
 frame_border3.grid()
