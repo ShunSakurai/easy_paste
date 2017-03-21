@@ -40,7 +40,7 @@ Requirements and procedures for the installer:
 ## Usage
 
 ### memoQ analysis file types
-Please select one of the following options when exporting the statistics from memoQ
+Please select one of the following options when exporting the statistics from memoQ. Please note that Trados-compatible format doesn't contain character counts.
 
 From Documents tab > Statistics:
 - CSV (Per-file, Trados-compatible)

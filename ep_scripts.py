@@ -196,7 +196,12 @@ def installed_version_is_newer(str_installed, str_online):
 
 def open_file(str_file_path):
     if sys.platform.startswith('win'):
-        os.startfile(str_file_path)
+        try:
+            os.startfile(str_file_path)
+        except (FileNotFoundError, PermissionError):
+            print('File could not be opened from inside Easy Paste.')
+            print('Please go to the file location and open it manually.')
+            print(sys.exc_info()[1])
     else:
         subprocess.call(['open', str_file_path])
 
@@ -338,9 +343,8 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
         row_3, func_equation = row_3_time, return_weighted_equations_time
     elif dict_weighted_options['str_wwt_style'] == 'words_first':
         row_3, func_equation = row_3_words, return_weighted_equations_words
-    print(dict_weighted_options['str_total_col'])
     if dict_weighted_options['str_total_col'] == '1':
-        row_3 += row_3_total
+        row_3 = row_3 + row_3_total
     lines = []
     for i in [row_1, row_2, row_3]:
         lines.append(i)
