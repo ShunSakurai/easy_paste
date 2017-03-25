@@ -38,14 +38,18 @@ def return_heading_quote(dict_quote_options):
         if dict_quote_options['str_heading'] == 'short':
             return ['New Words', 'Fuzzy Matches', 'Repetitions and 100% Matches']
         elif dict_quote_options['str_heading'] == 'long':
-            return ['Translation -  New Words', 'Translation -  Fuzzy Matches',
-                 'Translation -  Repetitions and 100% Matches']
+            return [
+                'Translation -  New Words', 'Translation -  Fuzzy Matches',
+                'Translation -  Repetitions and 100% Matches'
+            ]
     if dict_quote_options['str_rep100'] == 'separate':
         if dict_quote_options['str_heading'] == 'short':
             return ['New Words', 'Fuzzy Matches', '100% Matches', 'Repetitions']
         elif dict_quote_options['str_heading'] == 'long':
-            return ['Translation -  New Words', 'Translation -  Fuzzy Matches',
-                 'Translation - 100% Matches', 'Translation -  Repetitions']
+            return [
+                'Translation -  New Words', 'Translation -  Fuzzy Matches',
+                'Translation - 100% Matches', 'Translation -  Repetitions'
+            ]
 
 
 # Strings and function to use for weighted words
@@ -100,20 +104,20 @@ def check_updates():
         download_update(str_newest_version, url_installer)
 
 
-def detect_file_type_and_delimiter(str_unit, fn):
+def detect_file_type_and_delimiter(dict_ep_options, fn):
     delimiter = ''
     for enc in encodings:
         try:
             f = open(fn, encoding=enc)
             content = f.readline()
             delimiter = content[0]
-            if 'Context TM' in content and str_unit == 'char':
+            if 'Context TM' in content and dict_ep_options['str_unit'] == 'char':
                 print(
                     '-' * 70,
                     '\nTrados Compatible CSV doesn\'t support Characters.',
                     '\nPlease use another format.\n')
                 return
-            elif 'Context TM' in content and str_unit == 'word':
+            elif 'Context TM' in content and dict_ep_options['str_unit'] == 'word':
                 csv_indices = csv_indices_trados
             elif 'X-translated' in content:
                 csv_indices = csv_indices_all
@@ -172,7 +176,7 @@ def get_next_grid_row(root):
     return root.grid_size()[1] + 1
 
 
-def get_paths_to_write(str_file_path, prefix):
+def insert_prefix_in_path(str_file_path, prefix):
     analysis_divided = str_file_path.rsplit('/', 2)
     part_path = ''.join([
         analysis_divided[1], prefix, analysis_divided[2]])
@@ -343,7 +347,7 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
         row_3, func_equation = row_3_time, return_weighted_equations_time
     elif dict_weighted_options['str_wwt_style'] == 'words_first':
         row_3, func_equation = row_3_words, return_weighted_equations_words
-    if dict_weighted_options['str_total_col'] == '1':
+    if dict_weighted_options['bool_total_col']:
         row_3 = row_3 + row_3_total
     lines = []
     for i in [row_1, row_2, row_3]:
@@ -359,60 +363,66 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
         equations = func_equation(r, dict_weighted_options)
         if dict_weighted_options['str_wwt_style'] == 'time_first':
             row_body = [fname] + equations + [''] + words
-            if dict_weighted_options['str_total_col'] == '1':
+            if dict_weighted_options['bool_total_col']:
                 row_body += return_total_equations_time(r)
         elif dict_weighted_options['str_wwt_style'] == 'words_first':
             row_body = [fname] + words + equations
-            if dict_weighted_options['str_total_col'] == '1':
+            if dict_weighted_options['bool_total_col']:
                 row_body += return_total_equations_time(r)
         lines.append(row_body)
-    if dict_weighted_options['str_total_row'] == '1':
+    if dict_weighted_options['bool_total_row']:
         lines.append([''])
         lines.append(return_total_column(len(lines)))
     return lines
 
 
-def calc_quote(str_unit, str_file_paths, str_result, dict_quote_options):
-    for str_file_path in divide_str_tuple(str_file_paths):
-        indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
+def calc_quote(str_files, dict_ep_options, dict_quote_options):
+    for str_file_path in divide_str_tuple(str_files):
+        indices, enc, dl = detect_file_type_and_delimiter(dict_ep_options, str_file_path)
         csv_indices = slice_indices(indices, return_slice_group_quote(dict_quote_options))
         headings = return_heading_quote(dict_quote_options)
-        if str_unit == 'char':
+        if dict_ep_options['str_unit'] == 'char':
             csv_indices = add_num_to_md_list(csv_indices, 1)
         analysis_read = csv.reader(
             open(str_file_path, encoding=enc), delimiter=dl)
-        full_path, part_path = get_paths_to_write(str_file_path, '/to_paste(utf-8, comma)')
+        prefix = ''.join(['/quote-', dict_ep_options['str_unit'], '-'])
+        full_path, part_path = insert_prefix_in_path(str_file_path, prefix)
 
-        str_options = ' '.join(['Options:', str_unit, dict_quote_options['str_newfuzzy'], dict_quote_options['str_rep100'], dict_quote_options['str_heading']])
+        str_options = ' '.join([
+            'Options:',
+            dict_ep_options['str_unit'], dict_quote_options['str_newfuzzy'],
+            dict_quote_options['str_rep100'], dict_quote_options['str_heading']
+        ])
         print(str_options)
         lines = [[str_options], ['']] + provide_quote_lines(analysis_read, csv_indices, headings)
         write_lines_to_full_path(full_path, lines)
         print_success(part_path)
-        if str_result == '1':
+        if dict_ep_options['bool_result']:
             open_file(full_path)
     print_end()
 
 
-def calc_weighted(str_unit, str_file_paths, str_result, dict_weighted_options):
-    for str_file_path in divide_str_tuple(str_file_paths):
-        indices, enc, dl = detect_file_type_and_delimiter(str_unit, str_file_path)
+def calc_weighted(str_files, dict_ep_options, dict_weighted_options):
+    for str_file_path in divide_str_tuple(str_files):
+        indices, enc, dl = detect_file_type_and_delimiter(dict_ep_options, str_file_path)
         csv_indices = slice_indices(indices, list_slice_groups_weighted)
-        if str_unit == 'char':
+        if dict_ep_options['str_unit'] == 'char':
             csv_indices = add_num_to_md_list(csv_indices, 1)
         analysis_read = csv.reader(
             open(str_file_path, encoding=enc), delimiter=dl)
-        full_path, part_path = get_paths_to_write(str_file_path, '/weighted_')
+        prefix = ''.join(['/weighted-', dict_ep_options['str_unit'], '-'])
+        full_path, part_path = insert_prefix_in_path(str_file_path, prefix)
 
         lines = provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options)
         write_lines_to_full_path(full_path, lines)
         print_success(part_path)
-        if str_result == '1':
+        if dict_ep_options['bool_result']:
             open_file(full_path)
     print_end()
 
 
-def open_folder(str_file_paths):
-    str_file_path = divide_str_tuple(str_file_paths)[0]
+def open_folder(str_files):
+    str_file_path = divide_str_tuple(str_files)[0]
     analysis_divided = str_file_path.rsplit('/', 1)
     folder_full_path = analysis_divided[0]
     if sys.platform.startswith('win'):

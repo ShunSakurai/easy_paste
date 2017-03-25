@@ -8,7 +8,7 @@ A tool for generating easy-to-paste tables for quotes and weighted words from th
 ## Description
 You don't have to manually add up the number of words for creating quotes anymore. This tool generates easy-to-paste tables for quotes from the analysis exported from memoQ.
 
-You can also calculate the weighted words and the translation and proofreading time for the files. memoQ now [tells us the weighted words](https://www.memoq.com/memoq-build-june), but this tool is still useful in that it can calculated the weighted words for sliced files, and it can provide the estimated time.
+You can also calculate the weighted words and the translation and proofreading time for the files. memoQ now [tells us the weighted words](https://www.memoq.com/memoq-build-june), but this tool is still useful in that it can calculate the weighted words for sliced files, and it can provide the estimated time.
 
 This program is coded in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
 
@@ -129,5 +129,5 @@ You can use it for free.
 
 Please note that this tool is not officially tested and approved by our company. I try my best to maintain the accuracy and the compatibility, but please agree to use it 'at your own risk.'
 
-###MIT License
+### MIT License
 The code is protected under MIT License. Please see license.txt for details.

@@ -29,7 +29,7 @@ ent_file.grid(columnspan=2, pady=5)
 
 row_open = ep_scripts.get_next_grid_row(root)
 
-var_result = tkinter.StringVar()
+var_result = tkinter.BooleanVar()
 cb_result = tkinter.Checkbutton(text='Open after export', variable=var_result)
 cb_result.select()
 cb_result.grid(row=row_open, column=0, pady=5)
@@ -118,12 +118,12 @@ lable_total.grid(sticky='w', padx=10)
 
 row_total = ep_scripts.get_next_grid_row(root)
 
-var_total_col = tkinter.StringVar()
+var_total_col = tkinter.BooleanVar()
 cb_total_col = tkinter.Checkbutton(text='Total columns', variable=var_total_col)
 cb_total_col.select()
 cb_total_col.grid(row=row_total, column=0, sticky='w', padx=5)
 
-var_total_row = tkinter.StringVar()
+var_total_row = tkinter.BooleanVar()
 cb_total_row = tkinter.Checkbutton(text='Total row', variable=var_total_row)
 cb_total_row.select()
 cb_total_row.grid(row=row_total, column=1, sticky='w', padx=5)
@@ -153,6 +153,14 @@ def import_file(self):
 btn_file.bind('<ButtonRelease-1>', import_file)
 
 
+def get_ep_options():
+    dict_ep_options = {
+        'str_unit': var_unit.get(),
+        'bool_result': var_result.get()
+    }
+    return dict_ep_options
+
+
 def get_quote_options():
     dict_quote_options = {
         'str_newfuzzy': var_newfuzzy.get(),
@@ -165,31 +173,27 @@ def get_quote_options():
 def get_weighted_options():
     dict_weighted_options = {
         'str_wwt_style': var_wwt_style.get(),
-        'str_total_col': var_total_col.get(),
-        'str_total_row': var_total_row.get()
+        'bool_total_col': var_total_col.get(),
+        'bool_total_row': var_total_row.get()
     }
     return dict_weighted_options
 
 
 def run_quote(self):
     if btn_quote['state'] == 'normal' or 'active':
+        dict_ep_options = get_ep_options()
         dict_quote_options = get_quote_options()
-        ep_scripts.calc_quote(
-            var_unit.get(), var_files.get(),
-            var_result.get(), dict_quote_options
-        )
+        ep_scripts.calc_quote(var_files.get(), dict_ep_options, dict_quote_options)
 
 
 btn_quote.bind('<ButtonRelease-1>', run_quote)
 
 
 def run_weighted(self):
+    dict_ep_options = get_ep_options()
     dict_weighted_options = get_weighted_options()
     if btn_weighted['state'] == 'normal' or 'active':
-        ep_scripts.calc_weighted(
-            var_unit.get(), var_files.get(),
-            var_result.get(), dict_weighted_options
-        )
+        ep_scripts.calc_weighted(var_files.get(), dict_ep_options, dict_weighted_options)
 
 
 btn_weighted.bind('<ButtonRelease-1>', run_weighted)
