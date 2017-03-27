@@ -269,21 +269,21 @@ def return_total_equations_words(r):
     return ['', trhrs_subtotal, prhrs_subtotal]
 
 
-def shorten_fname(file_name):
+def shorten_fname(file_path):
     r'''
     >>> shorten_fname(r'[jpn] "Z:\Users\sakuraishun\Dropbox\Codes\easy_paste\README.md"')
     '[jpn]README.md'
     '''
-    file_name = file_name.replace('\\', '/')
-    if '.' in file_name and file_name.startswith('['):
-        lan = file_name[:file_name.find(']') + 1]
-        fname = file_name.rsplit('/', 1)[1].strip('"')
-    elif '.' in file_name and '/' in file_name:
-        lan = ''
-        fname = file_name.rsplit('/', 1)[1]
+    file_path = file_path.replace('\\', '/')
+    lan = ''
+    if '.' in file_path and '/' in file_path:
+        if file_path.startswith('['):
+            lan = file_path[:file_path.find(']') + 1]
+            fname = file_path.rsplit('/', 1)[1].strip('"')
+        else:
+            fname = file_path.rsplit('/', 1)[1]
     else:
-        lan = ''
-        fname = file_name
+        fname = file_path
     return lan + fname
 
 
