@@ -11,6 +11,7 @@ print('Loading v', setup.dict_console['version'], '...', sep='')
 
 root = tkinter.Tk()
 tk_F = tkinter.Frame(root)
+str_gray = 'dark slate gray'
 
 
 class Border(tkinter.Frame):
@@ -24,7 +25,7 @@ btn_file = tkinter.Button(text='Import Analysis Files')
 var_files = tkinter.StringVar()
 btn_file.grid(columnspan=2, pady=5)
 
-ent_file = tkinter.Entry(width=40, textvariable=var_files)
+ent_file = tkinter.Entry(width=55, textvariable=var_files)
 ent_file.grid(columnspan=2, pady=5)
 
 row_open = ep_scripts.get_next_grid_row(root)
@@ -52,6 +53,39 @@ for label, unit in units:
 
 frame_border1 = Border()
 frame_border1.grid()
+
+label_mr_categories = tkinter.Label(text=r'Categorize match rates')
+label_mr_categories.grid(sticky='w', padx=10)
+
+frame_mr_categories = tkinter.Frame()
+frame_mr_categories.grid(columnspan=2)
+
+row_mr_categories = ep_scripts.get_next_grid_row(root)
+
+list_str_mr = ['Reps', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'New']
+
+list_match_rates = []
+list_categories = []
+list_mr_categories = []
+
+for str_mr in list_str_mr:
+    label_match_rate = tkinter.Label(frame_mr_categories, text=str_mr)
+    label_match_rate.grid(row=row_mr_categories, column=list_str_mr.index(str_mr) * 2,pady=5)
+    list_match_rates.append(label_match_rate)
+    list_mr_categories.append(label_match_rate)
+
+for i in range(len(list_match_rates) - 1):
+    label_category = tkinter.Label(frame_mr_categories, text=' ')
+    label_category.grid(row=row_mr_categories, column=i * 2 + 1)
+    list_categories.append(label_category)
+    list_mr_categories.insert(i * 2 + 1, label_category)
+
+for i in [1, 4]:
+    list_categories[i]['bg'] = str_gray
+
+frame_border_temp = Border()
+frame_border_temp.grid()
+
 
 lable_newfuzzy = tkinter.Label(text=r'50-74% matches')
 lable_newfuzzy.grid(sticky='w', padx=10)
@@ -151,6 +185,30 @@ def import_file(self):
 
 
 btn_file.bind('<ButtonRelease-1>', import_file)
+
+
+def toggle_label_color(self):
+    if self.widget['bg'] == str_gray:
+        self.widget['bg'] = 'SystemButtonFace'
+    else:
+        self.widget['bg'] = str_gray
+
+for l in list_categories:
+    l.bind('<ButtonRelease-1>', toggle_label_color)
+
+
+def get_gray_indices(self):
+    gray_indices = []
+    for i in range(len(list_categories)):
+        if list_categories[i]['bg'] == str_gray:
+            gray_indices.append(i)
+    print(gray_indices)
+    return gray_indices
+
+
+btn_gray = tkinter.Button(text='Test: Get Gray Indices')
+btn_gray.grid(columnspan=2)
+btn_gray.bind('<ButtonRelease-1>', get_gray_indices)
 
 
 def get_ep_options():
