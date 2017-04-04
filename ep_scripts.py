@@ -15,8 +15,10 @@ import webbrowser
 # Constants
 encodings = ['utf-16', 'utf-8-sig']
 
-csv_indices_trados = [32, 28, 24, 20, 16, 12, 8, 4]
-csv_indices_all = [67, 59, 51, 43, 35, 27, 19, 11, 3]
+dict_csv_indices = {
+    'trados': [32, 28, 24, 20, 16, 12, 8, 4],
+    'all': [67, 59, 51, 43, 35, 27, 19, 11, 3]
+}
 
 
 # Strings and function to use for quote
@@ -118,9 +120,9 @@ def detect_file_type_and_delimiter(dict_ep_options, fn):
                     '\nPlease use another format.\n')
                 return
             elif 'Context TM' in content and dict_ep_options['str_unit'] == 'word':
-                csv_indices = csv_indices_trados
+                csv_indices = dict_csv_indices['trados']
             elif 'X-translated' in content:
-                csv_indices = csv_indices_all
+                csv_indices = dict_csv_indices['all']
             return csv_indices, enc, delimiter
         except:
             pass
