@@ -37,40 +37,42 @@ Requirements and procedures for the installer:
 - [Inno Setup](http://www.jrsoftware.org/isdl.php)
 - Open setup_installer.iss with Inno Setup Compiler and click Build > Compile
 
-## Usage
-
-### memoQ analysis file types
-Please select one of the following options when exporting the statistics from memoQ. Please note that Trados-compatible format doesn't contain character counts.
+## Prerequisites
+### Supported memoQ analysis file types
+When exporting the statistics from memoQ, select one of the following options. Please note that Trados-compatible format doesn't contain character counts.
 
 From Documents tab > Statistics:
-- CSV (Per-file, Trados-compatible)
 - CSV (Per-file, all information)
+- CSV (Per-file, Trados-compatible) * only support "word" counts
 
 ![Format](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_format.png)
 
 From Project home > Overview > Reports > Analysis:
-- CSV file exported by clicking 'export'
+- CSV file exported by clicking 'export' is also supported
 
 ![Format](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_format2.png)
 
-### Generating a table for quote
+## Usage
+### Common
 - You can open the program by double-clicking Easy Paste.exe or its alias.
 - Choose CSV files exported from memoQ's statistics in above mentioned format
+- After exporting the table, the exported CSV file is automatically opened
+
+### Generating a table for quote
 - Click "Generate table for quote"
-- CSV files starting with "to_paste" is generated in the same folder as the original CSV files
+- CSV files starting with "quote" is generated in the same folder as the original CSV files
 
 ![UI](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_ui.png)
 
-### Copying and pasting the table
+#### Copying and pasting the table
 - Open the exported CSV file
 - You can easily copy and paste the table to your quote
 - Paste with "Keep Text Only" option in order to avoid messing up the font and the format
 
-### Options
-- You can choose the unit from "Word" or "Character." "Character" is only supported in all information CSV files or CSV files exported from "Reports." See [memoQ analysis file types](https://github.com/ShunSakurai/easy_paste#memoq-analysis-file-types) for details
-- You can choose 50-74% matches are included in whether "New" or "Fuzzy"
-- You can choose the format from "New, Fuzzy, and 100% and Repetitions" or ""New, Fuzzy, 100%, and Repetitions""
-- You can choose the heading from "New Words" or "Translation -  New Words." I will add an option to create your own heading formats
+#### Options
+- You can choose the unit from "Word" or "Character." "Character" is only supported in all information CSV files or CSV files exported from "Reports." See [Supported memoQ analysis file types](https://github.com/ShunSakurai/easy_paste#supported-memoq-analysis-file-types) for details
+- You can freely customize the match rate categories. By default, match rates are divided into "New, Fuzzy, and 100% and Repetitions"
+- You can choose the heading from "New Words" or "Translation -  New Words"
 
 ![Four heading formats](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_heading.png)
 
@@ -78,18 +80,19 @@ From Project home > Overview > Reports > Analysis:
 The basic procedure is the same as in 'Generating a table for quote'
 
 - Click "Calculate weighted words"
-- CSV files starting with "weighted_" is generated in the same folder as the original CSV files
-- The exported CSV file is automatically opened
-- You can change the check 100% matches options and the words per day options and the result updates accordingly
-- Total and subtotal are automatically calculated and corresponding row and columns are added
-- Beware that the time and weighted words are not rounded. Round the values if necessary using Excel's commands, etc.
+- CSV files starting with "weighted" is generated in the same folder as the original CSV files
 - You can choose the format from the following two formats
 
 ![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet.png)
 ![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet2.png)
 
-## Answers to FAQ, and known issues and workarounds
+#### Editing and saving the table
+- Beware that the time and weighted words are not rounded. Round the values if necessary using Excel's commands, etc.
+- Total and subtotal are automatically calculated and corresponding row and columns are added
+- You can change the check 100% matches options and the words per day options and the result updates accordingly
+- After editing, save the file in a file format other than CSV to retain the equations. See [Equations are lost when re-saving the CSV](https://github.com/ShunSakurai/easy_paste#equations-are-los- when-re-saving-the-CSV)
 
+## Answers to FAQ, and known issues and workarounds
 ### Equations are lost when re-saving the CSV
 When you save the weighted words table after editing it in Excel or Open Office, the equations are lost and only values are saved. After that, you cannot change the words/day and 100% review:Yes/No. To prevent this, try saving the file as Excel or Open Office formats.
 
@@ -98,11 +101,10 @@ When you save the weighted words table after editing it in Excel or Open Office,
 - Make the "Open files" dialog more useful
 - Create your own heading formats
 - Create an empty table when no file is imported
-- * Resolve an issue where analysis for grouped multilingual files fails
+- \* Resolve an issue where analysis for grouped multilingual files fails
 
 ### Maybe later
 - Save last used settings
-- Open the tables from inside the program
 - Retain the order of the slices of a file
 
 ### Features not coming

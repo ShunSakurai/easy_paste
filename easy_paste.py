@@ -97,8 +97,8 @@ btn_select_all.grid(row=row_mrc, column=0, sticky='e', padx=20, pady=5)
 btn_restore_default = tkinter.Button(text='Default')
 btn_restore_default.grid(row=row_mrc, column=1, sticky='w', padx=20, pady=5)
 
-btn_save_mrc = tkinter.Button(text='Save', state='disabled')
-btn_save_mrc.grid(row=row_mrc, column=1, sticky='e', padx=20, pady=5)
+# btn_save_mrc = tkinter.Button(text='Save', state='disabled')
+# btn_save_mrc.grid(row=row_mrc, column=1, sticky='e', padx=20, pady=5)
 
 lable_heading = tkinter.Label(text='Headings')
 lable_heading.grid(sticky='w', padx=10)

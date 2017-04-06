@@ -376,36 +376,34 @@ def write_lines_to_full_path(full_path, lines):
 # Main functions
 def provide_quote_lines(analysis_read, csv_indices, headings):
     num_items = len(csv_indices)
-    list_files = []
+    list_quote_lines = []
     list_combined = []
     next(analysis_read)
     next(analysis_read)
     for row in analysis_read:
-        list_file = []
-        # list_file = [fname, new, fuzzy, 100 (and) rep]
+        list_quote_line = []
         fname = shorten_fname(row[0])
-        list_file.append(fname)
+        list_quote_line.append(fname)
         for i in range(num_items):
             unit_sum = addup_unit(row, csv_indices[i])
-            list_file.append(unit_sum)
-        list_files.append(list_file)
+            list_quote_line.append(unit_sum)
+        list_quote_lines.append(list_quote_line)
 
-        if list_file[0].startswith('['):
-            lan = list_file[0][1:list_file[0].find(']')]
-        # list_combined[i] = [lan, new, fuzzy, 100 (and) rep]
+        if list_quote_line[0].startswith('['):
+            lan = list_quote_line[0][1:list_quote_line[0].find(']')]
             if list_combined and list_combined[-1][0] == lan:
                 for i in range(num_items):
-                    list_combined[-1][i + 1] += list_file[i + 1]
+                    list_combined[-1][i + 1] += list_quote_line[i + 1]
             else:
-                list_combined.append([lan] + list_file[1:])
+                list_combined.append([lan] + list_quote_line[1:])
         else:
             pass
 
     lines = []
-    for list_file in list_combined + list_files:
-        lines.append([list_file[0]])
+    for list_quote_line in list_combined + list_quote_lines:
+        lines.append([list_quote_line[0]])
         for i in range(num_items):
-            lines.append([headings[i], list_file[i + 1]])
+            lines.append([headings[i], list_quote_line[i + 1]])
         lines.append([''])
     return lines
 
