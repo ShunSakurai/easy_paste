@@ -11,6 +11,9 @@ print('Loading v', setup.dict_console['version'], '...', sep='')
 
 root = tkinter.Tk()
 tk_F = tkinter.Frame(root)
+
+tuple_str_mr = ('New', '50-74%', '75-84%', '85-94%', '95-99%', '100%', 'Reps')
+default_list_separators = [False, True, False, False, True, False]
 str_gray = 'dark slate gray'
 str_default_color = 'SystemButtonFace'
 
@@ -60,7 +63,6 @@ label_mr_categories.grid(sticky='w', padx=10)
 
 frame_mr_categories = tkinter.Frame()
 frame_mr_categories.grid(columnspan=2, pady=10)
-tuple_str_mr = ('New', '50-74%', '75-84%', '85-94%', '95-99%', '100%', 'Reps')
 
 row_mrc_labels = ep_scripts.get_next_grid_row(frame_mr_categories)
 list_mrc_labels = []
@@ -84,8 +86,19 @@ for i in range(len(list_match_rate_labels) - 1):
     label_separator.grid(row=row_mr_categories, column=i * 2 + 1)
     list_separator_labels.append(label_separator)
 
-for i in [1, 4]:
-    list_separator_labels[i]['bg'] = str_gray
+row_mrc = ep_scripts.get_next_grid_row(root)
+
+btn_clear_all = tkinter.Button(text='Clear All')
+btn_clear_all.grid(row=row_mrc, column=0, sticky='w', padx=20, pady=5)
+
+btn_select_all = tkinter.Button(text='Select All')
+btn_select_all.grid(row=row_mrc, column=0, sticky='e', padx=20, pady=5)
+
+btn_restore_default = tkinter.Button(text='Default')
+btn_restore_default.grid(row=row_mrc, column=1, sticky='w', padx=20, pady=5)
+
+btn_save_mrc = tkinter.Button(text='Save', state='disabled')
+btn_save_mrc.grid(row=row_mrc, column=1, sticky='e', padx=20, pady=5)
 
 lable_heading = tkinter.Label(text='Headings')
 lable_heading.grid(sticky='w', padx=10)
@@ -161,6 +174,14 @@ def import_file(self):
 btn_file.bind('<ButtonRelease-1>', import_file)
 
 
+def set_colored_separators(list_separators):
+    for i in range(len(list_separators)):
+        if list_separators[i]:
+            list_separator_labels[i]['bg'] = str_gray
+        else:
+            list_separator_labels[i]['bg'] = str_default_color
+
+
 def toggle_label_color(self):
     if self.widget['bg'] == str_gray:
         self.widget['bg'] = str_default_color
@@ -202,6 +223,15 @@ def separator_functions(self):
 
 for sep in list_separator_labels:
     sep.bind('<ButtonRelease-1>', separator_functions)
+
+
+def separator_btn_functions(sequence):
+    set_colored_separators(sequence)
+    adjust_colspan()
+
+btn_clear_all['command'] = lambda: separator_btn_functions([False] * 6)
+btn_select_all['command'] = lambda: separator_btn_functions([True] * 6)
+btn_restore_default['command'] = lambda: separator_btn_functions(default_list_separators)
 
 
 def get_ep_options():
@@ -286,6 +316,7 @@ def return_to_click(self):
 
 
 root.bind('<Return>', return_to_click)
+set_colored_separators(default_list_separators)
 adjust_colspan()
 
 top = tk_F.winfo_toplevel()
