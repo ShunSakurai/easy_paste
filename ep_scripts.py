@@ -16,42 +16,64 @@ import webbrowser
 encodings = ['utf-16', 'utf-8-sig']
 
 dict_csv_indices = {
+    # Lower to higher match rates
     'trados': [32, 28, 24, 20, 16, 12, 8, 4],
     'all': [67, 59, 51, 43, 35, 27, 19, 11, 3]
 }
 
 
 # Strings and function to use for quote
+tuple_str_mr = (('New', 'New'), ('50', '74%'), ('75', '84%'), ('85', '94%'), ('95', '99%'), ('100%', '100%'), ('Reps', 'Reps'))
+
+
+def return_mrc_colspan(list_separators):
+    list_count = []
+    count = 0
+    for i in list_separators:
+        if i:
+            list_count.append(count)
+            count = 0
+        else:
+            count += 1
+    list_count.append(count)
+    to_return = [i * 2 + 1 for i in list_count]
+    return to_return
+
+
+def return_mrc_text(list_separators):
+    list_heading = []
+    current_start = tuple_str_mr[0][0]
+    for i in range(len(list_separators)):
+        if list_separators[i]:
+            list_heading.append('-'.join(unique_ordered_list((current_start, tuple_str_mr[i][1]))))
+            current_start = tuple_str_mr[i + 1][0]
+    list_heading.append('-'.join(unique_ordered_list((current_start, tuple_str_mr[-1][1]))))
+    # Might produce 95-Reps without %, to be fixed later
+    return list_heading
+
+
 def return_slice_group_quote(dict_quote_options):
-    if dict_quote_options['str_newfuzzy'] == 'new':
-        if dict_quote_options['str_rep100'] == 'joined':
-            return [[0, 2], [2, 5], [5, 9]]
-        elif dict_quote_options['str_rep100'] == 'separate':
-            return [[0, 2], [2, 5], [5, 6], [6, 9]]
-    if dict_quote_options['str_newfuzzy'] == 'fuzzy':
-        if dict_quote_options['str_rep100'] == 'joined':
-            return [[0, 1], [1, 5], [5, 9]]
-        elif dict_quote_options['str_rep100'] == 'separate':
-            return [[0, 1], [1, 5], [5, 6], [6, 9]]
+    r'''
+    >>> return_slice_group_quote({'list_separators': [False, True, False, False, True, False]})
+    [[0, 2], [2, 5], [5, 9]]
+    '''
+    list_separators = dict_quote_options['list_separators']
+    source_slice_groups_quote = ((0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 9))
+    to_return = []
+    current_start = source_slice_groups_quote[0][0]
+    for i in range(len(list_separators)):
+        if list_separators[i]:
+            to_return.append([current_start, source_slice_groups_quote[i][1]])
+            current_start = source_slice_groups_quote[i + 1][0]
+    to_return.append([current_start, source_slice_groups_quote[-1][1]])
+    return to_return
 
 
 def return_heading_quote(dict_quote_options):
-    if dict_quote_options['str_rep100'] == 'joined':
-        if dict_quote_options['str_heading'] == 'short':
-            return ['New Words', 'Fuzzy Matches', 'Repetitions and 100% Matches']
-        elif dict_quote_options['str_heading'] == 'long':
-            return [
-                'Translation -  New Words', 'Translation -  Fuzzy Matches',
-                'Translation -  Repetitions and 100% Matches'
-            ]
-    if dict_quote_options['str_rep100'] == 'separate':
-        if dict_quote_options['str_heading'] == 'short':
-            return ['New Words', 'Fuzzy Matches', '100% Matches', 'Repetitions']
-        elif dict_quote_options['str_heading'] == 'long':
-            return [
-                'Translation -  New Words', 'Translation -  Fuzzy Matches',
-                'Translation - 100% Matches', 'Translation -  Repetitions'
-            ]
+    list_heading = return_mrc_text(dict_quote_options['list_separators'])
+    if dict_quote_options['str_heading'] == 'long':
+        list_heading = ['Translation - ' + h  for h in list_heading]
+    return list_heading
 
 
 # Strings and function to use for weighted words
@@ -300,6 +322,14 @@ def slice_indices(csv_indices, slice_group):
     return csv_indices_grouped
 
 
+def unique_ordered_list(sequence):
+    unique_list = []
+    for i in sequence:
+        if i not in unique_list:
+            unique_list.append(i)
+    return unique_list
+
+
 def write_lines_to_full_path(full_path, lines):
     result_file = open(full_path, 'w', encoding='utf-8')
     result_writer = csv.writer(result_file, delimiter=',', lineterminator='\n')
@@ -390,11 +420,7 @@ def calc_quote(str_files, dict_ep_options, dict_quote_options):
         prefix = ''.join(['/quote-', dict_ep_options['str_unit'], '-'])
         full_path, part_path = insert_prefix_in_path(str_file_path, prefix)
 
-        str_options = ' '.join([
-            'Options:',
-            dict_ep_options['str_unit'], dict_quote_options['str_newfuzzy'],
-            dict_quote_options['str_rep100'], dict_quote_options['str_heading']
-        ])
+        str_options = 'Easy Paste Options:' + dict_ep_options['str_unit']
         print(str_options)
         lines = [[str_options], ['']] + provide_quote_lines(analysis_read, csv_indices, headings)
         write_lines_to_full_path(full_path, lines)

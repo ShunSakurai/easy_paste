@@ -12,6 +12,7 @@ print('Loading v', setup.dict_console['version'], '...', sep='')
 root = tkinter.Tk()
 tk_F = tkinter.Frame(root)
 str_gray = 'dark slate gray'
+str_default_color = 'SystemButtonFace'
 
 
 class Border(tkinter.Frame):
@@ -58,60 +59,33 @@ label_mr_categories = tkinter.Label(text=r'Categorize match rates')
 label_mr_categories.grid(sticky='w', padx=10)
 
 frame_mr_categories = tkinter.Frame()
-frame_mr_categories.grid(columnspan=2)
+frame_mr_categories.grid(columnspan=2, pady=10)
+tuple_str_mr = ('New', '50-74%', '75-84%', '85-94%', '95-99%', '100%', 'Reps')
 
-row_mr_categories = ep_scripts.get_next_grid_row(root)
+row_mrc_labels = ep_scripts.get_next_grid_row(frame_mr_categories)
+list_mrc_labels = []
 
-list_str_mr = ['Reps', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'New']
+for str_mr in tuple_str_mr:
+    label_mr_category = tkinter.Label(frame_mr_categories, text=str_mr)
+    label_mr_category.grid(row=row_mrc_labels, column=tuple_str_mr.index(str_mr) * 2, pady=5)
+    list_mrc_labels.append(label_mr_category)
 
-list_match_rates = []
-list_categories = []
-list_mr_categories = []
+row_mr_categories = ep_scripts.get_next_grid_row(frame_mr_categories)
+list_match_rate_labels = []
+list_separator_labels = []
 
-for str_mr in list_str_mr:
+for str_mr in tuple_str_mr:
     label_match_rate = tkinter.Label(frame_mr_categories, text=str_mr)
-    label_match_rate.grid(row=row_mr_categories, column=list_str_mr.index(str_mr) * 2,pady=5)
-    list_match_rates.append(label_match_rate)
-    list_mr_categories.append(label_match_rate)
+    label_match_rate.grid(row=row_mr_categories, column=tuple_str_mr.index(str_mr) * 2, pady=5)
+    list_match_rate_labels.append(label_match_rate)
 
-for i in range(len(list_match_rates) - 1):
-    label_category = tkinter.Label(frame_mr_categories, text=' ')
-    label_category.grid(row=row_mr_categories, column=i * 2 + 1)
-    list_categories.append(label_category)
-    list_mr_categories.insert(i * 2 + 1, label_category)
+for i in range(len(list_match_rate_labels) - 1):
+    label_separator = tkinter.Label(frame_mr_categories, text=' ')
+    label_separator.grid(row=row_mr_categories, column=i * 2 + 1)
+    list_separator_labels.append(label_separator)
 
 for i in [1, 4]:
-    list_categories[i]['bg'] = str_gray
-
-frame_border_temp = Border()
-frame_border_temp.grid()
-
-
-lable_newfuzzy = tkinter.Label(text=r'50-74% matches')
-lable_newfuzzy.grid(sticky='w', padx=10)
-
-newfuzzys = [('New', 'new'), ('Fuzzy', 'fuzzy')]
-var_newfuzzy = tkinter.StringVar()
-var_newfuzzy.set('new')
-rbs_newfuzzy = []
-row_newfuzzy = ep_scripts.get_next_grid_row(root)
-for label, newfuzzy in newfuzzys:
-    rb_newfuzzy = tkinter.Radiobutton(text=label, variable=var_newfuzzy, value=newfuzzy)
-    rb_newfuzzy.grid(row=row_newfuzzy, column=newfuzzys.index((label, newfuzzy)), sticky='w', padx=5)
-    rbs_newfuzzy.append(rb_newfuzzy)
-
-lable_rep100 = tkinter.Label(text='Reps and 100%')
-lable_rep100.grid(sticky='w', padx=10)
-
-rep100s = [('Joined', 'joined'), ('Separate', 'separate')]
-var_rep100 = tkinter.StringVar()
-var_rep100.set('joined')
-rbs_rep100 = []
-row_rep100 = ep_scripts.get_next_grid_row(root)
-for label, rep100 in rep100s:
-    rb_rep100 = tkinter.Radiobutton(text=label, variable=var_rep100, value=rep100)
-    rb_rep100.grid(row=row_rep100, column=rep100s.index((label, rep100)), sticky='w', padx=5)
-    rbs_rep100.append(rb_rep100)
+    list_separator_labels[i]['bg'] = str_gray
 
 lable_heading = tkinter.Label(text='Headings')
 lable_heading.grid(sticky='w', padx=10)
@@ -189,26 +163,45 @@ btn_file.bind('<ButtonRelease-1>', import_file)
 
 def toggle_label_color(self):
     if self.widget['bg'] == str_gray:
-        self.widget['bg'] = 'SystemButtonFace'
+        self.widget['bg'] = str_default_color
     else:
         self.widget['bg'] = str_gray
 
-for l in list_categories:
-    l.bind('<ButtonRelease-1>', toggle_label_color)
+
+def get_separators():
+    list_separators = []
+    for i in range(len(list_separator_labels)):
+        if list_separator_labels[i]['bg'] == str_gray:
+            list_separators.append(True)
+        else:
+            list_separators.append(False)
+    return list_separators
 
 
-def get_gray_indices(self):
-    gray_indices = []
-    for i in range(len(list_categories)):
-        if list_categories[i]['bg'] == str_gray:
-            gray_indices.append(i)
-    print(gray_indices)
-    return gray_indices
+def adjust_colspan():
+    list_separators = get_separators()
+    list_mr_text = ep_scripts.return_mrc_text(list_separators)
+    list_colspan = ep_scripts.return_mrc_colspan(list_separators)
+
+    for mrcl in list_mrc_labels:
+        mrcl.grid_forget()
+    list_mrc_labels.clear()
+
+    next_column = 0
+    for mrt, cs in zip(list_mr_text, list_colspan):
+        label_mr = tkinter.Label(frame_mr_categories, text=mrt)
+        label_mr.grid(row=row_mrc_labels, column=next_column, columnspan=cs)
+        list_mrc_labels.append(label_mr)
+        next_column += cs + 1
 
 
-btn_gray = tkinter.Button(text='Test: Get Gray Indices')
-btn_gray.grid(columnspan=2)
-btn_gray.bind('<ButtonRelease-1>', get_gray_indices)
+def separator_functions(self):
+    toggle_label_color(self)
+    adjust_colspan()
+
+
+for sep in list_separator_labels:
+    sep.bind('<ButtonRelease-1>', separator_functions)
 
 
 def get_ep_options():
@@ -221,8 +214,7 @@ def get_ep_options():
 
 def get_quote_options():
     dict_quote_options = {
-        'str_newfuzzy': var_newfuzzy.get(),
-        'str_rep100': var_rep100.get(),
+        'list_separators': get_separators(),
         'str_heading': var_heading.get()
     }
     return dict_quote_options
@@ -270,10 +262,8 @@ def select_and_focus(self):
     self.widget.focus()
 
 
-for rb in rbs_rep100:
-    rb.bind('<ButtonRelease-1>', select_and_focus)
-
-for rb in rbs_heading:
+all_rbs = rbs_unit + rbs_heading + rbs_wwt_style
+for rb in all_rbs:
     rb.bind('<ButtonRelease-1>', select_and_focus)
 
 
@@ -296,6 +286,7 @@ def return_to_click(self):
 
 
 root.bind('<Return>', return_to_click)
+adjust_colspan()
 
 top = tk_F.winfo_toplevel()
 top.resizable(False, False)
