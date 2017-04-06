@@ -24,6 +24,41 @@ dict_csv_indices = {
 
 # Strings and function to use for quote
 tuple_str_mr = (('New', 'New'), ('50', '74%'), ('75', '84%'), ('85', '94%'), ('95', '99%'), ('100%', '100%'), ('Reps', 'Reps'))
+quote_headers_display = [
+    (r'New-(74|84|94|99)%', 'New'),
+    (r'50-(84|94)%', 'Low Fuzzy'),
+    (r'(50|75)-99%', 'Fuzzy'),
+    (r'75-94%', 'Mid Fuzzy'),
+    (r'85-99%', 'High Fuzzy'),
+    # Look behind doesn't work when compiled and used in sub
+    (r'50-Reps', r'50%-Reps'),
+    (r'75-Reps', r'75%-Reps'),
+    (r'85-Reps', r'85%-Reps'),
+    (r'95-Reps', r'95%-Reps')
+]
+qh_display_for_replace = [(re.compile(t[0]), t[1]) for t in quote_headers_display]
+
+qh_dexport_for_replace = [
+    ('New', 'New Words'),
+    ('Fuzzy', 'Fuzzy Matches'),
+    ('100%-Reps', 'Repetitions and 100% Matches'),
+    ('%', '% Matches'),
+    ('Reps', 'Repetitions')
+]
+
+
+def replace_all_regex(string):
+    for t in qh_display_for_replace:
+        if t[0].match(string):
+            return t[0].sub(string, t[1])
+    return string
+
+
+def replace_all_string(string):
+    for t in qh_dexport_for_replace:
+        if t[0] in string:
+            return string.replace(t[0], t[1])
+    return string
 
 
 def return_mrc_colspan(list_separators):
@@ -48,7 +83,7 @@ def return_mrc_text(list_separators):
             list_heading.append('-'.join(unique_ordered_list((current_start, tuple_str_mr[i][1]))))
             current_start = tuple_str_mr[i + 1][0]
     list_heading.append('-'.join(unique_ordered_list((current_start, tuple_str_mr[-1][1]))))
-    # Might produce 95-Reps without %, to be fixed later
+    list_heading = [replace_all_regex(i) for i in list_heading]
     return list_heading
 
 
@@ -71,6 +106,7 @@ def return_slice_group_quote(dict_quote_options):
 
 def return_heading_quote(dict_quote_options):
     list_heading = return_mrc_text(dict_quote_options['list_separators'])
+    list_heading = [replace_all_string(i) for i in list_heading]
     if dict_quote_options['str_heading'] == 'long':
         list_heading = ['Translation - ' + h  for h in list_heading]
     return list_heading
