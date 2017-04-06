@@ -12,6 +12,11 @@ print('Loading v', setup.dict_console['version'], '...', sep='')
 root = tkinter.Tk()
 tk_F = tkinter.Frame(root)
 
+tuple_str_mr = ('New', '50-74%', '75-84%', '85-94%', '95-99%', '100%', 'Reps')
+default_list_separators = [False, True, False, False, True, False]
+str_gray = 'dark slate gray'
+str_default_color = 'SystemButtonFace'
+
 
 class Border(tkinter.Frame):
     def __init__(self):
@@ -24,7 +29,7 @@ btn_file = tkinter.Button(text='Import Analysis Files')
 var_files = tkinter.StringVar()
 btn_file.grid(columnspan=2, pady=5)
 
-ent_file = tkinter.Entry(width=40, textvariable=var_files)
+ent_file = tkinter.Entry(width=55, textvariable=var_files)
 ent_file.grid(columnspan=2, pady=5)
 
 row_open = ep_scripts.get_next_grid_row(root)
@@ -53,31 +58,47 @@ for label, unit in units:
 frame_border1 = Border()
 frame_border1.grid()
 
-lable_newfuzzy = tkinter.Label(text=r'50-74% matches')
-lable_newfuzzy.grid(sticky='w', padx=10)
+label_mr_categories = tkinter.Label(text=r'Categorize match rates')
+label_mr_categories.grid(sticky='w', padx=10)
 
-newfuzzys = [('New', 'new'), ('Fuzzy', 'fuzzy')]
-var_newfuzzy = tkinter.StringVar()
-var_newfuzzy.set('new')
-rbs_newfuzzy = []
-row_newfuzzy = ep_scripts.get_next_grid_row(root)
-for label, newfuzzy in newfuzzys:
-    rb_newfuzzy = tkinter.Radiobutton(text=label, variable=var_newfuzzy, value=newfuzzy)
-    rb_newfuzzy.grid(row=row_newfuzzy, column=newfuzzys.index((label, newfuzzy)), sticky='w', padx=5)
-    rbs_newfuzzy.append(rb_newfuzzy)
+frame_mr_categories = tkinter.Frame()
+frame_mr_categories.grid(columnspan=2, pady=10)
 
-lable_rep100 = tkinter.Label(text='Reps and 100%')
-lable_rep100.grid(sticky='w', padx=10)
+row_mrc_labels = ep_scripts.get_next_grid_row(frame_mr_categories)
+list_mrc_labels = []
 
-rep100s = [('Joined', 'joined'), ('Separate', 'separate')]
-var_rep100 = tkinter.StringVar()
-var_rep100.set('joined')
-rbs_rep100 = []
-row_rep100 = ep_scripts.get_next_grid_row(root)
-for label, rep100 in rep100s:
-    rb_rep100 = tkinter.Radiobutton(text=label, variable=var_rep100, value=rep100)
-    rb_rep100.grid(row=row_rep100, column=rep100s.index((label, rep100)), sticky='w', padx=5)
-    rbs_rep100.append(rb_rep100)
+for str_mr in tuple_str_mr:
+    label_mr_category = tkinter.Label(frame_mr_categories, text=str_mr)
+    label_mr_category.grid(row=row_mrc_labels, column=tuple_str_mr.index(str_mr) * 2, pady=5)
+    list_mrc_labels.append(label_mr_category)
+
+row_mr_categories = ep_scripts.get_next_grid_row(frame_mr_categories)
+list_match_rate_labels = []
+list_separator_labels = []
+
+for str_mr in tuple_str_mr:
+    label_match_rate = tkinter.Label(frame_mr_categories, text=str_mr)
+    label_match_rate.grid(row=row_mr_categories, column=tuple_str_mr.index(str_mr) * 2, pady=5)
+    list_match_rate_labels.append(label_match_rate)
+
+for i in range(len(list_match_rate_labels) - 1):
+    label_separator = tkinter.Label(frame_mr_categories, text=' ')
+    label_separator.grid(row=row_mr_categories, column=i * 2 + 1)
+    list_separator_labels.append(label_separator)
+
+row_mrc = ep_scripts.get_next_grid_row(root)
+
+btn_clear_all = tkinter.Button(text='Clear All')
+btn_clear_all.grid(row=row_mrc, column=0, sticky='w', padx=20, pady=5)
+
+btn_select_all = tkinter.Button(text='Select All')
+btn_select_all.grid(row=row_mrc, column=0, sticky='e', padx=20, pady=5)
+
+btn_restore_default = tkinter.Button(text='Default')
+btn_restore_default.grid(row=row_mrc, column=1, sticky='w', padx=20, pady=5)
+
+# btn_save_mrc = tkinter.Button(text='Save', state='disabled')
+# btn_save_mrc.grid(row=row_mrc, column=1, sticky='e', padx=20, pady=5)
 
 lable_heading = tkinter.Label(text='Headings')
 lable_heading.grid(sticky='w', padx=10)
@@ -153,6 +174,66 @@ def import_file(self):
 btn_file.bind('<ButtonRelease-1>', import_file)
 
 
+def set_colored_separators(list_separators):
+    for i in range(len(list_separators)):
+        if list_separators[i]:
+            list_separator_labels[i]['bg'] = str_gray
+        else:
+            list_separator_labels[i]['bg'] = str_default_color
+
+
+def toggle_label_color(self):
+    if self.widget['bg'] == str_gray:
+        self.widget['bg'] = str_default_color
+    else:
+        self.widget['bg'] = str_gray
+
+
+def get_separators():
+    list_separators = []
+    for i in range(len(list_separator_labels)):
+        if list_separator_labels[i]['bg'] == str_gray:
+            list_separators.append(True)
+        else:
+            list_separators.append(False)
+    return list_separators
+
+
+def adjust_colspan():
+    list_separators = get_separators()
+    list_mr_text = ep_scripts.return_mrc_text(list_separators)
+    list_colspan = ep_scripts.return_mrc_colspan(list_separators)
+
+    for mrcl in list_mrc_labels:
+        mrcl.grid_forget()
+    list_mrc_labels.clear()
+
+    next_column = 0
+    for mrt, cs in zip(list_mr_text, list_colspan):
+        label_mr = tkinter.Label(frame_mr_categories, text=mrt)
+        label_mr.grid(row=row_mrc_labels, column=next_column, columnspan=cs)
+        list_mrc_labels.append(label_mr)
+        next_column += cs + 1
+
+
+def separator_functions(self):
+    toggle_label_color(self)
+    adjust_colspan()
+
+
+for sep in list_separator_labels:
+    sep.bind('<ButtonRelease-1>', separator_functions)
+
+
+def separator_btn_functions(sequence):
+    set_colored_separators(sequence)
+    adjust_colspan()
+
+btn_clear_all['command'] = lambda: separator_btn_functions([False] * 6)
+btn_select_all['command'] = lambda: separator_btn_functions([True] * 6)
+btn_restore_default['command'] = lambda: separator_btn_functions(default_list_separators)
+
+
 def get_ep_options():
     dict_ep_options = {
         'str_unit': var_unit.get(),
@@ -163,8 +244,7 @@ def get_ep_options():
 
 def get_quote_options():
     dict_quote_options = {
-        'str_newfuzzy': var_newfuzzy.get(),
-        'str_rep100': var_rep100.get(),
+        'list_separators': get_separators(),
         'str_heading': var_heading.get()
     }
     return dict_quote_options
@@ -212,10 +292,8 @@ def select_and_focus(self):
     self.widget.focus()
 
 
-for rb in rbs_rep100:
-    rb.bind('<ButtonRelease-1>', select_and_focus)
-
-for rb in rbs_heading:
+all_rbs = rbs_unit + rbs_heading + rbs_wwt_style
+for rb in all_rbs:
     rb.bind('<ButtonRelease-1>', select_and_focus)
 
 
@@ -238,6 +316,8 @@ def return_to_click(self):
 
 
 root.bind('<Return>', return_to_click)
+set_colored_separators(default_list_separators)
+adjust_colspan()
 
 top = tk_F.winfo_toplevel()
 top.resizable(False, False)

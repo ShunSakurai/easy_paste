@@ -16,42 +16,100 @@ import webbrowser
 encodings = ['utf-16', 'utf-8-sig']
 
 dict_csv_indices = {
+    # Lower to higher match rates
     'trados': [32, 28, 24, 20, 16, 12, 8, 4],
     'all': [67, 59, 51, 43, 35, 27, 19, 11, 3]
 }
 
 
 # Strings and function to use for quote
+tuple_str_mr = (('New', 'New'), ('50', '74%'), ('75', '84%'), ('85', '94%'), ('95', '99%'), ('100%', '100%'), ('Reps', 'Reps'))
+quote_headers_display = [
+    (r'New-(74|84|94|99)%', 'New'),
+    (r'50-(84|94)%', 'Low Fuzzy'),
+    (r'(50|75)-99%', 'Fuzzy'),
+    (r'75-94%', 'Mid Fuzzy'),
+    (r'85-99%', 'High Fuzzy'),
+    # Look behind doesn't work when compiled and used in sub
+    (r'50-Reps', r'50%-Reps'),
+    (r'75-Reps', r'75%-Reps'),
+    (r'85-Reps', r'85%-Reps'),
+    (r'95-Reps', r'95%-Reps')
+]
+qh_display_for_replace = [(re.compile(t[0]), t[1]) for t in quote_headers_display]
+
+qh_dexport_for_replace = [
+    ('New', 'New Words'),
+    ('Fuzzy', 'Fuzzy Matches'),
+    ('100%-Reps', 'Repetitions and 100% Matches'),
+    ('%', '% Matches'),
+    ('Reps', 'Repetitions')
+]
+
+
+def replace_all_regex(string):
+    for t in qh_display_for_replace:
+        if t[0].match(string):
+            return t[0].sub(string, t[1])
+    return string
+
+
+def replace_all_string(string):
+    for t in qh_dexport_for_replace:
+        if t[0] in string:
+            return string.replace(t[0], t[1])
+    return string
+
+
+def return_mrc_colspan(list_separators):
+    list_count = []
+    count = 0
+    for i in list_separators:
+        if i:
+            list_count.append(count)
+            count = 0
+        else:
+            count += 1
+    list_count.append(count)
+    to_return = [i * 2 + 1 for i in list_count]
+    return to_return
+
+
+def return_mrc_text(list_separators):
+    list_heading = []
+    current_start = tuple_str_mr[0][0]
+    for i in range(len(list_separators)):
+        if list_separators[i]:
+            list_heading.append('-'.join(unique_ordered_list((current_start, tuple_str_mr[i][1]))))
+            current_start = tuple_str_mr[i + 1][0]
+    list_heading.append('-'.join(unique_ordered_list((current_start, tuple_str_mr[-1][1]))))
+    list_heading = [replace_all_regex(i) for i in list_heading]
+    return list_heading
+
+
 def return_slice_group_quote(dict_quote_options):
-    if dict_quote_options['str_newfuzzy'] == 'new':
-        if dict_quote_options['str_rep100'] == 'joined':
-            return [[0, 2], [2, 5], [5, 9]]
-        elif dict_quote_options['str_rep100'] == 'separate':
-            return [[0, 2], [2, 5], [5, 6], [6, 9]]
-    if dict_quote_options['str_newfuzzy'] == 'fuzzy':
-        if dict_quote_options['str_rep100'] == 'joined':
-            return [[0, 1], [1, 5], [5, 9]]
-        elif dict_quote_options['str_rep100'] == 'separate':
-            return [[0, 1], [1, 5], [5, 6], [6, 9]]
+    r'''
+    >>> return_slice_group_quote({'list_separators': [False, True, False, False, True, False]})
+    [[0, 2], [2, 5], [5, 9]]
+    '''
+    list_separators = dict_quote_options['list_separators']
+    source_slice_groups_quote = ((0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 9))
+    to_return = []
+    current_start = source_slice_groups_quote[0][0]
+    for i in range(len(list_separators)):
+        if list_separators[i]:
+            to_return.append([current_start, source_slice_groups_quote[i][1]])
+            current_start = source_slice_groups_quote[i + 1][0]
+    to_return.append([current_start, source_slice_groups_quote[-1][1]])
+    return to_return
 
 
 def return_heading_quote(dict_quote_options):
-    if dict_quote_options['str_rep100'] == 'joined':
-        if dict_quote_options['str_heading'] == 'short':
-            return ['New Words', 'Fuzzy Matches', 'Repetitions and 100% Matches']
-        elif dict_quote_options['str_heading'] == 'long':
-            return [
-                'Translation -  New Words', 'Translation -  Fuzzy Matches',
-                'Translation -  Repetitions and 100% Matches'
-            ]
-    if dict_quote_options['str_rep100'] == 'separate':
-        if dict_quote_options['str_heading'] == 'short':
-            return ['New Words', 'Fuzzy Matches', '100% Matches', 'Repetitions']
-        elif dict_quote_options['str_heading'] == 'long':
-            return [
-                'Translation -  New Words', 'Translation -  Fuzzy Matches',
-                'Translation - 100% Matches', 'Translation -  Repetitions'
-            ]
+    list_heading = return_mrc_text(dict_quote_options['list_separators'])
+    list_heading = [replace_all_string(i) for i in list_heading]
+    if dict_quote_options['str_heading'] == 'long':
+        list_heading = ['Translation - ' + h  for h in list_heading]
+    return list_heading
 
 
 # Strings and function to use for weighted words
@@ -300,6 +358,14 @@ def slice_indices(csv_indices, slice_group):
     return csv_indices_grouped
 
 
+def unique_ordered_list(sequence):
+    unique_list = []
+    for i in sequence:
+        if i not in unique_list:
+            unique_list.append(i)
+    return unique_list
+
+
 def write_lines_to_full_path(full_path, lines):
     result_file = open(full_path, 'w', encoding='utf-8')
     result_writer = csv.writer(result_file, delimiter=',', lineterminator='\n')
@@ -310,36 +376,34 @@ def write_lines_to_full_path(full_path, lines):
 # Main functions
 def provide_quote_lines(analysis_read, csv_indices, headings):
     num_items = len(csv_indices)
-    list_files = []
+    list_quote_lines = []
     list_combined = []
     next(analysis_read)
     next(analysis_read)
     for row in analysis_read:
-        list_file = []
-        # list_file = [fname, new, fuzzy, 100 (and) rep]
+        list_quote_line = []
         fname = shorten_fname(row[0])
-        list_file.append(fname)
+        list_quote_line.append(fname)
         for i in range(num_items):
             unit_sum = addup_unit(row, csv_indices[i])
-            list_file.append(unit_sum)
-        list_files.append(list_file)
+            list_quote_line.append(unit_sum)
+        list_quote_lines.append(list_quote_line)
 
-        if list_file[0].startswith('['):
-            lan = list_file[0][1:list_file[0].find(']')]
-        # list_combined[i] = [lan, new, fuzzy, 100 (and) rep]
+        if list_quote_line[0].startswith('['):
+            lan = list_quote_line[0][1:list_quote_line[0].find(']')]
             if list_combined and list_combined[-1][0] == lan:
                 for i in range(num_items):
-                    list_combined[-1][i + 1] += list_file[i + 1]
+                    list_combined[-1][i + 1] += list_quote_line[i + 1]
             else:
-                list_combined.append([lan] + list_file[1:])
+                list_combined.append([lan] + list_quote_line[1:])
         else:
             pass
 
     lines = []
-    for list_file in list_combined + list_files:
-        lines.append([list_file[0]])
+    for list_quote_line in list_combined + list_quote_lines:
+        lines.append([list_quote_line[0]])
         for i in range(num_items):
-            lines.append([headings[i], list_file[i + 1]])
+            lines.append([headings[i], list_quote_line[i + 1]])
         lines.append([''])
     return lines
 
@@ -390,11 +454,7 @@ def calc_quote(str_files, dict_ep_options, dict_quote_options):
         prefix = ''.join(['/quote-', dict_ep_options['str_unit'], '-'])
         full_path, part_path = insert_prefix_in_path(str_file_path, prefix)
 
-        str_options = ' '.join([
-            'Options:',
-            dict_ep_options['str_unit'], dict_quote_options['str_newfuzzy'],
-            dict_quote_options['str_rep100'], dict_quote_options['str_heading']
-        ])
+        str_options = 'Easy Paste Options:' + dict_ep_options['str_unit']
         print(str_options)
         lines = [[str_options], ['']] + provide_quote_lines(analysis_read, csv_indices, headings)
         write_lines_to_full_path(full_path, lines)
