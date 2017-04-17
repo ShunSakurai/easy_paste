@@ -54,9 +54,10 @@ From Project home > Overview > Reports > Analysis:
 
 ## Usage
 ### Common
-- You can open the program by double-clicking Easy Paste.exe or its alias.
+- You can open the program by double-clicking Easy Paste.exe or its alias
 - Choose CSV files exported from memoQ's statistics in above mentioned format
 - After exporting the table, the exported CSV file is automatically opened
+- You can move along the UI items with "Tab" key and invoke the focused item with the space bar
 
 ### Generating a table for quote
 - Click "Generate table for quote"

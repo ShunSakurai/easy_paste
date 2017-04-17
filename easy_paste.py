@@ -42,7 +42,7 @@ cb_result.grid(row=row_open, column=0, pady=5)
 btn_folder = tkinter.Button(text='Open folder', state='disabled')
 btn_folder.grid(row=row_open, column=1, pady=5)
 
-lable_unit = tkinter.Label(text='Unit')
+lable_unit = tkinter.Label(text='Source unit')
 lable_unit.grid(sticky='w', padx=10)
 
 units = [('Word', 'word'), ('Character', 'char')]
@@ -164,7 +164,7 @@ btn_update = tkinter.Button(text='Check for updates', command=ep_scripts.check_u
 btn_update.grid(row=row_about, column=1, pady=5)
 
 
-def import_file(self):
+def import_file(*event):
     initial_dir = ep_scripts.dir_from_str_path(ep_scripts.divide_str_tuple(var_files.get())[0])
     f_files = tkinter.filedialog.askopenfilenames(initialdir=initial_dir, **args_file)
     if f_files:
@@ -172,6 +172,7 @@ def import_file(self):
 
 
 btn_file.bind('<ButtonRelease-1>', import_file)
+btn_file['command'] = import_file
 
 
 def set_colored_separators(list_separators):
@@ -182,11 +183,11 @@ def set_colored_separators(list_separators):
             list_separator_labels[i]['bg'] = str_default_color
 
 
-def toggle_label_color(self):
-    if self.widget['bg'] == str_gray:
-        self.widget['bg'] = str_default_color
+def toggle_label_color(event):
+    if event.widget['bg'] == str_gray:
+        event.widget['bg'] = str_default_color
     else:
-        self.widget['bg'] = str_gray
+        event.widget['bg'] = str_gray
 
 
 def get_separators():
@@ -216,8 +217,8 @@ def adjust_colspan():
         next_column += cs + 1
 
 
-def separator_functions(self):
-    toggle_label_color(self)
+def separator_functions(event):
+    toggle_label_color(event)
     adjust_colspan()
 
 
@@ -259,37 +260,37 @@ def get_weighted_options():
     return dict_weighted_options
 
 
-def run_quote(self):
+def run_quote(*event):
     if btn_quote['state'] == 'normal' or 'active':
         dict_ep_options = get_ep_options()
         dict_quote_options = get_quote_options()
         ep_scripts.calc_quote(var_files.get(), dict_ep_options, dict_quote_options)
 
 
-btn_quote.bind('<ButtonRelease-1>', run_quote)
+btn_quote['command'] = run_quote
 
 
-def run_weighted(self):
+def run_weighted(*event):
     dict_ep_options = get_ep_options()
     dict_weighted_options = get_weighted_options()
     if btn_weighted['state'] == 'normal' or 'active':
         ep_scripts.calc_weighted(var_files.get(), dict_ep_options, dict_weighted_options)
 
 
-btn_weighted.bind('<ButtonRelease-1>', run_weighted)
+btn_weighted['command'] = run_weighted
 
 
-def run_folder(self):
+def run_folder(*event):
     if btn_folder['state'] == 'normal' or 'active':
         ep_scripts.open_folder(var_files.get())
 
 
-btn_folder.bind('<ButtonRelease-1>', run_folder)
+btn_folder['command'] = run_folder
 
 
-def select_and_focus(self):
-    self.widget.select()
-    self.widget.focus()
+def select_and_focus(event):
+    event.widget.select()
+    event.widget.focus()
 
 
 all_rbs = rbs_unit + rbs_heading + rbs_wwt_style
@@ -310,12 +311,6 @@ def file_selected(var, unknown, w):
 
 var_files.trace('w', file_selected)
 
-
-def return_to_click(self):
-    tk_F.focus_get().event_generate('<ButtonRelease-1>')
-
-
-root.bind('<Return>', return_to_click)
 set_colored_separators(default_list_separators)
 adjust_colspan()
 
