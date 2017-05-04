@@ -127,7 +127,12 @@ row_3_total = ['', 'TrHrs Subtotal', 'PrHrs Subtotal']
 c = 'ABCDEFGHIJKLM'
 
 
-# Utility functions
+# Utility classes and functions
+class FileTypeError(Exception):
+    def __str__(self):
+        return 'File type not supported. See readme for the supported files.'
+
+
 def add_num_to_md_list(md_list, num):
     r'''
     >>> add_num_to_md_list([[67], [35, 43, 51, 59], [27], [11, 19]], 1)
@@ -166,26 +171,26 @@ def check_updates():
 
 def detect_file_type_and_delimiter(dict_ep_options, fn):
     delimiter = ''
+    csv_indices = ''
     for enc in encodings:
+        f = open(fn, encoding=enc)
         try:
-            f = open(fn, encoding=enc)
             content = f.readline()
-            delimiter = content[0]
+        except UnicodeDecodeError:
+            continue
+        delimiter = content[0]
+        if 'X-translated' in content:
+            csv_indices = dict_csv_indices['all']
+        elif 'Context TM' in content and dict_ep_options['str_unit'] == 'word':
+            csv_indices = dict_csv_indices['trados']
+        else:
+            print('-' * 70)
             if 'Context TM' in content and dict_ep_options['str_unit'] == 'char':
                 print(
-                    '-' * 70,
-                    '\nTrados Compatible CSV doesn\'t support Characters.',
-                    '\nPlease use another format.\n')
-                return
-            elif 'Context TM' in content and dict_ep_options['str_unit'] == 'word':
-                csv_indices = dict_csv_indices['trados']
-            elif 'X-translated' in content:
-                csv_indices = dict_csv_indices['all']
-            return csv_indices, enc, delimiter
-        except:
-            pass
-    if not delimiter:
-        print('File type and delimiter could not be identified.')
+                    'Trados Compatible CSV doesn\'t support Characters.\n',
+                    'Please use another format.\n')
+            raise FileTypeError()
+        return csv_indices, enc, delimiter
 
 
 def dir_from_str_path(str_path):

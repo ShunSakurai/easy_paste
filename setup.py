@@ -21,7 +21,7 @@ dict_console = {
     'dest_base': 'Easy Paste',
     'icon_resources': [(1, './icons/easy_paste_icon.ico')],
     'script': 'easy_paste.py',
-    'version': '1.8.1',
+    'version': '1.8.2',
 }
 dict_options = {
     'bundle_files': 2,
