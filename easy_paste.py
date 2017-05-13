@@ -52,7 +52,7 @@ rbs_unit = []
 row_unit = ep_scripts.get_next_grid_row(root)
 for label, unit in units:
     rb_unit = tkinter.Radiobutton(text=label, variable=var_unit, value=unit)
-    rb_unit.grid(row=row_unit, column=units.index((label, unit)), sticky='w', padx=5)
+    rb_unit.grid(row=row_unit, column=units.index((label, unit)), sticky='w', padx=10, pady=5)
     rbs_unit.append(rb_unit)
 
 frame_border1 = Border()
@@ -110,11 +110,11 @@ rbs_heading = []
 row_heading = ep_scripts.get_next_grid_row(root)
 for label, heading in headings:
     rb_heading = tkinter.Radiobutton(text=label, variable=var_heading, value=heading)
-    rb_heading.grid(row=row_heading, column=headings.index((label, heading)), sticky='w', padx=5)
+    rb_heading.grid(row=row_heading, column=headings.index((label, heading)), sticky='w', padx=10, pady=5)
     rbs_heading.append(rb_heading)
 
 btn_quote = tkinter.Button(text='Generate table for quote', state='disabled')
-btn_quote.grid(columnspan=2, pady=10)
+btn_quote.grid(columnspan=2, pady=5)
 
 frame_border2 = Border()
 frame_border2.grid()
@@ -131,7 +131,7 @@ rbs_wwt_style = []
 row_style = ep_scripts.get_next_grid_row(root)
 for label, wwt_style in wwt_styles:
     rb_wwt_style = tkinter.Radiobutton(text=label, variable=var_wwt_style, value=wwt_style)
-    rb_wwt_style.grid(row=row_style, column=wwt_styles.index((label, wwt_style)), sticky='w', padx=5)
+    rb_wwt_style.grid(row=row_style, column=wwt_styles.index((label, wwt_style)), sticky='w', padx=10, pady=5)
     rbs_wwt_style.append(rb_wwt_style)
 
 lable_total = tkinter.Label(text='Calculate totals')
@@ -142,15 +142,15 @@ row_total = ep_scripts.get_next_grid_row(root)
 var_total_col = tkinter.BooleanVar()
 cb_total_col = tkinter.Checkbutton(text='Total columns', variable=var_total_col)
 cb_total_col.select()
-cb_total_col.grid(row=row_total, column=0, sticky='w', padx=5)
+cb_total_col.grid(row=row_total, column=0, sticky='w', padx=10, pady=5)
 
 var_total_row = tkinter.BooleanVar()
 cb_total_row = tkinter.Checkbutton(text='Total row', variable=var_total_row)
 cb_total_row.select()
-cb_total_row.grid(row=row_total, column=1, sticky='w', padx=5)
+cb_total_row.grid(row=row_total, column=1, sticky='w', padx=10, pady=5)
 
 btn_weighted = tkinter.Button(text='Calculate weighted words', state='disabled')
-btn_weighted.grid(columnspan=2, pady=10)
+btn_weighted.grid(columnspan=2, pady=5)
 
 frame_border3 = Border()
 frame_border3.grid()
@@ -229,6 +229,7 @@ for sep in list_separator_labels:
 def separator_btn_functions(sequence):
     set_colored_separators(sequence)
     adjust_colspan()
+
 
 btn_clear_all['command'] = lambda: separator_btn_functions([False] * 6)
 btn_select_all['command'] = lambda: separator_btn_functions([True] * 6)

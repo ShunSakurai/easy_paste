@@ -49,5 +49,6 @@ if __name__ == "__main__":
         options={'py2exe': dict_options}
     )
 
+    print('Removing __pycache__ folder...')
     shutil.rmtree('__pycache__')
     print('.exe file v' + dict_console['version'], 'created.')

@@ -363,6 +363,16 @@ def slice_indices(csv_indices, slice_group):
     return csv_indices_grouped
 
 
+def subtotal_by_lang(list_combined, list_quote_line, num_items):
+    lan = list_quote_line[0][1:list_quote_line[0].find(']')]
+    if list_combined and list_combined[-1][0] == lan:
+        for i in range(num_items):
+            list_combined[-1][i + 1] += list_quote_line[i + 1]
+    else:
+        list_combined.append([lan] + list_quote_line[1:])
+    return list_combined
+
+
 def unique_ordered_list(sequence):
     unique_list = []
     for i in sequence:
@@ -394,15 +404,8 @@ def provide_quote_lines(analysis_read, csv_indices, headings):
             list_quote_line.append(unit_sum)
         list_quote_lines.append(list_quote_line)
 
-        if list_quote_line[0].startswith('['):
-            lan = list_quote_line[0][1:list_quote_line[0].find(']')]
-            if list_combined and list_combined[-1][0] == lan:
-                for i in range(num_items):
-                    list_combined[-1][i + 1] += list_quote_line[i + 1]
-            else:
-                list_combined.append([lan] + list_quote_line[1:])
-        else:
-            pass
+        if fname.startswith('['):
+            list_combined = subtotal_by_lang(list_combined, list_quote_line, num_items)
 
     lines = []
     for list_quote_line in list_combined + list_quote_lines:
@@ -421,11 +424,11 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
     if dict_weighted_options['bool_total_col']:
         row_3 = row_3 + row_3_total
     lines = []
-    for i in [row_1, row_2, row_3]:
-        lines.append(i)
+    lines += [row_1, row_2, row_3]
     next(analysis_read)
     next(analysis_read)
     num_row = 3
+
     for row in analysis_read:
         num_row += 1
         r = str(num_row)
@@ -441,6 +444,7 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
             if dict_weighted_options['bool_total_col']:
                 row_body += return_total_equations_time(r)
         lines.append(row_body)
+
     if dict_weighted_options['bool_total_row']:
         lines.append([''])
         lines.append(return_total_column(len(lines)))
