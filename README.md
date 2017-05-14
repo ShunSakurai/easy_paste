@@ -106,7 +106,7 @@ When you save the weighted words table after editing it in Excel or Open Office,
 
 ### Maybe later
 - Save last used settings
-- Retain the order of the slices of a file
+- Enable the user to change result file name
 
 ### Features not coming
 - Support HTML format to count characters. It turned out some CSV formats include character counts

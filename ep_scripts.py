@@ -126,6 +126,8 @@ row_3_words = [
 row_3_total = ['', 'TrHrs Subtotal', 'PrHrs Subtotal']
 c = 'ABCDEFGHIJKLM'
 
+pattern_slice = re.compile(r'^(.+):\s(\d+)\-\d+$')
+
 
 # Utility classes and functions
 class FileTypeError(Exception):
@@ -363,6 +365,36 @@ def slice_indices(csv_indices, slice_group):
     return csv_indices_grouped
 
 
+def sort_slices(lines):
+    r'''
+    >>> sort_slices([['File A 1-90', '1'], ['File A 181-270', '1'], ['File B', '1'], ['File A 91-180', '1']])
+    [['File A 1-90', '1'], ['File A 91-180', '1'], ['File A 181-270', '1'], ['File B', '1']]
+    '''
+    dict_sliced_files = {}
+    for i in range(len(lines)):
+        full_fname = lines[i][0]
+        match = pattern_slice.match(full_fname)
+        if not match:
+            continue
+        else:
+            base_fname, start = match.group(1), int(match.group(2))
+            if base_fname not in dict_sliced_files:
+                dict_sliced_files[base_fname] = [{'idx': i, 'start': start}]
+            else:
+                dict_sliced_files[base_fname].append({'idx': i, 'start': start})
+                list_idx_start = dict_sliced_files[base_fname]
+                for j in range(len(list_idx_start) - 1):
+                    if list_idx_start[j]['start'] > start:
+                        idx_in_lines = list_idx_start[j]['idx']
+                        lines.insert(idx_in_lines, lines.pop(i))
+                        list_idx_start.insert(j, list_idx_start.pop())
+                        list_idx_start[j]['idx'] = idx_in_lines
+                        for k in range(j + 1, len(list_idx_start)):
+                            list_idx_start[k]['idx'] += 1
+                        break
+    return lines
+
+
 def subtotal_by_lang(list_combined, list_quote_line, num_items):
     lan = list_quote_line[0][1:list_quote_line[0].find(']')]
     if list_combined and list_combined[-1][0] == lan:
@@ -423,13 +455,15 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
         row_3, func_equation = row_3_words, return_weighted_equations_words
     if dict_weighted_options['bool_total_col']:
         row_3 = row_3 + row_3_total
-    lines = []
-    lines += [row_1, row_2, row_3]
+    header_lines = [row_1, row_2, row_3]
     next(analysis_read)
     next(analysis_read)
     num_row = 3
 
-    for row in analysis_read:
+    orig_body_lines = [row for row in analysis_read]
+    sorted_body_lines = sort_slices(orig_body_lines)
+    body_lines = []
+    for row in sorted_body_lines:
         num_row += 1
         r = str(num_row)
         fname = shorten_fname(row[0])
@@ -443,12 +477,13 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
             row_body = [fname] + words + equations
             if dict_weighted_options['bool_total_col']:
                 row_body += return_total_equations_time(r)
-        lines.append(row_body)
+        body_lines.append(row_body)
 
+    total_lines = []
     if dict_weighted_options['bool_total_row']:
-        lines.append([''])
-        lines.append(return_total_column(len(lines)))
-    return lines
+        total_lines.append([''])
+        total_lines.append(return_total_column(len(header_lines) + len(body_lines)))
+    return header_lines + body_lines + total_lines
 
 
 def calc_quote(str_files, dict_ep_options, dict_quote_options):
