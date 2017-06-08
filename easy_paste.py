@@ -16,6 +16,7 @@ tuple_str_mr = ('New', '50-74%', '75-84%', '85-94%', '95-99%', '100%', 'Reps')
 default_list_separators = [False, True, False, False, True, False]
 str_gray = 'dark slate gray'
 str_default_color = 'SystemButtonFace'
+ph_ent_file = " Paste the path here for quicker import"
 
 
 class Border(tkinter.Frame):
@@ -27,9 +28,10 @@ args_file = {'filetypes' : [('csv', '*.csv')]}
 
 btn_file = tkinter.Button(text='Import Analysis Files')
 var_files = tkinter.StringVar()
+var_files.set(ph_ent_file)
 btn_file.grid(columnspan=2, pady=5)
 
-ent_file = tkinter.Entry(width=55, textvariable=var_files)
+ent_file = tkinter.Entry(width=55, textvariable=var_files, foreground=str_gray)
 ent_file.grid(columnspan=2, pady=5)
 
 row_open = ep_scripts.get_next_grid_row(root)
@@ -167,13 +169,27 @@ btn_update = tkinter.Button(text='Check for updates', command=ep_scripts.check_u
 btn_update.grid(row=row_about, column=1, pady=5)
 
 
+def do_nothing(*event):
+    pass
+
+
+def clear_on_first_entry(*event):
+    var_files.set("")
+    ent_file['foreground'] = 'black'
+    ent_file.bind('<FocusIn>', do_nothing)
+
+
+ent_file.bind('<FocusIn>', clear_on_first_entry)
+
+
 def import_file(*event):
-    if var_files.get():
+    if var_files.get() and var_files.get() != ph_ent_file:
         initial_dir = ep_scripts.dir_from_str_path(ep_scripts.divide_str_tuple(var_files.get())[0])
     else:
         initial_dir = ep_scripts.os.path.expanduser("~")+'/Desktop/'
     f_files = tkinter.filedialog.askopenfilenames(initialdir=initial_dir, **args_file)
     if f_files:
+        clear_on_first_entry()
         var_files.set(f_files)
 
 
@@ -290,7 +306,7 @@ btn_weighted['command'] = run_weighted
 def run_template(*event):
     dict_ep_options = get_ep_options()
     dict_weighted_options = get_weighted_options()
-    if var_files.get():
+    if var_files.get() and var_files.get() != ph_ent_file:
         initial_dir = ep_scripts.dir_from_str_path(ep_scripts.divide_str_tuple(var_files.get())[0])
     else:
         initial_dir = ep_scripts.os.path.expanduser("~")+'/Desktop/'
