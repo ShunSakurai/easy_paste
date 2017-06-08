@@ -17,8 +17,10 @@ encodings = ['utf-16', 'utf-8-sig']
 
 dict_csv_indices = {
     # Lower to higher match rates
-    'trados': [32, 28, 24, 20, 16, 12, 8, 4],
-    'all': [67, 59, 51, 43, 35, 27, 19, 11, 3]
+    # (Context TM,) Repetitions, 100% Matches, 95% - 99%, 85% - 94%, 75% - 84%, 50% - 74%, No Match(, Total)
+    'trados': [32, 28, 24, 20, 16, 12, 8],
+    # (X-translated, 101%,) Repetitions, 100%, 95% - 99%, 85% - 94%, 75% - 84%, 50% - 74%, No match(, Fragments, Total)
+    'all': [67, 59, 51, 43, 35, 27, 19]
 }
 
 
@@ -93,7 +95,7 @@ def return_slice_group_quote(dict_quote_options):
     [[0, 2], [2, 5], [5, 9]]
     '''
     list_separators = dict_quote_options['list_separators']
-    source_slice_groups_quote = ((0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 9))
+    source_slice_groups_quote = tuple((i, i + 1) for i in range(7))
     to_return = []
     current_start = source_slice_groups_quote[0][0]
     for i in range(len(list_separators)):
@@ -113,7 +115,8 @@ def return_heading_quote(dict_quote_options):
 
 
 # Strings and function to use for weighted words
-list_slice_groups_weighted = [[6, 9], [5, 6], [4, 5], [3, 4], [2, 3], [1, 2], [0, 1]]
+list_slice_groups_weighted = [[i, i + 1] for i in range(6, -1, -1)]
+# [[6, 7], [5, 6], [4, 5], [3, 4], [2, 3], [1, 2], [0, 1]]
 
 row_1 = ['Check 100% matches:', 'Yes']
 row_2 = ['Chargeable words per day:', 2000]
@@ -136,10 +139,10 @@ class FileTypeError(Exception):
         return 'File type not supported. See readme for the supported files.'
 
 
-def add_num_to_md_list(md_list, num):
+def add_num_in_2d_list(md_list, num):
     r'''
-    >>> add_num_to_md_list([[67], [35, 43, 51, 59], [27], [11, 19]], 1)
-    [[68], [36, 44, 52, 60], [28], [12, 20]]
+    >>> add_num_in_2d_list([[67], [35, 43, 51, 59], [27], [19]], 1)
+    [[68], [36, 44, 52, 60], [28], [20]]
     '''
     for i in range(len(md_list)):
         md_list[i] = [j + 1 for j in md_list[i]]
@@ -301,8 +304,8 @@ def return_weighted_equations_time(r, dict_weighted_options):
         c[11], r, '+', c[12], r, ')/', c[1], '$2*8*4/5'])
     proof_time = ''.join([
         '=(((',
-        c[8], r, '+', c[9], r, ')*0.25)+(', c[10], r, '*0.60)+(',
-        c[6], r, '+', c[7], r, ')*(B$1="Yes")+',
+        c[6], r, '+', c[7], r, ')*(1+2*(B$1="Yes"))/3+(',
+        c[8], r, '+', c[9], r, ')*0.25)+(', c[10], r, '*0.60)+',
         c[11], r, '+', c[12], r, ')/', c[1], '$2*8/5'])
     total_time = ''.join(['=SUM(', c[2], r, ':', c[3], r, ')'])
     weighted_words = ''.join(['=', c[4], r, '*(', c[1], '$2/8)'])
@@ -316,8 +319,8 @@ def return_weighted_equations_words(r, dict_weighted_options):
         c[6], r, '+', c[7], r, ')/B$2*8*4/5'])
     proof_time = ''.join([
         '=(((',
-        c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+(',
-        c[1], r, '+', c[2], r, ')*(B$1="Yes")+',
+        c[1], r, '+', c[2], r, ')*(1+2*(B$1="Yes"))/3+(',
+        c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
         c[6], r, '+', c[7], r, ')/B$2*8/5'])
     total_time = ''.join(['=SUM(', c[8], r, ':', c[9], r, ')'])
     weighted_words = ''.join(['=', c[10], r, '*(B$2/8)'])
@@ -357,8 +360,8 @@ def shorten_fname(file_path):
 
 def slice_indices(csv_indices, slice_group):
     r'''
-    >>> slice_indices([67, 59, 51, 43, 35, 27, 19, 11, 3], [[0, 2], [2, 5], [5, 6], [6, 9]])
-    [[67, 59], [51, 43, 35], [27], [19, 11, 3]]
+    >>> slice_indices([67, 59, 51, 43, 35, 27, 19], [[0, 2], [2, 5], [5, 6], [6, 7]])
+    [[67, 59], [51, 43, 35], [27], [19]]
     '''
     csv_indices_grouped = []
     for group in slice_group:
@@ -493,7 +496,7 @@ def calc_quote(str_files, dict_ep_options, dict_quote_options):
         csv_indices = slice_indices(indices, return_slice_group_quote(dict_quote_options))
         headings = return_heading_quote(dict_quote_options)
         if dict_ep_options['str_unit'] == 'char':
-            csv_indices = add_num_to_md_list(csv_indices, 1)
+            csv_indices = add_num_in_2d_list(csv_indices, 1)
         analysis_read = csv.reader(
             open(str_file_path, encoding=enc), delimiter=dl)
         prefix = ''.join(['/quote-', dict_ep_options['str_unit'], '-'])
@@ -514,7 +517,7 @@ def calc_weighted(str_files, dict_ep_options, dict_weighted_options):
         indices, enc, dl = detect_file_type_and_delimiter(dict_ep_options, str_file_path)
         csv_indices = slice_indices(indices, list_slice_groups_weighted)
         if dict_ep_options['str_unit'] == 'char':
-            csv_indices = add_num_to_md_list(csv_indices, 1)
+            csv_indices = add_num_in_2d_list(csv_indices, 1)
         analysis_read = csv.reader(
             open(str_file_path, encoding=enc), delimiter=dl)
         prefix = ''.join(['/weighted-', dict_ep_options['str_unit'], '-'])
