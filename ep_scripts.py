@@ -92,7 +92,7 @@ def return_mrc_text(list_separators):
 def return_slice_group_quote(dict_quote_options):
     r'''
     >>> return_slice_group_quote({'list_separators': [False, True, False, False, True, False]})
-    [[0, 2], [2, 5], [5, 9]]
+    [[0, 2], [2, 5], [5, 7]]
     '''
     list_separators = dict_quote_options['list_separators']
     source_slice_groups_quote = tuple((i, i + 1) for i in range(7))
@@ -371,8 +371,8 @@ def slice_indices(csv_indices, slice_group):
 
 def sort_slices(lines):
     r'''
-    >>> sort_slices([['File A 1-90', '1'], ['File A 181-270', '1'], ['File B', '1'], ['File A 91-180', '1']])
-    [['File A 1-90', '1'], ['File A 91-180', '1'], ['File A 181-270', '1'], ['File B', '1']]
+    >>> sort_slices([['File A: 1-90', '1'], ['File A: 181-270', '1'], ['File B', '1'], ['File A: 91-180', '1']])
+    [['File A: 1-90', '1'], ['File A: 91-180', '1'], ['File A: 181-270', '1'], ['File B', '1']]
     '''
     dict_sliced_files = {}
     for i in range(len(lines)):
