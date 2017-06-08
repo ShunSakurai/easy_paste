@@ -126,6 +126,7 @@ row_3_words = [
 row_3_total = ['', 'TrHrs Subtotal', 'PrHrs Subtotal']
 c = 'ABCDEFGHIJKLM'
 
+fname_template = 'files/Analysis-Template.csv'
 pattern_slice = re.compile(r'^(.+):\s(\d+)\-\d+$')
 
 
@@ -226,7 +227,7 @@ def divide_str_tuple(str_tuple):
 def download_update(str_newest_version, url_installer):
     print('Downloading the newest version', str_newest_version)
     print('Your version is', setup.dict_console['version'])
-    download_folder = os.path.expanduser("~")+'/downloads/'
+    download_folder = os.path.expanduser("~")+'/Downloads/'
     download_path = download_folder + url_installer.group(2)
     d = ur.urlopen('https://github.com/' + url_installer.group(0))
     with open(download_path, 'wb') as f:
@@ -266,15 +267,15 @@ def installed_version_is_newer(str_installed, str_online):
 
 
 def open_file(str_file_path):
-    if sys.platform.startswith('win'):
-        try:
+    try:
+        if sys.platform.startswith('win'):
             os.startfile(str_file_path)
-        except (FileNotFoundError, PermissionError):
-            print('File could not be opened from inside Easy Paste.')
-            print('Please go to the file location and open it manually.')
-            print(sys.exc_info()[1])
-    else:
-        subprocess.call(['open', str_file_path])
+        else:
+            subprocess.call(['open', str_file_path])
+    except (FileNotFoundError, PermissionError):
+        print('File could not be opened from inside Easy Paste.')
+        print('Please go to the file location and open it manually.')
+        print(sys.exc_info()[1])
 
 
 def open_readme():
@@ -524,6 +525,18 @@ def calc_weighted(str_files, dict_ep_options, dict_weighted_options):
         print_success(part_path)
         if dict_ep_options['bool_result']:
             open_file(full_path)
+    print_end()
+
+
+def export_template(full_path, dict_ep_options, dict_weighted_options):
+    indices, enc, dl = detect_file_type_and_delimiter(dict_ep_options, fname_template)
+    csv_indices = slice_indices(dict_csv_indices['all'], list_slice_groups_weighted)
+    analysis_read = csv.reader(
+        open(fname_template, encoding=enc), delimiter=dl)
+    lines = provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options)
+    write_lines_to_full_path(full_path, lines)
+    if dict_ep_options['bool_result']:
+        open_file(full_path)
     print_end()
 
 

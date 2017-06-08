@@ -36,6 +36,7 @@ Source: "dist\python34.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "dist\tcl86t.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "dist\tk86t.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "dist\tcl\*"; DestDir: "{app}\tcl"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "dist\files\Analysis-Template.csv"; DestDir: "{app}\files"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

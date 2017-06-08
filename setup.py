@@ -21,7 +21,7 @@ dict_console = {
     'dest_base': 'Easy Paste',
     'icon_resources': [(1, './icons/easy_paste_icon.ico')],
     'script': 'easy_paste.py',
-    'version': '1.8.3',
+    'version': '1.8.4',
 }
 dict_options = {
     'bundle_files': 2,
@@ -46,6 +46,7 @@ if __name__ == "__main__":
 
     setup(
         console=[dict_console],
+        data_files=[('files', ['files/Analysis-Template.csv'])],
         options={'py2exe': dict_options}
     )
 

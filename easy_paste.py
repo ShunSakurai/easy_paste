@@ -152,6 +152,9 @@ cb_total_row.grid(row=row_total, column=1, sticky='w', padx=10, pady=5)
 btn_weighted = tkinter.Button(text='Calculate weighted words', state='disabled')
 btn_weighted.grid(columnspan=2, pady=5)
 
+btn_template = tkinter.Button(text='Export empty table')
+btn_template.grid(columnspan=2, pady=5)
+
 frame_border3 = Border()
 frame_border3.grid()
 
@@ -165,7 +168,10 @@ btn_update.grid(row=row_about, column=1, pady=5)
 
 
 def import_file(*event):
-    initial_dir = ep_scripts.dir_from_str_path(ep_scripts.divide_str_tuple(var_files.get())[0])
+    if var_files.get():
+        initial_dir = ep_scripts.dir_from_str_path(ep_scripts.divide_str_tuple(var_files.get())[0])
+    else:
+        initial_dir = ep_scripts.os.path.expanduser("~")+'/Desktop/'
     f_files = tkinter.filedialog.askopenfilenames(initialdir=initial_dir, **args_file)
     if f_files:
         var_files.set(f_files)
@@ -279,6 +285,23 @@ def run_weighted(*event):
 
 
 btn_weighted['command'] = run_weighted
+
+
+def run_template(*event):
+    dict_ep_options = get_ep_options()
+    dict_weighted_options = get_weighted_options()
+    if var_files.get():
+        initial_dir = ep_scripts.dir_from_str_path(ep_scripts.divide_str_tuple(var_files.get())[0])
+    else:
+        initial_dir = ep_scripts.os.path.expanduser("~")+'/Desktop/'
+    f_path = tkinter.filedialog.asksaveasfilename(
+        initialdir=initial_dir, initialfile="EP Words and Time Calculator.csv", filetypes=[('CSV', '*.csv')]
+    )
+    if f_path:
+        ep_scripts.export_template(f_path, dict_ep_options, dict_weighted_options)
+
+
+btn_template['command'] = run_template
 
 
 def run_folder(*event):

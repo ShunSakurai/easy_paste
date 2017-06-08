@@ -101,7 +101,6 @@ When you save the weighted words table after editing it in Excel or Open Office,
 ### Working on
 - Make the "Open files" dialog more useful
 - Create your own heading formats
-- Create an empty table when no file is imported
 - \* Resolve an issue where analysis for grouped multilingual files fails
 
 ### Maybe later
