@@ -1,4 +1,4 @@
-# easy_paste
+# Easy Paste
 A tool for generating easy-to-paste tables for quotes and weighted words from the analysis exported from memoQ
 
 ![Concept](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_concept.png)
@@ -112,7 +112,7 @@ When you save the weighted words table after editing it in Excel or Open Office,
 - Open multiple analysis CSV files at once. The equations will become too complex
 - Append the results at the bottom instead of overwriting the existing file. The equations will become too complex
 
-Please [let me know](https://app.asana.com/-/share?s=132674863519245-jpqOgsUH4HdnKpFhvDDKXHfGUw0ccrb27xIIYgXyXV0-29199191293549) if you need any of the features as soon as possible.
+Please let me know from [Github Issues](https://github.com/ShunSakurai/easy_paste/issues) or [Asana](https://app.asana.com/0/264050103803746/list) if you need any of the features as soon as possible.
 
 ## History
 Please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases) for the detailed history.
@@ -120,7 +120,7 @@ Please go to [Releases](https://github.com/ShunSakurai/easy_paste/releases) for 
 "*" at the beginning means bug-fixing.
 
 ## Contribution
-This is just a personal project and I do not really know what kind of contribution I may get. Any [feedback](https://app.asana.com/0/264050103803746/list) and contribution is welcome!
+This is just a personal project and I do not really know what kind of contribution I may get. Any feedback and contribution from [Github Issues](https://github.com/ShunSakurai/easy_paste/issues) or [Asana](https://app.asana.com/0/264050103803746/list) is welcome!
 
 Dear colleague translators and PMs, please help me brush up my English on this page.
 
