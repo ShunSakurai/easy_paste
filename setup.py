@@ -1,6 +1,7 @@
 '''
 cd dropbox/codes/easy_paste
 py -3.4 setup.py py2exe
+"C:\Program Files (x86)\Inno Setup 5\iscc" setup_installer.iss
 
 Libraries used:
 import tkinter

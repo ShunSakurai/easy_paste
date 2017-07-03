@@ -59,11 +59,11 @@ From Project home > Overview > Reports > Analysis:
 - After exporting the table, the exported CSV file is automatically opened
 - You can move along the UI items with "Tab" key and invoke the focused item with the space bar
 
+![UI](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_ui.png)
+
 ### Generating a table for quote
 - Click "Generate table for quote"
 - CSV files starting with "quote" is generated in the same folder as the original CSV files
-
-![UI](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_ui.png)
 
 #### Copying and pasting the table
 - Open the exported CSV file
@@ -84,14 +84,14 @@ The basic procedure is the same as in 'Generating a table for quote'
 - CSV files starting with "weighted" is generated in the same folder as the original CSV files
 - You can choose the format from the following two formats
 
-![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet.png)
-![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet2.png)
-
 #### Editing and saving the table
 - Beware that the time and weighted words are not rounded. Round the values if necessary using Excel's commands, etc.
 - Total and subtotal are automatically calculated and corresponding row and columns are added
 - You can change the check 100% matches options and the words per day options and the result updates accordingly
 - After editing, save the file in a file format other than CSV to retain the equations. See [Equations are lost when re-saving the CSV](https://github.com/ShunSakurai/easy_paste#equations-are-los- when-re-saving-the-CSV)
+
+![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet.png)
+![task sheet](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet2.png)
 
 ## Answers to FAQ, and known issues and workarounds
 ### Equations are lost when re-saving the CSV
@@ -109,7 +109,6 @@ When you save the weighted words table after editing it in Excel or Open Office,
 
 ### Features not coming
 - Support HTML format to count characters. It turned out some CSV formats include character counts
-- Open multiple analysis CSV files at once. The equations will become too complex
 - Append the results at the bottom instead of overwriting the existing file. The equations will become too complex
 
 Please let me know from [Github Issues](https://github.com/ShunSakurai/easy_paste/issues) or [Asana](https://app.asana.com/0/264050103803746/list) if you need any of the features as soon as possible.
