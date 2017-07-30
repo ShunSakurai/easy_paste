@@ -10,7 +10,7 @@ You don't have to manually add up the number of words for creating quotes anymor
 
 You can also calculate the weighted words and the translation and proofreading time for the files. memoQ now [tells us the weighted words](https://www.memoq.com/memoq-build-june), but this tool is still useful in that it can calculate the weighted words for sliced files, and it can provide the estimated time.
 
-This program is coded in Python with tkinter and is distributed in .exe format through [py2exe](http://www.py2exe.org/).
+This program is coded in Python with tkinter and is distributed in .exe format through [PyInstaller](http://www.pyinstaller.org/) and [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows).
 
 The icon was created with [アイコン ウィザード](http://freewareplace.web.fc2.com/) and the installer is created with [Inno Setup](http://www.jrsoftware.org/isdl.php).
 
@@ -26,16 +26,15 @@ If you have the Python environment installed, you can run the source code with `
 ## Build
 To convert the Python code to .exe file, and to create an installer, follow steps below.
 
-Requirements and procedures for the .exe file:
-
-- [py2exe](http://www.py2exe.org/)
-- Python 3.4 (py2exe is not compatible with Python 3.5 as far as I know)
-- Run `py -3.4 setup.py py2exe` on a Windows machine
-
-Requirements and procedures for the installer:
-
+### Requirements
+- [Python 3](https://www.python.org/downloads/)
+- [PyInstaller](http://www.pyinstaller.org/)
+- [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows), add it to PATH
 - [Inno Setup](http://www.jrsoftware.org/isdl.php)
-- Open setup_installer.iss with Inno Setup Compiler and click Build > Compile
+
+### Procedures
+- Run `py -B setup.py` on a Windows machine. `-B` is optional
+- You may have to set alias to make py = python3
 
 ## Prerequisites
 ### Supported memoQ analysis file types
@@ -97,9 +96,10 @@ The basic procedure is the same as in 'Generating a table for quote'
 ### Equations are lost when re-saving the CSV
 When you save the weighted words table after editing it in Excel or Open Office, the equations are lost and only values are saved. After that, you cannot change the words/day and 100% review:Yes/No. To prevent this, try saving the file as Excel or Open Office formats.
 
+### 101% matches are ignored in weighted word table
+
 ## Features to come
 ### Working on
-- Make the "Open files" dialog more useful
 - Create your own heading formats
 - \* Resolve an issue where analysis for grouped multilingual files fails
 

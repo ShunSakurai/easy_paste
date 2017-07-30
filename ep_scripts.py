@@ -239,7 +239,7 @@ def download_update(str_newest_version, url_installer):
     if sys.platform.startswith('win'):
         os.startfile(download_path)
     else:
-        subprocess.call(['open', download_path])
+        subprocess.run(['open', download_path])
     return
 
 
@@ -274,7 +274,7 @@ def open_file(str_file_path):
         if sys.platform.startswith('win'):
             os.startfile(str_file_path)
         else:
-            subprocess.call(['open', str_file_path])
+            subprocess.run(['open', str_file_path])
     except (FileNotFoundError, PermissionError):
         print('File could not be opened from inside Easy Paste.')
         print('Please go to the file location and open it manually.')
@@ -550,7 +550,7 @@ def open_folder(str_files):
     if sys.platform.startswith('win'):
         os.startfile(folder_full_path)
     else:
-        subprocess.call(['open', folder_full_path])
+        subprocess.run(['open', folder_full_path])
 
 
 if __name__ == "__main__":
