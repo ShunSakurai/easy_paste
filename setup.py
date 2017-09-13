@@ -18,7 +18,7 @@ dict_console = {
     'dest_base': 'Easy Paste',
     'icon_resources': [(1, './icons/easy_paste_icon.ico')],
     'script': 'easy_paste.py',
-    'version': '1.9.1',
+    'version': '1.9.2',
 }
 dict_options = {
     'excludes': [

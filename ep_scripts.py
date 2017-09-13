@@ -204,7 +204,7 @@ def dir_from_str_path(str_path):
     >>> dir_from_str_path('C:\\easy_paste\\files\\Analysis-GitHub Readme.csv')
     'C:/easy_paste/files'
     '''
-    str_path = str_path.replace('\\', '/')
+    str_path = replace_bslash_w_fslash(str_path)
     if str_path.endswith('/'):
         str_path_dir = str_path.rstrip('/')
     elif '.' in str_path.rsplit('/', 1)[-1]:
@@ -237,6 +237,7 @@ def download_update(str_newest_version, url_installer):
         f.write(d.read())
     print('Starting the installer.')
     if sys.platform.startswith('win'):
+        download_path = replace_fslash_w_bslash(download_path)
         os.startfile(download_path)
     else:
         subprocess.run(['open', download_path])
@@ -272,6 +273,7 @@ def installed_version_is_newer(str_installed, str_online):
 def open_file(str_file_path):
     try:
         if sys.platform.startswith('win'):
+            str_file_path = replace_fslash_w_bslash(str_file_path)
             os.startfile(str_file_path)
         else:
             subprocess.run(['open', str_file_path])
@@ -292,6 +294,14 @@ def print_success(path):
 
 def print_end():
     print('\nClick [x] on the tk window to close the program.')
+
+
+def replace_bslash_w_fslash(str_path):
+    return str_path.replace('\\', '/')
+
+
+def replace_fslash_w_bslash(str_path):
+    return str_path.replace('/', '\\')
 
 
 def return_total_column(l):
@@ -345,7 +355,7 @@ def shorten_fname(file_path):
     >>> shorten_fname(r'[jpn] "Z:\Users\sakuraishun\Dropbox\Codes\easy_paste\README.md"')
     '[jpn]README.md'
     '''
-    file_path = file_path.replace('\\', '/')
+    file_path = replace_bslash_w_fslash(file_path)
     lan = ''
     if '.' in file_path and '/' in file_path:
         if file_path.startswith('['):
@@ -548,6 +558,7 @@ def open_folder(str_files):
     analysis_divided = str_file_path.rsplit('/', 1)
     folder_full_path = analysis_divided[0]
     if sys.platform.startswith('win'):
+        folder_full_path = replace_fslash_w_bslash(folder_full_path)
         os.startfile(folder_full_path)
     else:
         subprocess.run(['open', folder_full_path])
