@@ -216,15 +216,34 @@ def dir_from_str_path(str_path):
 
 def divide_str_tuple(str_tuple):
     r'''
-    >>> divide_str_tuple(r'/Users/path/csv.csv {/Users/path/txt.txt}')
-    ['/Users/path/csv.csv', '/Users/path/txt.txt']
-
-    >>> divide_str_tuple(r' C:/Users/path/csv1.csv {C:/Users/path/csv2.csv} {C:\Users\path\txt1.txt} {C:\Users\path\txt2.txt}')
-    ['C:/Users/path/csv1.csv', 'C:/Users/path/csv2.csv', 'C:\\Users\\path\\txt1.txt', 'C:\\Users\\path\\txt2.txt']
+    >>> divide_str_tuple(r"('/Users/path/csv.csv', '/Users/path/file name with space.txt',)")
+    ['/Users/path/csv.csv', '/Users/path/file name with space.txt']
     '''
-    tuple_str_split = str_tuple.replace('{', ',').strip('(),').split(',')
-    list_from_str = [i.strip(' {},"\'') for i in tuple_str_split]
-    return list_from_str
+    if str_tuple[0] == '(':
+        # file is selected from the button
+        for (old, new) in [('(\'', '{'), ('\',', '}'), ('\')', '}'), ('\'', '{')]:
+            str_tuple = str_tuple.replace(old, new)
+    else:
+        # file is input directly in the field
+        # assuming only one file is selected
+        str_tuple = ''.join(['{', str_tuple, '}'])
+    list_from_str = []
+
+    while str_tuple:
+        if str_tuple[0] == '{':
+            end = str_tuple.find('}') + 1
+        else:
+            end = str_tuple.find(' ', 1)
+
+        if end == -1:
+            list_from_str.append(str_tuple)
+            break
+        else:
+            list_from_str.append(str_tuple[: end])
+            str_tuple = str_tuple[end + 1:]
+
+    list_from_str_clean = [i.strip(' {},"\'') for i in list_from_str]
+    return list_from_str_clean
 
 
 def download_update(str_newest_version, url_installer):
@@ -249,6 +268,7 @@ def get_next_grid_row(root):
 
 
 def insert_prefix_in_path(str_file_path, prefix):
+    str_file_path = replace_bslash_w_fslash(str_file_path)
     analysis_divided = str_file_path.rsplit('/', 2)
     part_path = ''.join([
         analysis_divided[1], prefix, analysis_divided[2]])
