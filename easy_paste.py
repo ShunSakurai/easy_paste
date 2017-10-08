@@ -19,9 +19,14 @@ str_default_color = 'SystemButtonFace'
 ph_ent_file = " Paste the path here for quicker import"
 
 
-class Border(tkinter.Frame):
+class Border10(tkinter.Frame):
     def __init__(self):
-        super().__init__(height=30)
+        super().__init__(height=10)
+
+
+class Border20(tkinter.Frame):
+    def __init__(self):
+        super().__init__(height=20)
 
 
 args_file = {'filetypes' : [('csv', '*.csv')]}
@@ -57,8 +62,14 @@ for label, unit in units:
     rb_unit.grid(row=row_unit, column=units.index((label, unit)), sticky='w', padx=10, pady=5)
     rbs_unit.append(rb_unit)
 
-frame_border1 = Border()
-frame_border1.grid()
+frame_border20_1 = Border20()
+frame_border20_1.grid()
+
+title_quote = tkinter.Label(text=r'Quote', font=('', 18))
+title_quote.grid(sticky='w', padx=25)
+
+frame_border10_1 = Border10()
+frame_border10_1.grid()
 
 label_mr_categories = tkinter.Label(text=r'Categorize match rates')
 label_mr_categories.grid(sticky='w', padx=10)
@@ -118,8 +129,14 @@ for label, heading in headings:
 btn_quote = tkinter.Button(text='Generate table for quote', state='disabled')
 btn_quote.grid(columnspan=2, pady=5)
 
-frame_border2 = Border()
-frame_border2.grid()
+frame_border20_2 = Border20()
+frame_border20_2.grid()
+
+title_weighted = tkinter.Label(text=r'Weighted', font=('', 18))
+title_weighted.grid(sticky='w', padx=25)
+
+frame_border10_2 = Border10()
+frame_border10_2.grid()
 
 lable_wwt_style = tkinter.Label(text='Weighted styles')
 lable_wwt_style.grid(sticky='w', padx=10)
@@ -157,8 +174,14 @@ btn_weighted.grid(columnspan=2, pady=5)
 btn_template = tkinter.Button(text='Export empty table')
 btn_template.grid(columnspan=2, pady=5)
 
-frame_border3 = Border()
-frame_border3.grid()
+frame_border20_3 = Border20()
+frame_border20_3.grid()
+
+title_about = tkinter.Label(text=r'About', font=('', 18))
+title_about.grid(sticky='w', padx=25)
+
+frame_border10_3 = Border10()
+frame_border10_3.grid()
 
 row_about = ep_scripts.get_next_grid_row(root)
 

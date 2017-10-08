@@ -474,10 +474,15 @@ def provide_quote_lines(analysis_read, csv_indices, headings):
             list_combined = subtotal_by_lang(list_combined, list_quote_line, num_items)
 
     lines = []
-    for list_quote_line in list_combined + list_quote_lines:
+    separator = '\'' + '=' * 20
+    if list_combined:
+        list_quote_lines = [[separator], ['Total per language']] + list_combined + [[separator], ['Individual files']] + list_quote_lines
+
+    for list_quote_line in list_quote_lines:
         lines.append([list_quote_line[0]])
-        for i in range(num_items):
-            lines.append([headings[i], list_quote_line[i + 1]])
+        if len(list_quote_line) >= 2:
+            for i in range(num_items):
+                lines.append([headings[i], list_quote_line[i + 1]])
         lines.append([''])
     return lines
 
