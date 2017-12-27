@@ -31,6 +31,7 @@ To convert the Python code to .exe file, and to create an installer, follow step
 - [PyInstaller](http://www.pyinstaller.org/)
 - [Verpatch](https://www.codeproject.com/Articles/37133/Simple-Version-Resource-Tool-for-Windows), add it to PATH
 - [Inno Setup](http://www.jrsoftware.org/isdl.php)
+- Minimum display resolution height: 900 pixels
 
 ### Procedures
 - Run `py -B setup.py` on a Windows machine. `-B` is optional
