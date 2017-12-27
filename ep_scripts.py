@@ -130,7 +130,8 @@ row_3_total = ['', 'TrHrs Subtotal', 'PrHrs Subtotal']
 c = 'ABCDEFGHIJKLM'
 
 fname_template = 'files/Analysis-Template.csv'
-pattern_slice = re.compile(r'^(.+):\s(\d+)\-\d+$')
+pattern_slice_end = re.compile(r'^(.+):\s(\d+)\-\d+$')
+pattern_slice_middle = re.compile(r'^(\[.+\]).*?\[(\d+)\-\d+\](.+)$')
 
 
 # Utility classes and functions
@@ -411,11 +412,16 @@ def sort_slices(lines):
     dict_sliced_files = {}
     for i in range(len(lines)):
         full_fname = lines[i][0]
-        match = pattern_slice.match(full_fname)
-        if not match:
-            continue
-        else:
-            base_fname, start = match.group(1), int(match.group(2))
+        match_end = pattern_slice_end.match(full_fname)
+        match_middle = pattern_slice_middle.match(full_fname)
+
+        if match_end or match_middle:
+            if match_end:
+                base_fname, start = match_end.group(1), int(match_end.group(2))
+            else:
+                base_fname = match_middle.group(1) + match_middle.group(3)
+                start = int(match_middle.group(2))
+
             if base_fname not in dict_sliced_files:
                 dict_sliced_files[base_fname] = [{'idx': i, 'start': start}]
             else:
@@ -504,9 +510,8 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
     num_row = 3
 
     orig_body_lines = [row for row in analysis_read]
-    sorted_body_lines = sort_slices(orig_body_lines)
     body_lines = []
-    for row in sorted_body_lines:
+    for row in orig_body_lines:
         num_row += 1
         r = str(num_row)
         fname = shorten_fname(row[0])
@@ -521,6 +526,8 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
             if dict_weighted_options['bool_total_col']:
                 row_body += return_total_equations_time(r)
         body_lines.append(row_body)
+
+    sorted_body_lines = sort_slices(body_lines)
 
     total_lines = []
     if dict_weighted_options['bool_total_row']:
