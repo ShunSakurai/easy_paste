@@ -324,6 +324,10 @@ def replace_fslash_w_bslash(str_path):
     return str_path.replace('/', '\\')
 
 
+def return_half_column(l):
+    return ['\'1/2'] + [''.join(['=', c[i], str(l + 2), '/2']) for i in range(1, 4)]
+
+
 def return_total_column(l):
     return ['Total'] + [''.join(['=sum(', c[i], '4:', c[i], str(l), ')']) for i in range(1, 13)]
 
@@ -520,8 +524,10 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
 
     total_lines = []
     if dict_weighted_options['bool_total_row']:
+        length = len(header_lines) + len(body_lines)
         total_lines.append([''])
-        total_lines.append(return_total_column(len(header_lines) + len(body_lines)))
+        total_lines.append(return_total_column(length))
+        total_lines.append(return_half_column(length))
     return header_lines + body_lines + total_lines
 
 
