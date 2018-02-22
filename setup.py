@@ -12,7 +12,7 @@ dict_console = {
     'dest_base': 'Easy Paste',
     'icon_resources': [(1, './icons/easy_paste_icon.ico')],
     'script': 'easy_paste.py',
-    'version': '1.9.7',
+    'version': '1.9.8',
 }
 
 dict_options = {
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         'verpatch', ''.join([folder_dist, '/', dict_console['dest_base'], '.exe']),
         zero_pad(dict_console['version']),
         '/va', '/pv', zero_pad(dict_console['version']),
-        '/s', 'copyright', '©2016-2017 ' + dict_console['author']
+        '/s', 'copyright', '©2016-2018 ' + dict_console['author']
     ]
 
     list_iscc = ['C:\Program Files (x86)\Inno Setup 5\iscc', 'setup_installer.iss']

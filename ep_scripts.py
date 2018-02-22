@@ -513,28 +513,30 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
     body_lines = []
     for row in orig_body_lines:
         num_row += 1
-        r = str(num_row)
         fname = shorten_fname(row[0])
-        words = [addup_unit(row, csv_indices[i]) for i in range(len(csv_indices))]
-        equations = func_equation(r, dict_weighted_options)
+        list_words = [addup_unit(row, csv_indices[i]) for i in range(len(csv_indices))]
+        list_equations = func_equation(str(num_row), dict_weighted_options)
         if dict_weighted_options['str_wwt_style'] == 'time_first':
-            row_body = [fname] + equations + [''] + words
-            if dict_weighted_options['bool_total_col']:
-                row_body += return_total_equations_time(r)
+            row_body = [fname] + list_equations + [''] + list_words
         elif dict_weighted_options['str_wwt_style'] == 'words_first':
-            row_body = [fname] + words + equations
-            if dict_weighted_options['bool_total_col']:
-                row_body += return_total_equations_time(r)
+            row_body = [fname] + list_words + list_equations
         body_lines.append(row_body)
 
     sorted_body_lines = sort_slices(body_lines)
 
-    total_lines = []
+    if dict_weighted_options['bool_total_col']:
+        num_row = 3
+        for row_body in sorted_body_lines:
+            num_row += 1
+            row_body += return_total_equations_time(str(num_row))
+
     if dict_weighted_options['bool_total_row']:
+        total_lines = []
         length = len(header_lines) + len(body_lines)
         total_lines.append([''])
         total_lines.append(return_total_column(length))
         total_lines.append(return_half_column(length))
+
     return header_lines + body_lines + total_lines
 
 
