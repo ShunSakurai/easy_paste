@@ -497,9 +497,9 @@ def provide_quote_lines(analysis_read, csv_indices, headings):
 
 def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
     if dict_weighted_options['str_wwt_style'] == 'time_first':
-        row_3, func_equation = row_3_time, return_weighted_equations_time
+        row_3, func_equation, func_total = row_3_time, return_weighted_equations_time, return_total_equations_time
     elif dict_weighted_options['str_wwt_style'] == 'words_first':
-        row_3, func_equation = row_3_words, return_weighted_equations_words
+        row_3, func_equation, func_total = row_3_words, return_weighted_equations_words, return_total_equations_words
     if dict_weighted_options['bool_total_col']:
         row_3 = row_3 + row_3_total
     header_lines = [row_1, row_2, row_3]
@@ -526,7 +526,7 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
         num_row = 3
         for row_body in sorted_body_lines:
             num_row += 1
-            row_body += return_total_equations_time(str(num_row))
+            row_body += func_total(str(num_row))
 
     if dict_weighted_options['bool_total_row']:
         total_lines = []
