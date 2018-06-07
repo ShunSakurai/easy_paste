@@ -169,11 +169,11 @@ def check_updates():
     pattern_installer = re.compile(r'/ShunSakurai/easy_paste/releases/download/v([0-9.]+)/(easy_paste_installer_\1.0.exe)')
     str_newest_version = pattern_version.search(str_release_page).group(0)
     url_installer = pattern_installer.search(str_release_page)
-    if installed_version_is_newer(setup.dict_console['version'], str_newest_version):
+    if new_version_is_available(setup.dict_console['version'], str_newest_version):
+        download_update(str_newest_version, url_installer)
+    else:
         print('You are using the newest version:', setup.dict_console['version'])
         return
-    else:
-        download_update(str_newest_version, url_installer)
 
 
 def detect_file_type_and_delimiter(dict_ep_options, fn):
@@ -278,17 +278,15 @@ def insert_prefix_in_path(str_file_path, prefix):
     return full_path, part_path
 
 
-def installed_version_is_newer(str_installed, str_online):
-    list_installed = str_installed.split('.')
-    list_online = str_online.split('.')
-    for i in range(3):
-        if int(list_installed[i]) < int(list_online[i]):
-            return False
-        elif int(list_installed[i]) > int(list_online[i]):
-            return True
-        else:
+def new_version_is_available(str_installed, str_online):
+    list_installed = setup.zero_pad(str_installed).split('.')
+    list_online = setup.zero_pad(str_online).split('.')
+    for (i, o) in zip(list_installed, list_online):
+        if int(i) == int(o):
             pass
-    return True
+        else:
+            return int(i) < int(o)
+    return False
 
 
 def open_file(str_file_path):

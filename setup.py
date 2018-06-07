@@ -12,7 +12,7 @@ dict_console = {
     'dest_base': 'Easy Paste',
     'icon_resources': [(1, './icons/easy_paste_icon.ico')],
     'script': 'easy_paste.py',
-    'version': '1.9.8',
+    'version': '1.9.8.1',
 }
 
 dict_options = {
@@ -88,5 +88,5 @@ if __name__ == "__main__":
             'start',
             ''.join([
                 'Output/easy_paste_installer_',
-                dict_console['version'], '.0.exe'
+                zero_pad(dict_console['version']), '.exe'
             ])], shell=True)
