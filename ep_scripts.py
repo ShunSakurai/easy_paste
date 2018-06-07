@@ -120,13 +120,14 @@ list_slice_groups_weighted = [[i, i + 1] for i in range(6, -1, -1)]
 
 row_1 = ['Check 100% matches:', 'Yes']
 row_2 = ['Chargeable words per day:', 2000]
-row_3_time = [
+row_3 = ['Apply MT:', 'Yes']
+row_4_time = [
     'Item', 'Wds', 'TrHrs', 'PrHrs', 'MaxHrs', 'DueDate',
     'Reps', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'New']
-row_3_words = [
+row_4_words = [
     'Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match',
     'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words']
-row_3_total = ['', 'TrHrs Subtotal', 'PrHrs Subtotal']
+row_4_total = ['', 'TrHrs Subtotal', 'PrHrs Subtotal']
 c = 'ABCDEFGHIJKLM'
 
 fname_template = 'files/Analysis-Template.csv'
@@ -328,13 +329,13 @@ def return_half_column(l):
 
 
 def return_total_column(l):
-    return ['Total'] + [''.join(['=sum(', c[i], '4:', c[i], str(l), ')']) for i in range(1, 13)]
+    return ['Total'] + [''.join(['=sum(', c[i], '5:', c[i], str(l), ')']) for i in range(1, 13)]
 
 
 def return_weighted_equations_time(r, dict_weighted_options):
     translation_time = ''.join([
-        '=(((', c[8], r, '+', c[9], r, ')*0.25)+(', c[10], r, '*0.60)+',
-        c[11], r, '+', c[12], r, ')/', c[1], '$2*8*4/5'])
+        '=(((', c[8], r, '+', c[9], r, ')*0.25)+(', c[10], r, '*0.60)+(',
+        c[11], r, '+', c[12], r, ')*(1-0.2*(B$3="Yes")))/', c[1], '$2*8*4/5'])
     proof_time = ''.join([
         '=(((',
         c[6], r, '+', c[7], r, ')*(1+2*(B$1="Yes"))/3+(',
@@ -348,8 +349,8 @@ def return_weighted_equations_time(r, dict_weighted_options):
 
 def return_weighted_equations_words(r, dict_weighted_options):
     translation_time = ''.join([
-        '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+',
-        c[6], r, '+', c[7], r, ')/B$2*8*4/5'])
+        '=(((', c[3], r, '+', c[4], r, ')*0.25)+(', c[5], r, '*0.60)+(',
+        c[6], r, '+', c[7], r, ')*(1-0.2*(B$3="Yes")))/B$2*8*4/5'])
     proof_time = ''.join([
         '=(((',
         c[1], r, '+', c[2], r, ')*(1+2*(B$1="Yes"))/3+(',
@@ -362,14 +363,14 @@ def return_weighted_equations_words(r, dict_weighted_options):
 
 
 def return_total_equations_time(r):
-    trhrs_subtotal = ''.join(['=sum(', c[2], '$4:', c[2], r, ')'])
-    prhrs_subtotal = ''.join(['=sum(', c[3], '$4:', c[3], r, ')'])
+    trhrs_subtotal = ''.join(['=sum(', c[2], '$5:', c[2], r, ')'])
+    prhrs_subtotal = ''.join(['=sum(', c[3], '$5:', c[3], r, ')'])
     return ['', trhrs_subtotal, prhrs_subtotal]
 
 
 def return_total_equations_words(r):
-    trhrs_subtotal = ''.join(['=sum(', c[8], '$4:', c[8], r, ')'])
-    prhrs_subtotal = ''.join(['=sum(', c[9], '$4:', c[9], r, ')'])
+    trhrs_subtotal = ''.join(['=sum(', c[8], '$5:', c[8], r, ')'])
+    prhrs_subtotal = ''.join(['=sum(', c[9], '$5:', c[9], r, ')'])
     return ['', trhrs_subtotal, prhrs_subtotal]
 
 
@@ -497,15 +498,15 @@ def provide_quote_lines(analysis_read, csv_indices, headings):
 
 def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
     if dict_weighted_options['str_wwt_style'] == 'time_first':
-        row_3, func_equation, func_total = row_3_time, return_weighted_equations_time, return_total_equations_time
+        row_4, func_equation, func_total = row_4_time, return_weighted_equations_time, return_total_equations_time
     elif dict_weighted_options['str_wwt_style'] == 'words_first':
-        row_3, func_equation, func_total = row_3_words, return_weighted_equations_words, return_total_equations_words
+        row_4, func_equation, func_total = row_4_words, return_weighted_equations_words, return_total_equations_words
     if dict_weighted_options['bool_total_col']:
-        row_3 = row_3 + row_3_total
-    header_lines = [row_1, row_2, row_3]
+        row_4 = row_4 + row_4_total
+    header_lines = [row_1, row_2, row_3, row_4]
     next(analysis_read)
     next(analysis_read)
-    num_row = 3
+    num_row = 4
 
     orig_body_lines = [row for row in analysis_read]
     body_lines = []
@@ -523,7 +524,7 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
     sorted_body_lines = sort_slices(body_lines)
 
     if dict_weighted_options['bool_total_col']:
-        num_row = 3
+        num_row = 4
         for row_body in sorted_body_lines:
             num_row += 1
             row_body += func_total(str(num_row))
