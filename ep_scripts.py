@@ -121,14 +121,15 @@ list_slice_groups_weighted = [[i, i + 1] for i in range(6, -1, -1)]
 row_1 = ['Check 100% matches:', 'Yes']
 row_2 = ['Chargeable words per day:', 2000]
 row_3 = ['Apply MT:', 'Yes']
-row_4_time = [
+row_5_time = [
     'Item', 'Wds', 'TrHrs', 'PrHrs', 'MaxHrs', 'DueDate',
     'Reps', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'New']
-row_4_words = [
+row_5_words = [
     'Item', 'Repeated', '100%', '95-99%', '85-94%', '75-84%', '50-74%', 'No Match',
     'Translation time', 'Proofreading time', 'Total time (hours)', 'Chargeable words']
-row_4_total = ['', 'TrHrs Subtotal', 'PrHrs Subtotal']
+row_5_total = ['', 'TrHrs Subtotal', 'PrHrs Subtotal']
 c = 'ABCDEFGHIJKLM'
+start_row = 6
 
 fname_template = 'files/Analysis-Template.csv'
 pattern_slice_end = re.compile(r'^(.+):\s(\d+)\-\d+$')
@@ -324,12 +325,12 @@ def replace_fslash_w_bslash(str_path):
     return str_path.replace('/', '\\')
 
 
-def return_half_column(l):
+def return_half_row(l):
     return ['\'1/2'] + [''.join(['=', c[i], str(l + 2), '/2']) for i in range(1, 4)]
 
 
-def return_total_column(l):
-    return ['Total'] + [''.join(['=sum(', c[i], '5:', c[i], str(l), ')']) for i in range(1, 13)]
+def return_total_row(l):
+    return ['Total'] + [''.join(['=sum(', c[i], str(start_row), ':', c[i], str(l), ')']) for i in range(1, 13)]
 
 
 def return_weighted_equations_time(r, dict_weighted_options):
@@ -363,14 +364,14 @@ def return_weighted_equations_words(r, dict_weighted_options):
 
 
 def return_total_equations_time(r):
-    trhrs_subtotal = ''.join(['=sum(', c[2], '$5:', c[2], r, ')'])
-    prhrs_subtotal = ''.join(['=sum(', c[3], '$5:', c[3], r, ')'])
+    trhrs_subtotal = ''.join(['=sum(', c[2], '$', str(start_row), ':', c[2], r, ')'])
+    prhrs_subtotal = ''.join(['=sum(', c[3], '$', str(start_row), ':', c[3], r, ')'])
     return ['', trhrs_subtotal, prhrs_subtotal]
 
 
 def return_total_equations_words(r):
-    trhrs_subtotal = ''.join(['=sum(', c[8], '$5:', c[8], r, ')'])
-    prhrs_subtotal = ''.join(['=sum(', c[9], '$5:', c[9], r, ')'])
+    trhrs_subtotal = ''.join(['=sum(', c[8], '$', str(start_row), ':', c[8], r, ')'])
+    prhrs_subtotal = ''.join(['=sum(', c[9], '$', str(start_row), ':', c[9], r, ')'])
     return ['', trhrs_subtotal, prhrs_subtotal]
 
 
@@ -498,15 +499,15 @@ def provide_quote_lines(analysis_read, csv_indices, headings):
 
 def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
     if dict_weighted_options['str_wwt_style'] == 'time_first':
-        row_4, func_equation, func_total = row_4_time, return_weighted_equations_time, return_total_equations_time
+        row_5, func_equation, func_total = row_5_time, return_weighted_equations_time, return_total_equations_time
     elif dict_weighted_options['str_wwt_style'] == 'words_first':
-        row_4, func_equation, func_total = row_4_words, return_weighted_equations_words, return_total_equations_words
+        row_5, func_equation, func_total = row_5_words, return_weighted_equations_words, return_total_equations_words
     if dict_weighted_options['bool_total_col']:
-        row_4 = row_4 + row_4_total
-    header_lines = [row_1, row_2, row_3, row_4]
+        row_5 = row_5 + row_5_total
+    header_lines = [row_1, row_2, row_3, [''], row_5]
     next(analysis_read)
     next(analysis_read)
-    num_row = 4
+    num_row = start_row - 1
 
     orig_body_lines = [row for row in analysis_read]
     body_lines = []
@@ -524,17 +525,17 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
     sorted_body_lines = sort_slices(body_lines)
 
     if dict_weighted_options['bool_total_col']:
-        num_row = 4
+        num_row = start_row - 1
         for row_body in sorted_body_lines:
             num_row += 1
             row_body += func_total(str(num_row))
 
+    total_lines = []
     if dict_weighted_options['bool_total_row']:
-        total_lines = []
         length = len(header_lines) + len(body_lines)
         total_lines.append([''])
-        total_lines.append(return_total_column(length))
-        total_lines.append(return_half_column(length))
+        total_lines.append(return_total_row(length))
+        total_lines.append(return_half_row(length))
 
     return header_lines + body_lines + total_lines
 
