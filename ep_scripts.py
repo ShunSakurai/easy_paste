@@ -1,6 +1,6 @@
 '''
 cd dropbox/codes/easy_paste
-py ep_scripts.py
+py -B ep_scripts.py
 '''
 import setup
 import csv
@@ -110,7 +110,7 @@ def return_heading_quote(dict_quote_options):
     list_heading = return_mrc_text(dict_quote_options['list_separators'])
     list_heading = [replace_all_string(i) for i in list_heading]
     if dict_quote_options['str_heading'] == 'long':
-        list_heading = ['Translation - ' + h  for h in list_heading]
+        list_heading = ['Translation - ' + h for h in list_heading]
     return list_heading
 
 
@@ -222,31 +222,33 @@ def divide_str_tuple(str_tuple):
     >>> divide_str_tuple(r"('/Users/path/csv.csv', '/Users/path/file name with space.txt',)")
     ['/Users/path/csv.csv', '/Users/path/file name with space.txt']
     '''
-    if str_tuple[0] == '(':
-        # file is selected from the button
-        for (old, new) in [('(\'', '{'), ('\',', '}'), ('\')', '}'), ('\'', '{')]:
-            str_tuple = str_tuple.replace(old, new)
-    else:
-        # file is input directly in the field
-        # assuming only one file is selected
-        str_tuple = ''.join(['{', str_tuple, '}'])
     list_from_str = []
+    str_tuple = str_tuple.strip('(, )')
 
     while str_tuple:
-        if str_tuple[0] == '{':
-            end = str_tuple.find('}') + 1
-        else:
-            end = str_tuple.find(' ', 1)
+        first_character = str_tuple[0]
+        if first_character in '{\'"':
+            if first_character == '{':
+                # path is input directly in the field
+                pattern_end = re.compile(r'(?<=[^\\])}')
+            else:
+                # files are selected from the button
+                pattern_end = re.compile(r'(?<=[^\\])' + first_character)
+            match = pattern_end.search(str_tuple)
+            if not match:
+                list_from_str.append(str_tuple)
+                break
+            end = match.end(0)
+            list_from_str.append(str_tuple[1: end - 1])
+            str_tuple = str_tuple[end:]
+            str_tuple = str_tuple.strip(', ')
 
-        if end == -1:
+        else:
+            # only one file is selected and the path doesn't include space
             list_from_str.append(str_tuple)
             break
-        else:
-            list_from_str.append(str_tuple[: end])
-            str_tuple = str_tuple[end + 1:]
 
-    list_from_str_clean = [i.strip(' {},"\'') for i in list_from_str]
-    return list_from_str_clean
+    return list_from_str
 
 
 def download_update(str_newest_version, url_installer):

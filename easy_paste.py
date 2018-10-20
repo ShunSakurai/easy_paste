@@ -29,7 +29,7 @@ class Border20(tkinter.Frame):
         super().__init__(height=20)
 
 
-args_file = {'filetypes' : [('csv', '*.csv')]}
+args_file = {'filetypes': [('csv', '*.csv')]}
 
 btn_file = tkinter.Button(text='Import Analysis Files')
 var_files = tkinter.StringVar()
