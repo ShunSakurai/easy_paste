@@ -509,28 +509,30 @@ def provide_weighted_lines(analysis_read, csv_indices, dict_weighted_options):
     header_lines = [row_1, row_2, row_3, [''], row_5]
     next(analysis_read)
     next(analysis_read)
-    num_row = start_row - 1
 
     orig_body_lines = [row for row in analysis_read]
+    num_row = start_row - 1
     body_lines = []
     for row in orig_body_lines:
         num_row += 1
         fname = shorten_fname(row[0])
         list_words = [addup_unit(row, csv_indices[i]) for i in range(len(csv_indices))]
-        list_equations = func_equation(str(num_row), dict_weighted_options)
-        if dict_weighted_options['str_wwt_style'] == 'time_first':
-            row_body = [fname] + list_equations + [''] + list_words
-        elif dict_weighted_options['str_wwt_style'] == 'words_first':
-            row_body = [fname] + list_words + list_equations
+        row_body = [fname] + list_words
         body_lines.append(row_body)
 
     sorted_body_lines = sort_slices(body_lines)
-
-    if dict_weighted_options['bool_total_col']:
-        num_row = start_row - 1
-        for row_body in sorted_body_lines:
-            num_row += 1
+    num_row = start_row - 1
+    body_lines = []
+    for row in sorted_body_lines:
+        num_row += 1
+        list_equations = func_equation(str(num_row), dict_weighted_options)
+        if dict_weighted_options['str_wwt_style'] == 'time_first':
+            row_body = row[:1] + list_equations + [''] + row[1:]
+        elif dict_weighted_options['str_wwt_style'] == 'words_first':
+            row_body = row + list_equations
+        if dict_weighted_options['bool_total_col']:
             row_body += func_total(str(num_row))
+        body_lines.append(row_body)
 
     total_lines = []
     if dict_weighted_options['bool_total_row']:
