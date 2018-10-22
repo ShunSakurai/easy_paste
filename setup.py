@@ -12,7 +12,7 @@ dict_console = {
     'dest_base': 'Easy Paste',
     'icon_resources': [(1, './icons/easy_paste_icon.ico')],
     'script': 'easy_paste.py',
-    'version': '2.0.3'
+    'version': '2.0.4'
 }
 
 dict_options = {
