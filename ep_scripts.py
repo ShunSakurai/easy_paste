@@ -185,7 +185,7 @@ def detect_file_type_and_delimiter(dict_ep_options, fn):
         f = open(fn, encoding=enc)
         try:
             content = f.readline()
-        except UnicodeDecodeError:
+        except (UnicodeDecodeError, UnicodeError):
             continue
         delimiter = content[0]
         if 'X-translated' in content:
