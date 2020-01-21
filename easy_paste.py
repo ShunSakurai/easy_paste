@@ -31,13 +31,16 @@ class Border20(tkinter.Frame):
 
 args_file = {'filetypes': [('csv', '*.csv')]}
 
-btn_file = tkinter.Button(text='Import Analysis Files')
+title_import = tkinter.Label(text=r'Import/Export', font=('', 18))
+title_import.grid(sticky='w', padx=25)
+
 var_files = tkinter.StringVar()
 var_files.set(ph_ent_file)
-btn_file.grid(columnspan=2, pady=5)
-
 ent_file = tkinter.Entry(width=55, textvariable=var_files, foreground=str_gray)
 ent_file.grid(columnspan=2, pady=5)
+
+btn_file = tkinter.Button(text='Import Analysis Files')
+btn_file.grid(columnspan=2, pady=5)
 
 row_open = ep_scripts.get_next_grid_row(root)
 
