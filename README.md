@@ -1,6 +1,8 @@
 # Easy Paste
 A tool for generating easy-to-paste tables for quotes and weighted words from the analysis exported from memoQ
 
+This project is discontinued and will not be updated.
+
 ![Concept](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_concept.png)
 
 ![task sheet concept](https://raw.github.com/wiki/ShunSakurai/easy_paste/easy_paste_task_sheet_concept.png)
